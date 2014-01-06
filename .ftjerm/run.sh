@@ -1,0 +1,6 @@
+cd /home/shmibs/.ftjerm/1
+ftjerm -k 7 -m windows -km alt -c0 000000 -c8 282E2B -c1 FF4D52 -c9 FF8083 -c2 4BEB4B -c10 7AEB7A -c3 EDB655 -c11 EDC785 -c4 53CDE0 -c12 80D3E0 -c5 CD00CD -c13 FF00FF -c6 5FD4D0 -c14 8AD4D1 -c7 E3E2D6 -c15 FFFEF9 -bg Black -fg White -ah false -fn "TI Calc Fonts Clean 8" -fy 16 -w 1920 -h 266 -o 0 -sh '/home/shmibs/.ftjerm/1/ssh.sh' -bgimg /home/shmibs/.ftjerm/major-cut-mono.png &
+cd /home/shmibs/.ftjerm/2
+ftjerm -k 8 -m windows -km alt -c0 000000 -c8 282E2B -c1 FF4D52 -c9 FF8083 -c2 4BEB4B -c10 7AEB7A -c3 EDB655 -c11 EDC785 -c4 53CDE0 -c12 80D3E0 -c5 CD00CD -c13 FF00FF -c6 5FD4D0 -c14 8AD4D1 -c7 E3E2D6 -c15 FFFEF9 -bg Black -fg White -ah false -fn "TI Calc Fonts Clean 8" -fy 16 -w 1920 -h 266 -o 0 -sh '/home/shmibs/.ftjerm/2/weechat.sh' -bgimg /home/shmibs/.ftjerm/ed-cut-mono.png &
+cd /home/shmibs/.ftjerm/3
+ftjerm -k 9 -m windows -km alt -c0 000000 -c8 282E2B -c1 FF4D52 -c9 FF8083 -c2 4BEB4B -c10 7AEB7A -c3 EDB655 -c11 EDC785 -c4 53CDE0 -c12 80D3E0 -c5 CD00CD -c13 FF00FF -c6 5FD4D0 -c14 8AD4D1 -c7 E3E2D6 -c15 FFFEF9 -bg Black -fg White -ah false -fn "TI Calc Fonts Clean 8" -fy 16 -w 1920 -h 266 -o 0 -sh '/home/shmibs/.ftjerm/3/system.sh' -bgimg /home/shmibs/.ftjerm/lain-cut-mono.png &
