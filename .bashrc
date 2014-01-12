@@ -17,6 +17,7 @@ shopt -s checkwinsize
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias diff='colordiff'
+alias less='less -R'
 
 PS1='[\u@\h \W]\$ '
 PS2='> '
@@ -35,3 +36,4 @@ esac
 [ -r /usr/share/bash-completion/bash_completion   ] && . /usr/share/bash-completion/bash_completion
 
 export EDITOR="vim"
+export PAGER="less -R"

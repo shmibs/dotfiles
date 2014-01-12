@@ -79,91 +79,12 @@ for s = 1, screen.count() do
 end
 -- }}}
 
--- {{{ Menu
--- Create a laucher widget and a main menu
-myawesomemenu = {
-   { "manual", terminal .. " -e man awesome" },
-   { "restart", awesome.restart },
-   { "reboot", "reboot" },
-   { "poweroff", "poweroff" },
-   { "logout", "mate-session-save --logout" },
-}
-
-myinternetmenu = {
+mymainmenu = awful.menu({ items = { 
 	{ "firefox", "firefox", "/home/shmibs/.icons/FaenzaWolfe/apps/16/firefox.png" },
-	{ "tor", "/home/shmibs/stuffs/tor/start-tor-browser" },
+	{ "tor", "/home/shmibs/stuffs/tor/start-tor-browser", ".icons/NITRUX-Buttons/apps/16/vidalia.png" },
 	{ "qtransmission", "transmission-qt", "/home/shmibs/.icons/FaenzaWolfe/apps/16/transmission.png" },
-	{ "qtscrobbler", "qtscrobbler", "/home/shmibs/.icons/FaenzaWolfe/apps/16/lastfm.png" },
-	{ "midori", "midori", "/home/shmibs/.icons/FaenzaWolfe/apps/16/midori.png" },
-	{ "pidgin", "pidgin", "/home/shmibs/.icons/FaenzaWolfe/apps/16/pidgin.png" },
-}
-
--- {{ game menus
-
-myongamesmenu = {
-	{ "SleepIsDeath", "/home/shmibs/Games/SleepIsDeath_v16_UnixSource/run.sh", "/home/shmibs/Games/SleepIsDeath_v16_UnixSource/sleepisdeath.png" },
-}
-
-myplgamesmenu = {
-}
-
-mysisgamesmenu = {
-}
-
-myemgamesmenu = {
-	{ "M64Py", "m64py", "/home/shmibs/icons/mupen64plus.png" },
-	{ "mednafen", "mfe", "/home/shmibs/icons/mednafen.png" },
-	{ "snes9x", "snes9x-gtk", "/usr/share/icons/hicolor/16x16/apps/snes9x.png" },
-}
-
-mystgamesmenu = {
-	{ "MCDroid", "/home/shmibs/Games/desura/common/mcdroid/desura_launch_Play.sh" },
-}
-
-myargamesmenu = {
-	{ "voxatron", "voxatron" },
-	{ "Jamestown", "jamesown" },
-	{ "VVVVVV", "vvvvvv" },
-	{ "Steel Storm", "/home/shmibs/Games/desura/common/steel-storm/desura_launch_Play.sh" },
-}
-
-mypggamesmenu = {
-	{ "DoD", "/home/shmibs/Games/desura/common/dungeons-of-dredmor/desura_launch_Play.sh" },
-	{ "Minecraft", "java -jar /home/shmibs/Games/minecraft/minecraft.jar" },
-	{ "Dwarf Fortress", "dwarffortress" },
-}
-
-myadgamesmenu = {
-	{ "The Neverhood", "/usr/share/playonlinux/playonlinux --run \"The Neverhood\" %F" },
-	{ "Bastion", "bastion" },
-	{ "Fallout", "/home/shmibs/Games/desura/common/fallout/desura_launch_Play.sh" },
-}
-
-mypzgamesmenu = {
-	{ "Night Sky", "nightsky-game" },
-	{ "splice", "splice-hib" },
-}
-
-mygamesmenu = {
-	{ "Online", myongamesmenu },
-	{ "Platforming", myplgamesmenu },
-	{ "Simulation", mysigamesmenu },
-	{ "Emu", myemgamesmenu },
-	{ "Strategy", mystgamesmenu },
-	{ "Arcade", myargamesmenu },
-	{ "Proc-Gen", mypggamesmenu },
-	{ "Adventure", myadgamesmenu },
-	{ "Puzzle", mypzgamesmenu },
-	{ "desura", "/home/shmibs/Games/desura/desura" },
-	{ "desura -f", "/home/shmibs/Games/desura/desura -f" },
-	{ "playonlinux", "playonlinux" },
-}
-
--- }}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, "/home/shmibs/.icons/FaenzaWolfe/places/22/distributor-logo-archlinux.png" },
-                                    { "internet", myinternetmenu, "/home/shmibs/.icons/FaenzaWolfe/categories/16/applications-internet.png" },
-                                    { "games", mygamesmenu, "/home/shmibs/.icons/FaenzaWolfe/categories/16/applications-games.png" }
+	{ "desura", "/home/shmibs/Games/desura/desura", "/home/shmibs/.icons/Faenza/apps/16/desura.png" },
+	{ "playonlinux", "playonlinux", "/home/shmibs/.icons/FaenzaWolfe/apps/16/playonlinux.png" },
                                   }
                         })
 
@@ -411,13 +332,13 @@ globalkeys = awful.util.table.join(
     awful.key({modkey, "Shift", "Control" }, "s"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Desktop\"") end),
     awful.key({modkey, "Shift", "Control" }, "m"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Music\"") end),
     awful.key({modkey, "Shift", "Control" }, "g"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Games\"") end),
-    awful.key({modkey, "Shift", "Control" }, "p"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/projects\"") end),
+    awful.key({modkey, "Shift", "Control" }, "p"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Projects\"") end),
     awful.key({modkey, "Shift", "Control" }, "r"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/ROMz\"") end),
-    awful.key({modkey, "Shift", "Control" }, "c"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/comics\"") end),
-    awful.key({modkey, "Shift", "Control" }, "o"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/iso\"") end),
+    awful.key({modkey, "Shift", "Control" }, "c"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Comics\"") end),
+    awful.key({modkey, "Shift", "Control" }, "k"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Disks\"") end),
     awful.key({modkey, "Shift", "Control" }, "i"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Images\"") end),
-    awful.key({modkey, "Shift", "Control" }, "b"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/backdrops\"") end),
-    awful.key({modkey, "Shift", "Control" }, "t"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/thcool\"") end),
+    awful.key({modkey, "Shift", "Control" }, "b"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Backdrops\"") end),
+    awful.key({modkey, "Shift", "Control" }, "t"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Thcool\"") end),
     awful.key({modkey, "Shift", "Control" }, "v"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Videos\"") end),
 
     -- focus and swap by direction.
