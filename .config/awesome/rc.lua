@@ -83,8 +83,8 @@ mymainmenu = awful.menu({ items = {
 	{ "firefox", "firefox", "/home/shmibs/.icons/FaenzaWolfe/apps/16/firefox.png" },
 	{ "tor", "/home/shmibs/stuffs/tor/start-tor-browser", ".icons/NITRUX-Buttons/apps/16/vidalia.png" },
 	{ "qtransmission", "transmission-qt", "/home/shmibs/.icons/FaenzaWolfe/apps/16/transmission.png" },
-	{ "desura", "/home/shmibs/Games/desura/desura", "/home/shmibs/.icons/Faenza/apps/16/desura.png" },
 	{ "playonlinux", "playonlinux", "/home/shmibs/.icons/FaenzaWolfe/apps/16/playonlinux.png" },
+	{ "desura", "/home/shmibs/Games/desura/desura", "/home/shmibs/.icons/Faenza/apps/16/desura.png" },
                                   }
                         })
 
@@ -328,18 +328,18 @@ globalkeys = awful.util.table.join(
     
 	-- bindings for quick access to folders
     awful.key({modkey, "Shift", "Control" }, "Return" , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs\"") end),
-    awful.key({modkey, "Shift", "Control" }, "d"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Downloads\"") end),
-    awful.key({modkey, "Shift", "Control" }, "s"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Desktop\"") end),
-    awful.key({modkey, "Shift", "Control" }, "m"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Music\"") end),
-    awful.key({modkey, "Shift", "Control" }, "g"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Games\"") end),
-    awful.key({modkey, "Shift", "Control" }, "p"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Projects\"") end),
-    awful.key({modkey, "Shift", "Control" }, "r"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/ROMz\"") end),
-    awful.key({modkey, "Shift", "Control" }, "c"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Comics\"") end),
-    awful.key({modkey, "Shift", "Control" }, "k"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Disks\"") end),
-    awful.key({modkey, "Shift", "Control" }, "i"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Images\"") end),
-    awful.key({modkey, "Shift", "Control" }, "b"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Backdrops\"") end),
-    awful.key({modkey, "Shift", "Control" }, "t"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Thcool\"") end),
-    awful.key({modkey, "Shift", "Control" }, "v"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/Videos\"") end),
+    awful.key({modkey, "Shift", "Control" }, "d"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/downloads\"") end),
+    awful.key({modkey, "Shift", "Control" }, "s"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/desktop\"") end),
+    awful.key({modkey, "Shift", "Control" }, "m"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/music\"") end),
+    awful.key({modkey, "Shift", "Control" }, "g"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/games\"") end),
+    awful.key({modkey, "Shift", "Control" }, "p"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/projects\"") end),
+    awful.key({modkey, "Shift", "Control" }, "r"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/romz\"") end),
+    awful.key({modkey, "Shift", "Control" }, "c"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/comics\"") end),
+    awful.key({modkey, "Shift", "Control" }, "k"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/disks\"") end),
+    awful.key({modkey, "Shift", "Control" }, "i"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/images\"") end),
+    awful.key({modkey, "Shift", "Control" }, "b"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/backdrops\"") end),
+    awful.key({modkey, "Shift", "Control" }, "t"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/thcool\"") end),
+    awful.key({modkey, "Shift", "Control" }, "v"      , function () awful.util.spawn_with_shell(terminal .. " -t ranger -e \"ranger /home/shmibs/videos\"") end),
 
     -- focus and swap by direction.
     awful.key({ modkey,           }, "k",       function () 	awful.client.focus.bydirection( "up" )
