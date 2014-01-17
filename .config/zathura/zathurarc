@@ -1,4 +1,4 @@
 set font                    "Droid Sans Mono 10"
-set inputbar-fg	            "#333333"
-set tabbar-focus-fg         "#333333"
-set completion-highlight-bg "#7A658F"
+set inputbar-fg	            "#2d2d2d"
+set tabbar-focus-fg         "#2d2d2d"
+set completion-highlight-bg "#d64937"

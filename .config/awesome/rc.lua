@@ -79,18 +79,6 @@ for s = 1, screen.count() do
 end
 -- }}}
 
-mymainmenu = awful.menu({ items = { 
-	{ "firefox", "firefox", "/home/shmibs/.icons/FaenzaWolfe/apps/16/firefox.png" },
-	{ "tor", "/home/shmibs/stuffs/tor/start-tor-browser", ".icons/NITRUX-Buttons/apps/16/vidalia.png" },
-	{ "qtransmission", "transmission-qt", "/home/shmibs/.icons/FaenzaWolfe/apps/16/transmission.png" },
-	{ "playonlinux", "playonlinux", "/home/shmibs/.icons/FaenzaWolfe/apps/16/playonlinux.png" },
-	{ "desura", "/home/shmibs/Games/desura/desura", "/home/shmibs/.icons/Faenza/apps/16/desura.png" },
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -227,7 +215,6 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
     local left_layout2 = wibox.layout.fixed.horizontal()
-    left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
     if s == 1 then
@@ -273,7 +260,6 @@ end
 
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 5, awful.tag.viewnext),
     awful.button({ }, 4, awful.tag.viewprev)
 ))
@@ -315,7 +301,8 @@ globalkeys = awful.util.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.util.spawn_with_shell(terminal) end),
     awful.key({ modkey,  "Shift"  }, "f",      function () awful.util.spawn_with_shell("firefox") end),
-    awful.key({ modkey,  "Shift"  }, "g",      function () awful.util.spawn_with_shell("geany") end),
+    awful.key({ modkey,  "Shift"  }, "d",      function () awful.util.spawn_with_shell("/home/shmibs/games/desura/desura") end),
+    awful.key({ modkey,  "Shift"  }, "o",      function () awful.util.spawn_with_shell("/home/shmibs/stuffs/tor/start-tor-browser") end),
     awful.key({ modkey,  "Shift"  }, "i",      function () awful.util.spawn_with_shell("gimp") end),
     awful.key({ modkey,  "Shift"  }, "w",      function () awful.util.spawn_with_shell("mathematica") end),
     awful.key({ modkey,  "Shift"  }, "c",      function () awful.util.spawn_with_shell("mate-calc") end),
@@ -323,7 +310,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,  "Shift"  }, "v",      function () awful.util.spawn_with_shell("mate-terminal -e \"vim\"") end),
     awful.key({ modkey,  "Shift"  }, "x",      function () awful.util.spawn_with_shell("mcomix") end),
     awful.key({ modkey,  "Shift"  }, "s",      function () awful.util.spawn_with_shell("pavucontrol") end),
-    awful.key({ modkey,           }, "#19",    function () awful.util.spawn_with_shell("dmenu_run -fn \"TI Calc Fonts Clean-8\" -h 16 -nb \"#333333\" -nf \"#FCFCFC\" -sb \"#7a658f\" -sf \"#FCFCFC\"") end),
+    awful.key({ modkey,  "Shift"  }, "t",      function () awful.util.spawn_with_shell("transmission-gtk") end),
+    awful.key({ modkey,           }, "#19",    function () awful.util.spawn_with_shell("dmenu_run -fn \"TI Calc Fonts Clean-8\" -h 16 -nb \"#2d2d2d\" -nf \"#dcdcdc\" -sb \"#d64937\" -sf \"#fcfcfc\"") end),
     awful.key({                   }, "Print",  function () awful.util.spawn_with_shell("mate-screenshot") end),
     
 	-- bindings for quick access to folders
@@ -370,11 +358,6 @@ globalkeys = awful.util.table.join(
 												end),
     awful.key({ modkey,  "Shift"  }, "space", 	function () 
 													awful.layout.inc(layouts,  -1)
-												end),
-    
-    -- show menu
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
-    
     -- restart
     awful.key({ modkey, "Control" }, "r", awesome.restart)
 )
@@ -479,7 +462,7 @@ awful.rules.rules = {
       properties = { floating = true,
                      maximized_vertical = true,
 		     maximized_horizontal = true } },
-    { rule_any = { type = { "splash" }, name = { "ftjerm" } },
+    { rule_any = { type = { "splash" }, name = { "ftjerm", "GSdx" } },
 	  properties = { border_width = 0,
 					 floating = true,
 					 ontop = true } },
