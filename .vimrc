@@ -1,6 +1,6 @@
 syntax on
 filetype plugin on
-set autoindent
+set cindent
 
 "tab controls to match pentadactyl
 map <C-n> <Esc>:tabn<CR>

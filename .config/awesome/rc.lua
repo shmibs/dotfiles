@@ -311,7 +311,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,  "Shift"  }, "x",      function () awful.util.spawn_with_shell("mcomix") end),
     awful.key({ modkey,  "Shift"  }, "s",      function () awful.util.spawn_with_shell("pavucontrol") end),
     awful.key({ modkey,  "Shift"  }, "t",      function () awful.util.spawn_with_shell("transmission-gtk") end),
-    awful.key({ modkey,           }, "#19",    function () awful.util.spawn_with_shell("dmenu_run -fn \"TI Calc Fonts Clean-8\" -h 16 -nb \"#2d2d2d\" -nf \"#dcdcdc\" -sb \"#d64937\" -sf \"#fcfcfc\"") end),
+    awful.key({ modkey,           }, "#19",    function () awful.util.spawn_with_shell("dmenu_run -fn \"TI Calc Fonts Clean-8\" -h 16 -nb \"" .. beautiful.bg_normal .. "\" -nf \"" .. beautiful.fg_normal .. "\" -sb \"" .. beautiful.bg_focus .. "\" -sf \"" .. beautiful.fg_focus .. "\"") end),
     awful.key({                   }, "Print",  function () awful.util.spawn_with_shell("mate-screenshot") end),
     
 	-- bindings for quick access to folders
@@ -358,6 +358,7 @@ globalkeys = awful.util.table.join(
 												end),
     awful.key({ modkey,  "Shift"  }, "space", 	function () 
 													awful.layout.inc(layouts,  -1)
+												end),
     -- restart
     awful.key({ modkey, "Control" }, "r", awesome.restart)
 )
