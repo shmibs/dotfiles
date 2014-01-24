@@ -1,6 +1,6 @@
 syntax on
 filetype plugin on
-set cindent
+set autoindent
 
 "tab controls to match pentadactyl
 map <C-n> <Esc>:tabn<CR>
@@ -32,3 +32,16 @@ if &term != "linux"
 	xnoremap <expr> p (v:register ==# '"' ? '"+' : '') . 'p'
 	xnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
 end
+
+"filetype-specific settings. i can't figure out how to stick all the
+"FileTypes in one list (mostly because i have no idea what i'm doing
+"with viml), so separate lines it is.
+autocmd FileType c   call Settings_c()
+autocmd FileType cpp call Settings_c()
+
+function! Settings_c()
+	"i want autoindent as the default, and doing that along with
+	"filetype indent on yields wonky results
+	setlocal cindent
+endfunction
+
