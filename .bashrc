@@ -18,6 +18,8 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias diff='colordiff'
 alias less='less -R'
+alias vmount='udevil mount'
+alias vumount='udevil umount'
 
 PS1='[\u@\h \W]\$ '
 PS2='> '
