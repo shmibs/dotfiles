@@ -37,3 +37,6 @@ esac
 
 export EDITOR="vim"
 export PAGER="less -R"
+export GTK_IM_MODULE="ibus"
+export XMODIFIERS="@im=ibus"
+export QT_IM_MODULE="ibus"
