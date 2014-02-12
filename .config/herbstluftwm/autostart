@@ -81,7 +81,6 @@ hc keybind $Mod-period use_index +1 --skip-visible
 hc keybind $Mod-comma  use_index -1 --skip-visible
 
 # layouting
-hc keybind $Mod-r remove
 hc keybind $Mod-f fullscreen toggle
 hc keybind $Mod-p pseudotile toggle
 
@@ -96,7 +95,10 @@ hc keybind $Mod-BackSpace   cycle_monitor
 hc keybind $Mod-i jumpto urgent
 
 ################ launchers ################
+
+# mate
 hc keybind XF86PowerOff spawn mate-session-save --shutdown-dialog
+hc keybind Print        spawn mate-screenshot
 
 # ranger
 hc keybind $Mod-Shift-Control-Return spawn urxvt -e ranger /home/shmibs

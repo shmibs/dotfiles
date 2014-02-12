@@ -5,10 +5,10 @@
 # keysym as listed in /usr/include/X11/keysymdef.h without the "XK_" prefix.
 
 case "$1" in
-"C-c")
+"y")
         echo -n "$2" | xclip -selection clipboard ;;
 "C-d")
         rm "$2" ;;
-"C-g")
+"g")
         gimp "$2" & ;;
 esac
