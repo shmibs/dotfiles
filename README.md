@@ -24,7 +24,7 @@ all your documentation on the other)
 ###urxvt
 yay for mouseless copy-pasta!
 if you've never seend it, check out
-[urxvt-perls](https://github.com/muennich/urxvt-perls)
+[urxvt-perls](https://github.com/muennich/urxvt-perls).
 
 ###ranger
 yay for everything about ranger!
@@ -37,7 +37,7 @@ adding a feature of some sort for it to communicate
 selections to the outside world.
 
 ###pentadactyl
-if you've never heard of it, try pentadactyl NOW
+if you've never heard of it, try pentadactyl NOW.
 suddenly a browser is no longer a thing that necessarily
 breaks your workflow when you have to refer to it for
 information. oh, and try [setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
