@@ -15,7 +15,7 @@ panel_height=18
 font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
 bgcolor=$(hc get frame_border_normal_color)
 selbg=$(hc get window_border_active_color)
-selfg='#101010'
+selfg='#fefefe'
 
 ####
 # Try to find textwidth binary.
@@ -65,7 +65,7 @@ hc pad $monitor $panel_height
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.
-        date +$'date\t^fg(#efefef)%a, %b %d, %H:%M:%S'
+        date +$'date\t^fg(#efefef)%a, %b %d, %H:%M'
         sleep 1 || break
     done > >(uniq_linebuffered) &
     childpid=$!
@@ -75,7 +75,8 @@ hc pad $monitor $panel_height
     IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
     visible=true
     date=""
-    windowtitle=""
+    clients=""
+    focus_index=""
     while true ; do
 
         ### Output ###
@@ -103,24 +104,24 @@ hc pad $monitor $panel_height
                     echo -n "^bg()^fg(#ababab)"
                     ;;
             esac
-            if [ ! -z "$dzen2_svn" ] ; then
-                # clickable tags if using SVN dzen
-                echo -n "^ca(1,\"${herbstclient_command[@]:-herbstclient}\" "
-                echo -n "focus_monitor \"$monitor\" && "
-                echo -n "\"${herbstclient_command[@]:-herbstclient}\" "
-                echo -n "use \"${i:1}\") ${i:1} ^ca()"
-            else
-                # non-clickable tags if using older dzen
-                echo -n " ${i:1} "
-            fi
+	    # non-clickable tags, because i don't care
+	    echo -n " ${i:1} "
         done
-        echo -n "$separator"
-        echo -n "^bg()^fg() ${windowtitle//^/^^}"
+        echo -n "$separator^fg()"
+
+	for i in "${!clients[@]}"; do
+		if [ $i -eq $focus_index ]; then
+			echo -n "^bg($selbg)^fg($selfg) ${clients[i]} ^bg()^fg()"
+		else
+			echo -n " ${clients[i]} "
+		fi
+	done
+
         # small adjustments
         right="$separator^bg() $date $separator"
         right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
         # get width of right aligned text.. and add some space..
-        width=$($textwidth "$font" "$right_text_only ")
+        width=$($textwidth "$font" "$right_text_only    ")
         echo -n "^pa($(($panel_width - $width)))$right"
         echo
 
@@ -168,7 +169,17 @@ hc pad $monitor $panel_height
                 exit
                 ;;
             focus_changed|window_title_changed)
-                windowtitle="${cmd[@]:2}"
+		clients=($(herbstclient layout | grep -Eo '0x[0-9a-f]*')) focus_client=$(herbstclient get_attr clients.focus.winid)
+		focus_index=""
+		hc_args="herbstclient chain"
+		for i in "${!clients[@]}"; do
+			if [ "${clients[i]}" == "$focus_client" ]; then
+				focus_index=$i
+			fi
+			hc_args="$hc_args"" .-. get_attr clients.""${clients[i]}"".instance .-. echo"
+		done
+
+		clients=($($hc_args))
                 ;;
             #player)
             #    ;;
@@ -180,5 +191,5 @@ hc pad $monitor $panel_height
     # gets piped to dzen2.
 
 } 2> /dev/null | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \
-    -e 'button3=' \
+    -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
     -ta l -bg "$bgcolor" -fg '#efefef'

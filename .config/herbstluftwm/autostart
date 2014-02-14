@@ -49,11 +49,14 @@ hc keybind $Mod-a cycle -1
 # create an empty frame at the specified direction
 hc keybind $Mod-s chain .-. lock .-. split bottom 0.5 .-. focus -e d .-. unlock
 hc keybind $Mod-v chain .-. lock .-. split right  0.5 .-. focus -e r .-. unlock
+# create an empty frame and shift the currently focused client into it
+hc keybind $Mod-Control-s chain .-. lock .-. split bottom 0.5 .-. shift down .-. unlock
+hc keybind $Mod-Control-v chain .-. lock .-. split right  0.5 .-. shift right .-. unlock
 # let the current frame explode into subframes
 hc keybind $Mod-Shift-space split explode
 
 # resizing frames
-resizestep=0.05
+resizestep=0.04
 hc keybind $Mod-Control-h       resize left +$resizestep
 hc keybind $Mod-Control-j       resize down +$resizestep
 hc keybind $Mod-Control-k       resize up +$resizestep
@@ -101,17 +104,17 @@ hc keybind XF86PowerOff spawn mate-session-save --shutdown-dialog
 hc keybind Print        spawn mate-screenshot
 
 # ranger
-hc keybind $Mod-Shift-Control-Return spawn urxvt -e ranger /home/shmibs
-hc keybind $Mod-Shift-Control-b      spawn urxvt -e ranger /home/shmibs/backdrops
-hc keybind $Mod-Shift-Control-c      spawn urxvt -e ranger /home/shmibs/comics
-hc keybind $Mod-Shift-Control-d      spawn urxvt -e ranger /home/shmibs/downloads
-hc keybind $Mod-Shift-Control-s      spawn urxvt -e ranger /home/shmibs/desktop
-hc keybind $Mod-Shift-Control-m      spawn urxvt -e ranger /home/shmibs/music
-hc keybind $Mod-Shift-Control-g      spawn urxvt -e ranger /home/shmibs/games
-hc keybind $Mod-Shift-Control-p      spawn urxvt -e ranger /home/shmibs/projects
-hc keybind $Mod-Shift-Control-i      spawn urxvt -e ranger /home/shmibs/images
-hc keybind $Mod-Shift-Control-t      spawn urxvt -e ranger /home/shmibs/thcool
-hc keybind $Mod-Shift-Control-v      spawn urxvt -e ranger /home/shmibs/videos
+hc keybind $Mod-Shift-Control-Return spawn urxvt -name "ranger" -e ranger /home/shmibs
+hc keybind $Mod-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/backdrops
+hc keybind $Mod-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/comics
+hc keybind $Mod-Shift-Control-d      spawn urxvt -name "ranger" -e ranger /home/shmibs/downloads
+hc keybind $Mod-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
+hc keybind $Mod-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
+hc keybind $Mod-Shift-Control-g      spawn urxvt -name "ranger" -e ranger /home/shmibs/games
+hc keybind $Mod-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
+hc keybind $Mod-Shift-Control-i      spawn urxvt -name "ranger" -e ranger /home/shmibs/images
+hc keybind $Mod-Shift-Control-t      spawn urxvt -name "ranger" -e ranger /home/shmibs/thcool
+hc keybind $Mod-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/shmibs/videos
 
 # spawn
 hc keybind $Mod-Return  spawn urxvt
@@ -122,8 +125,8 @@ hc keybind $Mod-Shift-i spawn gimp
 hc keybind $Mod-Shift-m spawn mathematica
 hc keybind $Mod-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind $Mod-Shift-t spawn transmission-gtk
-hc keybind $Mod-Shift-v spawn urxvt -e vim
-hc keybind $Mod-Shift-w spawn urxvt -e weechat
+hc keybind $Mod-Shift-v spawn urxvt -name "vim" -e vim
+hc keybind $Mod-Shift-w spawn urxvt -name "weechat" -e weechat
 
 # banshee
 hc keybind $Mod-Shift-Up   spawn banshee --show
