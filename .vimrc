@@ -11,6 +11,10 @@ map <C-t> <Esc>:tabnew<CR>
 nnoremap = O<Esc>j
 nnoremap + O<Esc>
 
+"disable auto session save/load
+let g:session_autosave = 'no'
+let g:session_autoload = 'no'
+
 "copy words from above and below the cursor
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
@@ -38,10 +42,17 @@ end
 "with viml), so separate lines it is.
 autocmd FileType c   call Settings_c()
 autocmd FileType cpp call Settings_c()
+autocmd FileType perl call Settings_perl()
 
 function! Settings_c()
 	"i want autoindent as the default, and doing that along with
 	"filetype indent on yields wonky results
 	setlocal cindent
+endfunction
+
+function! Settings_perl()
+	"i want autoindent as the default, and doing that along with
+	"filetype indent on yields wonky results
+	setlocal smartindent
 endfunction
 

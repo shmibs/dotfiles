@@ -20,6 +20,7 @@ alias diff='colordiff'
 alias less='less -R'
 alias vmount='udevil mount'
 alias vumount='udevil umount'
+alias def='sdcv'
 
 PS1='[\u@\h \W]\$ '
 PS2='> '

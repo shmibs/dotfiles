@@ -1,0 +1,10 @@
+
+# video
+fs=yes
+ass-hinting=native
+vo=opengl-hq
+slang=en,eng
+
+# audio
+alang=jp,jpn,jap,en,eng
+

@@ -21,46 +21,43 @@ xsetroot -solid '#5A8E3A'
 hc keyunbind --all
 
 # keybindings
-# if you have a super key you will be much happier with Mod set to Mod4
-#Mod=Mod1    # Use alt as the main modifier
-Mod=Mod4   # Use the super key as the main modifier
 
-hc keybind $Mod-Shift-r reload
-hc keybind $Mod-e close_or_remove
+hc keybind Mod4-Shift-r reload
+hc keybind Mod4-e close_or_remove
 
 # basic movement
 # focusing clients
-hc keybind $Mod-h     focus left
-hc keybind $Mod-j     focus down
-hc keybind $Mod-k     focus up
-hc keybind $Mod-l     focus right
+hc keybind Mod4-h     focus left
+hc keybind Mod4-j     focus down
+hc keybind Mod4-k     focus up
+hc keybind Mod4-l     focus right
 
 # moving clients
-hc keybind $Mod-Shift-h     shift left
-hc keybind $Mod-Shift-j     shift down
-hc keybind $Mod-Shift-k     shift up
-hc keybind $Mod-Shift-l     shift right
+hc keybind Mod4-Shift-h     shift left
+hc keybind Mod4-Shift-j     shift down
+hc keybind Mod4-Shift-k     shift up
+hc keybind Mod4-Shift-l     shift right
 
 # cycle through clients
-hc keybind $Mod-d cycle  1
-hc keybind $Mod-a cycle -1
+hc keybind Mod4-d cycle  1
+hc keybind Mod4-a cycle -1
 
 # splitting frames
 # create an empty frame at the specified direction
-hc keybind $Mod-s chain .-. lock .-. split bottom 0.5 .-. focus -e d .-. unlock
-hc keybind $Mod-v chain .-. lock .-. split right  0.5 .-. focus -e r .-. unlock
+hc keybind Mod4-s chain .-. lock .-. split bottom 0.5 .-. focus -e d .-. unlock
+hc keybind Mod4-v chain .-. lock .-. split right  0.5 .-. focus -e r .-. unlock
 # create an empty frame and shift the currently focused client into it
-hc keybind $Mod-Control-s chain .-. lock .-. split bottom 0.5 .-. shift down .-. unlock
-hc keybind $Mod-Control-v chain .-. lock .-. split right  0.5 .-. shift right .-. unlock
+hc keybind Mod4-Control-s chain .-. lock .-. split bottom 0.5 .-. shift down .-. unlock
+hc keybind Mod4-Control-v chain .-. lock .-. split right  0.5 .-. shift right .-. unlock
 # let the current frame explode into subframes
-hc keybind $Mod-Shift-space split explode
+hc keybind Mod4-Shift-space split explode
 
 # resizing frames
 resizestep=0.04
-hc keybind $Mod-Control-h       resize left +$resizestep
-hc keybind $Mod-Control-j       resize down +$resizestep
-hc keybind $Mod-Control-k       resize up +$resizestep
-hc keybind $Mod-Control-l       resize right +$resizestep
+hc keybind Mod4-Control-h       resize left +$resizestep
+hc keybind Mod4-Control-j       resize down +$resizestep
+hc keybind Mod4-Control-k       resize up +$resizestep
+hc keybind Mod4-Control-l       resize right +$resizestep
 
 # tags
 tag_names=( {1..5} )
@@ -71,8 +68,8 @@ for i in ${!tag_names[@]} ; do
     hc add "${tag_names[$i]}"
     key="${tag_keys[$i]}"
     if ! [ -z "$key" ] ; then
-        hc keybind "$Mod-$key" use_index "$i"
-        hc keybind "$Mod-Control-$key" move_index "$i"
+        hc keybind "Mod4-$key" use_index "$i"
+        hc keybind "Mod4-Control-$key" move_index "$i"
     fi
 done
 
@@ -80,63 +77,71 @@ done
 hc set_layout max
 
 # cycle through tags
-hc keybind $Mod-period use_index +1 --skip-visible
-hc keybind $Mod-comma  use_index -1 --skip-visible
+hc keybind Mod4-n use_index +1 --skip-visible
+hc keybind Mod4-p use_index -1 --skip-visible
+
+# jump to last used tag
+hc keybind Mod4-Escape use_previous
 
 # layouting
-hc keybind $Mod-f fullscreen toggle
-hc keybind $Mod-p pseudotile toggle
+hc keybind Mod4-t pseudotile toggle
+hc keybind Mod4-f fullscreen toggle
 
 # mouse
 hc mouseunbind --all
-hc mousebind $Mod-Button1 move
-hc mousebind $Mod-Button2 zoom
-hc mousebind $Mod-Button3 resize
+hc mousebind Mod4-Button1 move
+hc mousebind Mod4-Button2 zoom
+hc mousebind Mod4-Button3 resize
 
 # focus
-hc keybind $Mod-BackSpace   cycle_monitor
-hc keybind $Mod-i jumpto urgent
+hc keybind Mod4-BackSpace   cycle_monitor
+hc keybind Mod4-i jumpto urgent
 
 ################ launchers ################
 
 # mate
 hc keybind XF86PowerOff spawn mate-session-save --shutdown-dialog
+hc keybind Mod1-XF86PowerOff spawn mate-session-save --shutdown-dialog
 hc keybind Print        spawn mate-screenshot
 
 # ranger
-hc keybind $Mod-Shift-Control-Return spawn urxvt -name "ranger" -e ranger /home/shmibs
-hc keybind $Mod-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/backdrops
-hc keybind $Mod-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/comics
-hc keybind $Mod-Shift-Control-d      spawn urxvt -name "ranger" -e ranger /home/shmibs/downloads
-hc keybind $Mod-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
-hc keybind $Mod-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
-hc keybind $Mod-Shift-Control-g      spawn urxvt -name "ranger" -e ranger /home/shmibs/games
-hc keybind $Mod-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
-hc keybind $Mod-Shift-Control-i      spawn urxvt -name "ranger" -e ranger /home/shmibs/images
-hc keybind $Mod-Shift-Control-t      spawn urxvt -name "ranger" -e ranger /home/shmibs/thcool
-hc keybind $Mod-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/shmibs/videos
+hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger /home/shmibs
+hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/backdrops
+hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/comics
+hc keybind Mod4-Shift-Control-d      spawn urxvt -name "ranger" -e ranger /home/shmibs/downloads
+hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
+hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
+hc keybind Mod4-Shift-Control-g      spawn urxvt -name "ranger" -e ranger /home/shmibs/games
+hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
+hc keybind Mod4-Shift-Control-i      spawn urxvt -name "ranger" -e ranger /home/shmibs/images
+hc keybind Mod4-Shift-Control-t      spawn urxvt -name "ranger" -e ranger /home/shmibs/thcool
+hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/shmibs/videos
+
+# grab colour to clipboard
+hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
 
 # spawn
-hc keybind $Mod-Return  spawn urxvt
-hc keybind $Mod-Shift-c spawn mate-calc
-hc keybind $Mod-Shift-d spawn ~/games/desura/desura
-hc keybind $Mod-Shift-f spawn firefox
-hc keybind $Mod-Shift-i spawn gimp
-hc keybind $Mod-Shift-m spawn mathematica
-hc keybind $Mod-Shift-o spawn ~/stuffs/tor/start-tor-browser
-hc keybind $Mod-Shift-t spawn transmission-gtk
-hc keybind $Mod-Shift-v spawn urxvt -name "vim" -e vim
-hc keybind $Mod-Shift-w spawn urxvt -name "weechat" -e weechat
+hc keybind Mod4-Return  spawn urxvt
+hc keybind Mod4-Shift-c spawn mate-calc
+hc keybind Mod4-Shift-d spawn ~/games/desura/desura
+hc keybind Mod4-Shift-f spawn firefox
+hc keybind Mod4-Shift-i spawn gimp
+hc keybind Mod4-Shift-m spawn mathematica
+hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
+hc keybind Mod4-Shift-t spawn transmission-gtk
+hc keybind Mod4-Shift-v spawn urxvt -name "vim" -e vim
+hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
 
 # banshee
-hc keybind $Mod-Shift-Up   spawn banshee --show
-hc keybind $Mod-Shift-Down spawn banshee --hide
-hc keybind $Mod-Left       spawn banshee --restart-or-previous
-hc keybind $Mod-Right      spawn banshee --next
-hc keybind $Mod-Down       spawn banshee --toggle-playing
+hc keybind Mod4-Shift-Up   spawn banshee --show
+hc keybind Mod4-Shift-Down spawn banshee --hide
+hc keybind Mod4-Left       spawn banshee --restart-or-previous
+hc keybind Mod4-Right      spawn banshee --next
+hc keybind Mod4-Down       spawn banshee --toggle-playing
 
 # dmenu
-hc keybind $Mod-0 spawn dmenu_run -h 18 -nb $bg_normal -nf $fg_normal  -sb $bg_focus  -sf $fg_focus
+hc keybind Mod4-0 spawn dmenu_run -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal  -sb $bg_focus  -sf $fg_focus
+hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh $bg_normal $fg_normal $bg_focus $fg_focus
 
 ############## end launchers ##############
 
@@ -168,8 +173,8 @@ hc rule focus=on
 # unmanage docs, dropdowns, etc
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on
-hc rule class~'(Mate-calc|Pcsx2)' pseudotile=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
+hc rule class~'(Mate-calc|MPlayer|Pcsx2|Tilem2)' pseudotile=on focus=on
 
 # unlock, just to be sure
 hc unlock
