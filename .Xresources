@@ -1,3 +1,5 @@
+URxvt*termName: rxvt-256color
+
 ! Compile xft: Attempt to find a visual with the given bit depth; option -depth.
 URxvt*depth: 32
 
@@ -8,7 +10,7 @@ URxvt*buffered: on
 ! URxvt*geometry: geom
 
 ! Use the specified colour as the windows background colour [default White]; option -bg.
-URxvt*background: #1C1C1C
+URxvt*background: #080808
 
 ! Use the specified colour as the windows foreground colour [default Black]; option -fg.
 URxvt*foreground: #FEFEFE
