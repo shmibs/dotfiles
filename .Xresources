@@ -10,7 +10,7 @@ URxvt*buffered: on
 ! URxvt*geometry: geom
 
 ! Use the specified colour as the windows background colour [default White]; option -bg.
-URxvt*background: #080808
+URxvt*background: #171717
 
 ! Use the specified colour as the windows foreground colour [default Black]; option -fg.
 URxvt*foreground: #FEFEFE
@@ -226,10 +226,10 @@ URxvt*cursorBlink: true
 ! URxvt*{|}
 
 ! OverTheSpot, OffTheSpot, Root; option -pt.
-URxvt*preeditType: OverTheSpot
+!URxvt*preeditType: OverTheSpot
 
 ! name of inputMethod to use; option -im.
-URxvt*inputMethod: ibus
+!URxvt*inputMethod: ibus
 
 ! The locale to use for opening the IM. You can use an "LC_CTYPE" of e.g.  "de_DE.UTF-8" for normal text processing but "ja_JP.EUC-JP" for the input extension
 ! URxvt*imLocale: name

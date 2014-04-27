@@ -14,14 +14,6 @@
 
 shopt -s checkwinsize
 
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias diff='colordiff'
-alias less='less -R'
-alias vmount='udevil mount'
-alias vumount='udevil umount'
-alias def='sdcv'
-
 PS1='[\u@\h \W]\$ '
 PS2='> '
 PS3='> '
@@ -40,6 +32,29 @@ esac
 
 export EDITOR="vim"
 export PAGER="less -R"
-export GTK_IM_MODULE="ibus"
-export XMODIFIERS="@im=ibus"
-export QT_IM_MODULE="ibus"
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias diff='colordiff'
+alias less='less -R'
+
+alias vmount='udevil mount'
+alias vumount='udevil umount'
+alias def='sdcv'
+
+send() {
+	scp $@ shmibbles.me:/srv/http/tmp/
+	for name in "$@"
+	do
+		echo "http://shmibbles.me/tmp/$(basename $name)" | xclip -i -selection clipboard
+	done
+}
+
+sendi() {
+	scp $@ shmibbles.me:/srv/http/img/
+	for name in "$@"
+	do
+		echo "http://shmibbles.me/img/$(basename $name)" | xclip -i -selection clipboard
+	done
+}
+

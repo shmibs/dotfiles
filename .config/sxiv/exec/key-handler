@@ -11,4 +11,18 @@ case "$1" in
         rm "$2" ;;
 "g")
         gimp "$2" & ;;
+"s")
+
+	scp "$2" shmibbles.me:/srv/http/tmp/
+	echo "http://shmibbles.me/tmp/$(basename $2)" | xclip -i -selection clipboard
+	echo "http://shmibbles.me/tmp/$(basename $2)" | xclip -i -selection primary
+	notify-send "uploaded $(basename $2) to /tmp/"
+	;;
+"i")
+	scp "$2" shmibbles.me:/srv/http/img/
+	echo "http://shmibbles.me/img/$(basename $2)" | xclip -i -selection clipboard
+	echo "http://shmibbles.me/img/$(basename $2)" | xclip -i -selection primary
+	notify-send "uploaded $(basename $2) to /img/"
+	;;
+
 esac

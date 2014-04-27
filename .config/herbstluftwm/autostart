@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # define colours
-bg_normal='#2d2d2d'
+#bg_normal='#2d2d2d'
+#fg_normal='#dcdcdc'
+#bg_focus='#d64937'
+#fg_focus='#fcfcfc'
+bg_normal='#2b2b2b'
 fg_normal='#dcdcdc'
-bg_focus='#d64937'
+bg_focus='#a6754c'
 fg_focus='#fcfcfc'
 
 hc() {
@@ -99,6 +103,8 @@ hc keybind Mod4-i jumpto urgent
 
 ################ launchers ################
 
+# tegaki
+hc keybind Mod4-r spawn tegaki-recognize
 # mate
 hc keybind XF86PowerOff spawn mate-session-save --shutdown-dialog
 hc keybind Mod1-XF86PowerOff spawn mate-session-save --shutdown-dialog
@@ -175,7 +181,7 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(Gcalctool|Pcsx2|Tilem2)' pseudotile=on focus=on
+hc rule class~'(milkytracker|goattrk2|FTL|Tegaki-recognize|Gcalctool|Pcsx2|Tilem2)' pseudotile=on focus=on
 
 # unlock, just to be sure
 hc unlock

@@ -3,7 +3,7 @@ filetype plugin on
 set autoindent
 
 "colours!
-colorscheme calmar256-dark
+colorscheme anotherdark
 set background=dark
 
 "tab controls to match pentadactyl
@@ -57,7 +57,7 @@ let g:c_no_if0_fold = 1
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one list (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
-autocmd FileType c   call Settings_c()
+autocmd FileType c call Settings_c()
 autocmd FileType cpp call Settings_c()
 autocmd FileType perl call Settings_perl()
 
@@ -69,4 +69,3 @@ endfunction
 function! Settings_perl()
 	setlocal smartindent
 endfunction
-

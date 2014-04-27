@@ -10,6 +10,12 @@ then
 	xmodmap ~/.Xmodmap
 fi
 
+#input!
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS="@im=fcitx"
+fcitx &
+
 #urxvt daemon
 urxvtd &
 
@@ -20,8 +26,8 @@ then
 fi
 
 xsetroot -cursor_name left_ptr
-compton -b -o 0.8 -r 10 -l -10 -t -10 --backend glx --paint-on-overlay &
-ibus-daemon -x &
+compton -b --backend glx --vsync opengl &
+#ibus-daemon -x &
 nitrogen --restore &
 
 exec mate-session
