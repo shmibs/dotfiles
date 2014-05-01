@@ -43,22 +43,33 @@ alias vumount='udevil umount'
 alias def='sdcv'
 
 send() {
-	scp $@ shmibbles.me:/srv/http/tmp/
-	for name in "$@"
-	do
-		name=$(echo "http://shmibbles.me/tmp/$(basename $name)" | sed 's/ /%20/g')
-		echo $name | xclip -i -selection clipboard
-		echo $name | xclip -i -selection primary
-	done
+	if [ "$1" ]; then
+		scp $@ shmibbles.me:/srv/http/tmp/
+		if [ $? -eq 0 ]; then
+			for name in "$@"
+			do
+				name=$(echo "http://shmibbles.me/tmp/$(basename $name)" | sed 's/ /%20/g')
+				echo $name | xclip -i -selection clipboard
+				echo $name | xclip -i -selection primary
+			done
+		fi
+	else
+		echo "specify at least one file to send"
+	fi
 }
 
 sendi() {
-	scp $@ shmibbles.me:/srv/http/img/
-	for name in "$@"
-	do
-		name=$(echo "http://shmibbles.me/img/$(basename $name)" | sed 's/ /%20/g')
-		echo $name | xclip -i -selection clipboard
-		echo $name | xclip -i -selection primary
-	done
+	if [ "$1" ]; then
+		scp $@ shmibbles.me:/srv/http/img/
+		if [ $? -eq 0 ]; then
+			for name in "$@"
+			do
+				name=$(echo "http://shmibbles.me/img/$(basename $name)" | sed 's/ /%20/g')
+				echo $name | xclip -i -selection clipboard
+				echo $name | xclip -i -selection primary
+			done
+		fi
+	else
+		echo "specify at least one file to send"
+	fi
 }
-

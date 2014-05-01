@@ -14,15 +14,25 @@ case "$1" in
 "s")
 
 	scp "$2" shmibbles.me:/srv/http/tmp/
-	echo "http://shmibbles.me/tmp/$(basename $2)" | xclip -i -selection clipboard
-	echo "http://shmibbles.me/tmp/$(basename $2)" | xclip -i -selection primary
-	notify-send "uploaded $(basename $2) to /tmp/"
+	if [ $? -ne 0 ]; then
+		notify-send "uploading $(basename $2) to /tmp/ failed"
+	else
+		name=$(echo "http://shmibbles.me/tmp/$(basename $2)" | sed 's/ /%20/g')
+		echo "$name" | xclip -i -selection clipboard
+		echo "$name" | xclip -i -selection primary
+		notify-send "uploaded $(basename $2) to /tmp/"
+	fi
 	;;
 "i")
 	scp "$2" shmibbles.me:/srv/http/img/
-	echo "http://shmibbles.me/img/$(basename $2)" | xclip -i -selection clipboard
-	echo "http://shmibbles.me/img/$(basename $2)" | xclip -i -selection primary
-	notify-send "uploaded $(basename $2) to /img/"
+	if [ $? -ne 0 ]; then
+		notify-send "uploading $(basename $2) to /img/ failed"
+	else
+		name=$(echo "http://shmibbles.me/img/$(basename $2)" | sed 's/ /%20/g')
+		echo "$name" | xclip -i -selection clipboard
+		echo "$name" | xclip -i -selection primary
+		notify-send "uploaded $(basename $2) to /img/"
+	fi
 	;;
 
 esac
