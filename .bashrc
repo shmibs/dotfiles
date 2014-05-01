@@ -46,7 +46,9 @@ send() {
 	scp $@ shmibbles.me:/srv/http/tmp/
 	for name in "$@"
 	do
-		echo "http://shmibbles.me/tmp/$(basename $name)" | xclip -i -selection clipboard
+		name=$(echo "http://shmibbles.me/tmp/$(basename $name)" | sed 's/ /%20/g')
+		echo $name | xclip -i -selection clipboard
+		echo $name | xclip -i -selection primary
 	done
 }
 
@@ -54,7 +56,9 @@ sendi() {
 	scp $@ shmibbles.me:/srv/http/img/
 	for name in "$@"
 	do
-		echo "http://shmibbles.me/img/$(basename $name)" | xclip -i -selection clipboard
+		name=$(echo "http://shmibbles.me/img/$(basename $name)" | sed 's/ /%20/g')
+		echo $name | xclip -i -selection clipboard
+		echo $name | xclip -i -selection primary
 	done
 }
 
