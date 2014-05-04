@@ -1,13 +1,9 @@
 #!/bin/bash
 
 # define colours
-#bg_normal='#2d2d2d'
-#fg_normal='#dcdcdc'
-#bg_focus='#d64937'
-#fg_focus='#fcfcfc'
-bg_normal='#2b2b2b'
+bg_normal='#333333'
 fg_normal='#dcdcdc'
-bg_focus='#a6754c'
+bg_focus='#a25136'
 fg_focus='#fcfcfc'
 
 hc() {

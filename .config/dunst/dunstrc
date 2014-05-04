@@ -68,7 +68,7 @@
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
     # Set to 0 to disable.
-    idle_threshold = 120
+    idle_threshold = 0
 
     # Which monitor should the notifications be displayed on.
     monitor = 0
@@ -83,7 +83,7 @@
     #
     # If this option is set to mouse or keyboard, the monitor option will be
     # ignored.
-    follow = mouse
+    follow = keyboard
 
     # should a notification popped up from history be sticky or
     # timeout as if it would normally do.
@@ -125,7 +125,7 @@
 
 [frame]
     width = 1
-    color = "#a6754c"
+    color = "#a25136"
 
 [shortcuts]
     # shortcuts are specified as [modifier+][modifier+]...key
@@ -134,26 +134,25 @@
     # xev might be helpful to find names for keys
 
     # close notification
-    close = mod4+n
+    close = mod4+grave
 
     # redisplay last message(s)
-    # On the US keyboard layout 'grave' is normally above TAB and left of '1'.
-    history = mod4+ctrl+n
+    history = mod4+ctrl+grave
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
-    background = "#2d2d2d"
+    background = "#333333"
     foreground = "#dcdcdc"
-    timeout = 10
+    timeout = 0
 
 [urgency_normal]
-    background = "#2d2d2d"
+    background = "#333333"
     foreground = "#fcfcfc"
-    timeout = 10
+    timeout = 0
 
 [urgency_critical]
-    background = "#d64937"
+    background = "#a25136"
     foreground = "#fcfcfc"
     timeout = 0
 
@@ -186,7 +185,10 @@
 
 [ignore]
 # This notification will not be displayed
-     summary = "HL: perl"
+     summary = "*HL: perl*"
+     summary = "HL: "
+     body = "*HL: perl*"
+     body = "HL: "
 
 #[signed_on]
 #    appname = Pidgin

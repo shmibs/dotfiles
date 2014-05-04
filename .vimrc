@@ -57,15 +57,38 @@ let g:c_no_if0_fold = 1
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one list (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
-autocmd FileType c call Settings_c()
-autocmd FileType cpp call Settings_c()
-autocmd FileType perl call Settings_perl()
+autocmd FileType asm     call Settings_asm()
+autocmd FileType c       call Settings_c()
+autocmd FileType cpp     call Settings_c()
+autocmd FileType haskell call Settings_haskell()
+autocmd FileType make    call Settings_script()
+autocmd FileType perl    call Settings_script()
+autocmd FileType sh      call Settings_script()
+autocmd FileType vim     call Settings_vim()
+
+function! Settings_asm()
+	setlocal cindent
+	set foldmethod=syntax
+	map \\ A<Tab>;<Space>
+endfunction
 
 function! Settings_c()
 	setlocal cindent
 	set foldmethod=syntax
+	map \\ A<Space>/*<Space><Space>*/<Esc>hhi
 endfunction
 
-function! Settings_perl()
+function! Settings_haskell()
 	setlocal smartindent
+	map \\ A<Space>--<Space>
+endfunction
+
+function! Settings_script()
+	setlocal smartindent
+	map \\ A<Space>#<Space>
+endfunction
+
+function! Settings_vim()
+	setlocal smartindent
+	map \\ A<Space>"<Space>
 endfunction
