@@ -18,8 +18,8 @@ case "$1" in
 		notify-send "uploading $(basename $2) to /tmp/ failed"
 	else
 		name=$(echo "http://shmibbles.me/tmp/$(basename $2)" | sed 's/ /%20/g')
-		echo "$name" | xclip -i -selection clipboard
-		echo "$name" | xclip -i -selection primary
+		echo "$name" | tr -d '\n' | xclip -i -selection clipboard
+		echo "$name" | tr -d '\n' | xclip -i -selection primary
 		notify-send "uploaded $(basename $2) to /tmp/"
 	fi
 	;;
@@ -29,8 +29,8 @@ case "$1" in
 		notify-send "uploading $(basename $2) to /img/ failed"
 	else
 		name=$(echo "http://shmibbles.me/img/$(basename $2)" | sed 's/ /%20/g')
-		echo "$name" | xclip -i -selection clipboard
-		echo "$name" | xclip -i -selection primary
+		echo "$name" | tr -d '\n' | xclip -i -selection clipboard
+		echo "$name" | tr -d '\n' | xclip -i -selection primary
 		notify-send "uploaded $(basename $2) to /img/"
 	fi
 	;;

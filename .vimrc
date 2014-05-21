@@ -1,5 +1,6 @@
 syntax on
 filetype plugin on
+"set omnifunc=syntaxcomplete#Complete
 set autoindent
 
 "colours!
@@ -7,9 +8,9 @@ colorscheme anotherdark
 set background=dark
 
 "tab controls to match pentadactyl
-map <C-n> <Esc>:tabn<CR>
-map <C-p> <Esc>:tabp<CR>
-map <C-t> <Esc>:tabnew<CR>
+noremap <C-n> <Esc>:tabn<CR>
+noremap <C-p> <Esc>:tabp<CR>
+noremap <C-t> <Esc>:tabnew<CR>
 
 "insert lines above and below with (=|+)
 "very hackish, but i couldn't think of a better way
@@ -21,11 +22,10 @@ let g:session_autosave = 'no'
 let g:session_autoload = 'no'
 
 "folds!
-map fo zO
-map fc zC
-map fm zM
-map fr zR
-
+nnoremap fo zO
+nnoremap fc zC
+nnoremap fm zM
+nnoremap fr zR
 
 "copy words from above and below the cursor
 inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
@@ -69,26 +69,26 @@ autocmd FileType vim     call Settings_vim()
 function! Settings_asm()
 	setlocal cindent
 	set foldmethod=syntax
-	map \\ A<Tab>;<Space>
+	noremap -- A<Tab>;<Space>
 endfunction
 
 function! Settings_c()
 	setlocal cindent
 	set foldmethod=syntax
-	map \\ A<Space>/*<Space><Space>*/<Esc>hhi
+	noremap -- A<Space>/*<Space><Space>*/<Esc>hhi
 endfunction
 
 function! Settings_haskell()
 	setlocal smartindent
-	map \\ A<Space>--<Space>
+	noremap -- A<Space>--<Space>
 endfunction
 
 function! Settings_script()
 	setlocal smartindent
-	map \\ A<Space>#<Space>
+	noremap -- A<Space>#<Space>
 endfunction
 
 function! Settings_vim()
 	setlocal smartindent
-	map \\ A<Space>"<Space>
+	noremap -- A<Space>"<Space>
 endfunction

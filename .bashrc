@@ -49,8 +49,8 @@ send() {
 			for name in "$@"
 			do
 				name=$(echo "http://shmibbles.me/tmp/$(basename $name)" | sed 's/ /%20/g')
-				echo $name | xclip -i -selection clipboard
-				echo $name | xclip -i -selection primary
+				echo $name | tr -d '\n' | xclip -i -selection clipboard
+				echo $name | tr -d '\n' | xclip -i -selection primary
 			done
 		fi
 	else
@@ -65,8 +65,8 @@ sendi() {
 			for name in "$@"
 			do
 				name=$(echo "http://shmibbles.me/img/$(basename $name)" | sed 's/ /%20/g')
-				echo $name | xclip -i -selection clipboard
-				echo $name | xclip -i -selection primary
+				echo $name | tr -d '\n' | xclip -i -selection clipboard
+				echo $name | tr -d '\n' | xclip -i -selection primary
 			done
 		fi
 	else
