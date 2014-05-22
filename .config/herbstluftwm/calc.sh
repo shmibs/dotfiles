@@ -6,8 +6,6 @@ prompt="calc:"
 pi="3.1415926535897932384626433832795028841971694"
 e="2.7182818284590452353602874713526624977572471"
 while [ "$in" != "" ]; do
-	val=0
-	
 	in=$(echo "" | dmenu -q -h 18 -nb $1 -nf $2 -sb $3 -sf $4 -p "$prompt")
 
 	out=$(echo "pi=$pi; e=$e; $acc $in" | calc -p 2>&1 | tr -d "\n")
