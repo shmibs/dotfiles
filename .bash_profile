@@ -1,4 +1,4 @@
-# /etc/profile
+# /home/shmibs/.bash_profile
 
 #Set our umask
 umask 022
@@ -26,4 +26,4 @@ unset TERMCAP
 # Man is much better than us at figuring this out
 unset MANPATH
 
-export EDITOR="vim"
+source ~/.bash_aliases

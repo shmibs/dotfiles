@@ -8,19 +8,26 @@ e="2.7182818284590452353602874713526624977572471"
 while [ "$in" != "" ]; do
 	in=$(echo "" | dmenu -q -h 18 -nb $1 -nf $2 -sb $3 -sf $4 -p "$prompt")
 
-	out=$(echo "pi=$pi; e=$e; $acc $in" | calc -p 2>&1 | tr -d "\n")
-	
-	if [ "$out" = "Missing operator" ]; then
-		out=$(echo "pi=$pi; e=$e; $in" | calc -p 2>&1)
-	fi
+	# replace "ans" with the previous value
+	in=$(echo $in | sed -e "s/ans/$acc/g")
 
-	# check for error output
+	out=$(echo "pi=$pi; e=$e; $acc $in" | calc -p 2>&1)
+	
 	if [ "${?#0}" != "" ]; then
 		out=$(echo "$out" | tr -d "\n")
-		prompt="calc: ($acc) err: $out"
-	else
-		acc=$out
-		prompt="calc: ($acc)"
+		if [ "$out" = "Missing operator" ]; then
+			out=$(echo "pi=$pi; e=$e; $in" | calc -p 2>&1)
+			if [ "${?#0}" != "" ]; then
+				out=$(echo "$out" | tr -d "\n")
+				prompt="calc: ($acc) err: $out"
+			else
+				acc=$out
+				prompt="calc: ($acc)"
+			fi
+		else
+			out=$(echo "$out" | tr -d "\n")
+			prompt="calc: ($acc) err: $out"
+		fi
 	fi
 done
 

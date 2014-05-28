@@ -7,19 +7,22 @@ set autoindent
 colorscheme anotherdark
 set background=dark
 
-"tab controls to match pentadactyl
-noremap <C-n> <Esc>:tabn<CR>
-noremap <C-p> <Esc>:tabp<CR>
-noremap <C-t> <Esc>:tabnew<CR>
+"enable status-line
+set laststatus=2
+
+"allow edited background buffers
+set hidden
+
+"buffer controls to match pentadactyl
+noremap <C-n> <Esc>:bn<CR>
+noremap <C-p> <Esc>:bp<CR>
+noremap <C-t> <Esc>:badd<Space>
+noremap <C-g> <Esc>:buffers<CR>:b<Space>
 
 "insert lines above and below with (=|+)
 "very hackish, but i couldn't think of a better way
 nnoremap = Oa<C-u><Esc>j
 nnoremap + oa<C-u><Esc>k
-
-"disable auto session save/load
-let g:session_autosave = 'no'
-let g:session_autoload = 'no'
 
 "folds!
 nnoremap fo zO
@@ -28,8 +31,8 @@ nnoremap fm zM
 nnoremap fr zR
 
 "copy words from above and below the cursor
-inoremap <expr> <c-y> pumvisible() ? "\<c-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
-inoremap <expr> <c-e> pumvisible() ? "\<c-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <C-y> pumvisible() ? "\<C-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 "use the X clipboard for things when running in a virtual terminal, because yes
 if &term != "linux"
@@ -90,5 +93,5 @@ endfunction
 
 function! Settings_vim()
 	setlocal smartindent
-	noremap -- A<Space>"<Space>
+	noremap -- A<Space>"
 endfunction
