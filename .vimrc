@@ -10,6 +10,9 @@ set background=dark
 "enable status-line
 set laststatus=2
 
+"hide mode in cmd
+set noshowmode
+
 "allow edited background buffers
 set hidden
 
