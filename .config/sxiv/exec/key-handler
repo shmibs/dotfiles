@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # The key combo argument has the following form: "[C-][M-][S-]KEY",
 # where C/M/S indicate Ctrl/Meta(Alt)/Shift modifier states and KEY is the X
