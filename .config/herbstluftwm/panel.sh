@@ -62,6 +62,7 @@ hc pad $monitor $panel_height
     #   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
 
     #mpc idleloop player &
+    
     while true ; do
         # "date" output is checked once a second, but an event is only
         # generated if the output changed compared to the previous run.

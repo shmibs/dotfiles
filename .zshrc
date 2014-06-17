@@ -113,3 +113,8 @@ sendi() {
 	fi
 }
 
+ssh-firefox() {
+	xpra start ssh:shmibs@shmibbles.me:1 --pulseaudio --exit-with-children --start-child="firefox" 
+	# this shouldn't be necessary, but just to make sure
+	xpra stop ssh:shmibs@shmibbles.me:1
+}

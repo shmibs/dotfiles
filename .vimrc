@@ -16,6 +16,14 @@ set noshowmode
 "allow edited background buffers
 set hidden
 
+"vim-latex settings
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor="latex"
+
+"gvim-specific settings
+set guifont=Tamsyn\ 11
+set guioptions=aegimt
+
 "buffer controls to match pentadactyl
 noremap <C-n> <Esc>:bn<CR>
 noremap <C-p> <Esc>:bp<CR>
@@ -69,6 +77,7 @@ autocmd FileType cpp     call Settings_c()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType make    call Settings_script()
 autocmd FileType perl    call Settings_script()
+autocmd FileType python  call Settings_script()
 autocmd FileType sh      call Settings_script()
 autocmd FileType vim     call Settings_vim()
 
