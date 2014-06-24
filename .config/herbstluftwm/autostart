@@ -177,7 +177,7 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(milkytracker|goattrk2|FTL|Tegaki-recognize|Gcalctool|Pcsx2|Tilem2)' pseudotile=on focus=on
+hc rule class~'(freeciv-sdl|milkytracker|FTL|Tegaki-recognize|Pcsx2|Tilem2)' pseudotile=on focus=on
 
 # unlock, just to be sure
 hc unlock

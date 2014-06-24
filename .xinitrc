@@ -16,6 +16,12 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 fcitx &
 
+#clean up sxiv cache
+#and ensure necessary EV
+#exists
+sxiv -c
+export XDG_CACHE_HOME=/home/shmibs/.cache
+
 #disable power saving
 xset -dpms
 xset s off
