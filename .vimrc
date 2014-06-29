@@ -1,5 +1,5 @@
 syntax on
-filetype plugin on
+filetype plugin indent on
 "set omnifunc=syntaxcomplete#Complete
 set autoindent
 
@@ -28,10 +28,9 @@ nnoremap <C-n> :tabn<CR>
 nnoremap <C-p> :tabp<CR>
 nnoremap <C-t> <C-w>s<C-w>T
 
-"insert lines above and below with (=|+)
-"very hackish, but i couldn't think of a better way
+"insert lines below
+nnoremap ++ ==
 nnoremap = Oa<C-u><Esc>j
-nnoremap + oa<C-u><Esc>k
 
 "folds!
 nnoremap fo zO
@@ -72,44 +71,66 @@ let g:c_no_if0_fold = 1
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
 autocmd FileType cpp     call Settings_cpp()
+autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType make    call Settings_script()
 autocmd FileType perl    call Settings_script()
 autocmd FileType python  call Settings_script()
 autocmd FileType sh      call Settings_script()
 autocmd FileType vim     call Settings_vim()
+autocmd FileType zsh     call Settings_script()
 
 function! Settings_asm()
-	setlocal cindent
+	"settings
 	setlocal foldmethod=syntax
+	"mappings
 	nnoremap -- A<Tab>;<Space>
 endfunction
 
 function! Settings_c()
-	setlocal cindent
+	"settings
 	setlocal foldmethod=syntax
+	"mappings
+	nnoremap <Leader>c :!make<CR>
 	nnoremap -- O<Space>*/<Esc>hhi/*<Space>
 endfunction
 
 function! Settings_cpp()
-	setlocal cindent
+	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	"mappings
+	nnoremap <Leader>c :!make<CR>
 	nnoremap -- O<Space>*/<Esc>hhi/*<Space>
 endfunction
 
 function! Settings_haskell()
-	setlocal smartindent
+	"settings
+	"mappings
 	nnoremap -- O--<Space>
 endfunction
 
 function! Settings_script()
-	setlocal smartindent
+	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	"mappings
 	nnoremap -- O#<Space>
 endfunction
 
+function! Settings_tex()
+	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	"mappings
+	nnoremap -- O%<Space>
+	nnoremap <Leader>c :!latex -output-format=pdf %<CR><CR>
+	nnoremap <Leader>C :!latex -output-format=pdf %<CR>
+endfunction
+
 function! Settings_vim()
-	setlocal smartindent
-	nnoremap -- A<Space>"
+	"settings
+	"mappings
+	nnoremap -- O"
 endfunction

@@ -70,10 +70,12 @@ alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias diff='colordiff'
 alias less='less -R'
+alias latex='latex -output-format=pdf'
 
 alias vmount='udevil mount'
 alias vumount='udevil umount'
 alias def='sdcv'
+alias thesaurus='aiksaurus'
 
 export EDITOR="vim"
 export PAGER="less -R"

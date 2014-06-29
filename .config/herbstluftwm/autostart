@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# define colours
-bg_normal='#333333'
-fg_normal='#dcdcdc'
-bg_focus='#a25136'
-fg_focus='#fcfcfc'
+source ~/.config/herbstluftwm/colours.sh
 
 hc() {
     herbstclient "$@"
@@ -177,7 +173,7 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(freeciv-sdl|milkytracker|FTL|Tegaki-recognize|Pcsx2|Tilem2)' pseudotile=on focus=on
+hc rule class~'(freeciv-sdl|milkytracker|FTL|Tegaki-recognize|Pcsx2|Tilem2|Wine)' pseudotile=on focus=on
 
 # unlock, just to be sure
 hc unlock
