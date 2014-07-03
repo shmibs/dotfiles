@@ -42,9 +42,6 @@ suddenly a browser is no longer a thing that necessarily
 breaks your workflow when you have to refer to it for
 information. oh, and try [setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
 
-###dunst/dmenu/stalonetray/compton/dzen2/nitrogen
-useful things all around. i haven't bothered with
-any fancy-pants dmenu configs just yet. maybe after
-finishing up with dzen2 and (maybe) switching to
-zsh (now that i have an ssd and completions don't
-take forever to load).
+###dunst/dmenu/trayer/compton/bar/nitrogen
+useful things all around. i'm still trying to figure out
+alternative mouse buttons with bar.

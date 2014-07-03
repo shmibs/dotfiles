@@ -1,0 +1,15 @@
+#!/bin/bash
+
+bg_normal='#333333'
+fg_normal='#efefef'
+bg_focus='#00aad4'
+fg_focus='#efefef'
+bg_urgent='#ff4070'
+fg_urgent='#efefef'
+
+fg_grey='#ababab'
+
+bheight=18
+
+dfont='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
+efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'

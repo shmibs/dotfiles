@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.config/herbstluftwm/config_vars
+
 acc=0
 in="first"
 prompt="calc:"
@@ -25,7 +27,9 @@ command_check() {
 }
 
 while [ "$in" != "" ]; do
-	in=$(echo "" | dmenu -q -h 18 -nb $1 -nf $2 -sb $3 -sf $4 -p "$prompt")
+	in=$(echo "" | dmenu -fn $efont -q -h $bheight \
+		-nb $bg_normal -nf $fg_normal \
+		-sb $bg_focus -sf $fg_focus -p "$prompt")
 	if [[ $(command_check "$in" "$acc") -eq 1 ]]; then
 		break
 	fi

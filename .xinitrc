@@ -22,6 +22,10 @@ fcitx &
 sxiv -c
 export XDG_CACHE_HOME=/home/shmibs/.cache
 
+#load local fonts
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
 #disable power saving
 xset -dpms
 xset s off

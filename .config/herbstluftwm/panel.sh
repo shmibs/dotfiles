@@ -1,5 +1,9 @@
 #!/bin/bash
 
+###########
+#  SETUP  #
+###########
+
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
 geometry=( $(herbstclient monitor_rect "$monitor") )
@@ -8,189 +12,238 @@ if [ -z "$geometry" ] ;then
     exit 1
 fi
 # geometry has the format W H X Y
-x=${geometry[0]}
-y=${geometry[1]}
-panel_width=${geometry[2]}
-panel_height=18
-font="-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*"
-bgcolor=$(hc get frame_border_normal_color)
-selbg=$(hc get window_border_active_color)
-selfg='#fefefe'
+xpos=${geometry[0]}
+ypos=${geometry[1]}
+width=${geometry[2]}
 
-####
-# Try to find textwidth binary.
-# In e.g. Ubuntu, this is named dzen2-textwidth.
-if which textwidth &> /dev/null ; then
-    textwidth="textwidth";
-elif which dzen2-textwidth &> /dev/null ; then
-    textwidth="dzen2-textwidth";
-else
-    echo "This script requires the textwidth tool of the dzen2 project."
-    exit 1
-fi
-####
-# true if we are using the svn version of dzen2
-# depending on version/distribution, this seems to have version strings like
-# "dzen-" or "dzen-x.x.x-svn"
-if dzen2 -v 2>&1 | head -n 1 | grep -q '^dzen-\([^,]*-svn\|\),'; then
-    dzen2_svn="true"
-else
-    dzen2_svn=""
-fi
+# grab standardised colours
+source ~/.config/herbstluftwm/config_vars
 
-if awk -Wv 2>/dev/null | head -1 | grep -q '^mawk'; then
-    # mawk needs "-W interactive" to line-buffer stdout correctly
-    # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=593504
-    uniq_linebuffered() {
-      awk -W interactive '$0 != l { print ; l=$0 ; fflush(); }' "$@"
-    }
-else
-    # other awk versions (e.g. gawk) issue a warning with "-W interactive", so
-    # we don't want to use it there.
-    uniq_linebuffered() {
-      awk '$0 != l { print ; l=$0 ; fflush(); }' "$@"
-    }
-fi
+# set alpha for background colours
+alpha='#ff'
+bg_normal=$(echo -n $alpha; echo "$bg_normal" | tr -d '#')
+fg_normal=$(echo -n '#ff'; echo "$fg_normal" | tr -d '#')
+bg_focus=$(echo -n $alpha; echo "$bg_focus" | tr -d '#')
+fg_focus=$(echo -n '#ff'; echo "$fg_focus" | tr -d '#')
+bg_urgent=$(echo -n '#ff'; echo "$bg_urgent" | tr -d '#')
+fg_urgent=$(echo -n '#ff'; echo "$fg_urgent" | tr -d '#')
 
-hc pad $monitor $panel_height
+fg_grey=$(echo -n '#ff'; echo "$fg_grey" | tr -d '#')
+
+hc pad $monitor $bheight
+
+# global content variables
+winlist=""
+
+
+
+#################
+#  SUBROUTINES  #
+#################
+
+# functions for retrieving and processing data
+# upon events
+
+update_taglist() {
+	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
+	hc tag_status | tr '\t' '\n' | sed \
+		-e '1d' \
+		-e '$d' \
+		-e 's/\(.*\)/\1 /' \
+		-e 's/:/ /' \
+		-e "s/[#+\-%]\(.*\)/%{B${bg_focus} F${fg_focus}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/!\(.*\)/%{B${bg_urgent} F${fg_urgent}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/\.\(.*\)/%{B${bg_normal} F${fg_grey}} \1%{B${bg_normal} F${fg_normal}}/" \
+		| tr -d '\n'
+	echo "%{F${bg_focus}}|%{F${fg_normal}}"
+}
+
+update_winlist() {
+	focus_id=$(hc get_attr clients.focus.winid)
+
+	if [[ "$focus_id" == "" ]]; then
+		return
+	fi
+
+	# grab current window list, limit to current desktop,
+	# clean up output, cut to length,add focused window 
+	# formatting, and finally delete win ids and merge
+	# lines
+	
+	for c in $(herbstclient layout | grep -Eo '0x[0-9a-f]*'); do
+		xwininfo -id $c | sed -n 2p | sed -e 's/"//' -e 's/"$//' -e 's/$/\t/' | cut -c -70 | sed \
+		-e 's/xwininfo: Window id: //' \
+		-e 's/$/.../' -e 's/\t\.\.\.$//' \
+		-e "s/${focus_id} \(.*\)/%{B${bg_focus} F${fg_focus}} \1 %{B${bg_normal} F${fg_normal}}/" \
+		-e 's/0x[a-f0-9]* \(.*\)/ \1 /' | tr -d '\n'
+	done
+}
+
+
+
+#######################
+#  OUTPUT CONTAINERS  #
+#######################
+
+# all fields are put in separate elements
+
+# tag list
+fields[1]=$(update_taglist)
+# window list
+fields[2]=$(update_winlist)
+# align right
+fields[3]="%{r}"
+# when
+fields[4]=""
+# banshee np
+fields[5]=""
+# conky stats
+fields[6]=""
+# date
+fields[7]=""
+# vertical separator and gap for tray
+fields[8]="%{F${bg_focus}}|    %{F${fg_normal}}"
+
+
+######################
+#  EVENT GENERATORS  #
+######################
+
+# loops for generating a line of information,
+# with the first element in the line as a
+# unique identifier for the event type
+
+get_stat() {
+	{
+		conky -c ~/.config/herbstluftwm/panel/conky_stats
+	# suppress lines that do not differ from
+	# previous lines
+	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
+get_date() {
+	{
+		while true; do
+			date +$'date\t%a, %b %d, %H:%M:%S'
+			sleep 1
+		done
+	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
+get_when() {
+	{
+		while true; do
+			if [[ "$(when --future=1 | sed '1,2d')" == "" ]]; then
+				echo -e 'when\t0'
+			else
+				echo -e 'when\t1'
+			fi
+			sleep 10
+		done
+	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
+
+
+#######################
+#  EVENT MULTIPLEXER  #
+#######################
+
+# the loops defined above are launched and
+# their outputs multiplexed 
 
 {
-    ### Event generator ###
-    # based on different input data (mpc, date, hlwm hooks, ...) this generates events, formed like this:
-    #   <eventname>\t<data> [...]
-    # e.g.
-    #   date    ^fg(#efefef)18:33^fg(#909090), 2013-10-^fg(#efefef)29
-
-    #mpc idleloop player &
-    
-    while true ; do
-        # "date" output is checked once a second, but an event is only
-        # generated if the output changed compared to the previous run.
-        date +$'date\t^fg(#efefef)%a, %b %d, %H:%M'
-        sleep 1 || break
-    done > >(uniq_linebuffered) &
-    childpid=$!
-    hc --idle
-    kill $childpid
-} 2> /dev/null | {
-    IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
-    visible=true
-    date=""
-    clients=""
-    focus_index=""
-    while true ; do
-
-        ### Output ###
-        # This part prints dzen data based on the _previous_ data handling run,
-        # and then waits for the next event to happen.
-
-        bordercolor="#26221C"
-        separator="^bg()^fg($selbg)|"
-        # draw tags
-        for i in "${tags[@]}" ; do
-            case ${i:0:1} in
-                '#')
-                    echo -n "^bg($selbg)^fg($selfg)"
-                    ;;
-                '+')
-                    echo -n "^bg(#9CA668)^fg(#141414)"
-                    ;;
-                ':')
-                    echo -n "^bg()^fg(#ffffff)"
-                    ;;
-                '!')
-                    echo -n "^bg(#FF0675)^fg(#141414)"
-                    ;;
-                *)
-                    echo -n "^bg()^fg(#ababab)"
-                    ;;
-            esac
-	    # non-clickable tags, because i don't care
-	    echo -n " ${i:1} "
-        done
-        echo -n "$separator^fg()"
-
-	for i in "${!clients[@]}"; do
-		if [ $i -eq $focus_index ]; then
-			echo -n "^bg($selbg)^fg($selfg) ${clients[i]} ^bg()^fg()"
-		else
-			echo -n " ${clients[i]} "
-		fi
+	get_stat &
+	child[1]=$!
+	get_date &
+	child[2]=$!
+	get_when &
+	child[3]=$!
+	
+	hc --idle
+	
+	for id in ${child[@]}; do
+		kill $id
 	done
+} 2> /dev/null | {
 
-        # small adjustments
-        right="$separator^bg() $date $separator"
-        right_text_only=$(echo -n "$right" | sed 's.\^[^(]*([^)]*)..g')
-        # get width of right aligned text.. and add some space..
-        width=$($textwidth "$font" "$right_text_only    ")
-        echo -n "^pa($(($panel_width - $width)))$right"
-        echo
 
-        ### Data handling ###
-        # This part handles the events generated in the event loop, and sets
-        # internal variables based on them. The event and its arguments are
-        # read into the array cmd, then action is taken depending on the event
-        # name.
-        # "Special" events (quit_panel/togglehidepanel/reload) are also handled
-        # here.
 
-        # wait for next event
-        IFS=$'\t' read -ra cmd || break
-        # find out event origin
-        case "${cmd[0]}" in
-            tag*)
-                #echo "resetting tags" >&2
-                IFS=$'\t' read -ra tags <<< "$(hc tag_status $monitor)"
-                ;;
-            date)
-                #echo "resetting date" >&2
-                date="${cmd[@]:1}"
-                ;;
-            quit_panel)
-                exit
-                ;;
-            togglehidepanel)
-                currentmonidx=$(hc list_monitors | sed -n '/\[FOCUS\]$/s/:.*//p')
-                if [ "${cmd[1]}" -ne "$monitor" ] ; then
-                    continue
-                fi
-                if [ "${cmd[1]}" = "current" ] && [ "$currentmonidx" -ne "$monitor" ] ; then
-                    continue
-                fi
-                echo "^togglehide()"
-                if $visible ; then
-                    visible=false
-                    hc pad $monitor 0
-                else
-                    visible=true
-                    hc pad $monitor $panel_height
-                fi
-                ;;
-            reload)
-                exit
-                ;;
-            focus_changed|window_title_changed)
-		clients=($(herbstclient layout | grep -Eo '0x[0-9a-f]*')) focus_client=$(herbstclient get_attr clients.focus.winid)
-		focus_index=""
-		hc_args="herbstclient chain"
-		for i in "${!clients[@]}"; do
-			if [ "${clients[i]}" == "$focus_client" ]; then
-				focus_index=$i
-			fi
-			hc_args="$hc_args"" .-. get_attr clients.""${clients[i]}"".instance .-. echo"
-		done
+##################
+#  EVENT PARSER  #
+##################
 
-		clients=($($hc_args))
-                ;;
-            #player)
-            #    ;;
-        esac
-    done
+# those lines are then read, one by one,
+# and the information contained used to
+# generate the required fields
 
-    ### dzen2 ###
-    # After the data is gathered and processed, the output of the previous block
-    # gets piped to dzen2.
+	while true; do
+		
+		# split our read lines into an array
+		# for easy parsing
+		IFS=$'\t' read -ra event || break
+		
+		# determine event type and act
+		# accordingly
+		case "${event[0]}" in
+			date)
+				fields[7]="%{F${bg_focus}}|%{F${fg_normal} A:date:} ${event[@]:1} %{A}"
+				;;
+			stats)
+				fields[6]="%{F${bg_focus}}|%{F${fg_normal} A:stats:} ${event[@]:1} %{A}"
+				;;
+			when)
+				if [[ "${events[1]}" -eq 1 ]]; then
+					fields[4]="%{F${bg_focus}}|%{F${fg_normal} A:when:} * %{A}"
+				else
+					fields[4]=""
+				fi
+				;;
 
-} 2> /dev/null | dzen2 -w $panel_width -x $x -y $y -fn "$font" -h $panel_height \
-    -e 'button3=;button4=exec:herbstclient use_index -1;button5=exec:herbstclient use_index +1' \
-    -ta l -bg "$bgcolor" -fg '#efefef'
+			# hc events
+			focus_changed|window_title_changed)
+				fields[2]=$(update_winlist)
+				;;
+			tag_changed|tag_flags)
+				fields[1]=$(update_taglist)
+				fields[2]=$(update_winlist)
+				;;
+				
+			*)
+				;;
+		esac
+		
+		# i wish i could just print the entire array
+		# this easily, but that inserts spaces
+		#echo "${fields[@]}"
+		echo -n "${fields[1]}${fields[2]}${fields[3]}${fields[4]}"
+		echo "${fields[5]}${fields[6]}${fields[7]}${fields[8]}"
+		
+	done
+	
+	# pass the events into bar
+} 2> /dev/null | bar -f $dfont -g${width}x${bheight}+${xpos}+${ypos} \
+	-B ${bg_normal} -F ${fg_normal} | \
+{
+
+#####################
+#  COMMAND HANDLER  #
+#####################
+
+# finally, take the output from bar and execute commands
+	while read command; do
+		case "$command" in
+			date)
+				notify-send "$(cal)"
+				;;
+			stats)
+				urxvt -e htop
+				;;
+			when)
+				notify-send "$(when)"
+				;;
+			*)
+				;;
+		esac
+	done
+}

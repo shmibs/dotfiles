@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.config/herbstluftwm/colours.sh
+source ~/.config/herbstluftwm/config_vars
 
 hc() {
     herbstclient "$@"
@@ -138,9 +138,10 @@ hc keybind Mod4-Right      spawn banshee --next
 hc keybind Mod4-Down       spawn banshee --toggle-playing
 
 # dmenu
-hc keybind Mod4-0 spawn dmenu_run -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal  -sb $bg_focus  -sf $fg_focus
-hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh $bg_normal $fg_normal $bg_focus $fg_focus
-hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh $bg_normal $fg_normal $bg_focus $fg_focus
+hc keybind Mod4-0 spawn dmenu_run -fn $dfont -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal \
+	-sb $bg_focus  -sf $fg_focus
+hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh
+hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
 ############## end launchers ##############
 
