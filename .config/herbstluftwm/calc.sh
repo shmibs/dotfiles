@@ -29,13 +29,11 @@ command_check() {
 while [ "$in" != "" ]; do
 	in=$(echo "" | dmenu -fn $efont -q -h $bheight \
 		-nb $bg_normal -nf $fg_normal \
-		-sb $bg_focus -sf $fg_focus -p "$prompt")
+		-sb $bg_focus -sf $fg_focus -p "$prompt" | \
+		sed -e "s/ans/$acc/g")
 	if [[ $(command_check "$in" "$acc") -eq 1 ]]; then
 		break
 	fi
-
-	# replace "ans" with the previous value
-	in=$(echo $in | sed -e "s/ans/$acc/g")
 
 	out=$(echo "pi=$pi; e=$e; $acc $in" | calc -p 2>&1)
 	
@@ -54,6 +52,9 @@ while [ "$in" != "" ]; do
 			out=$(echo "$out" | tr -d "\n")
 			prompt="calc: ($acc) err: $out"
 		fi
+	else
+		acc=$out
+		prompt="calc: ($acc)"
 	fi
 done
 
