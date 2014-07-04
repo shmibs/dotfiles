@@ -2,7 +2,7 @@
 
 
 ##Screenshots
-[![clean](http://shmibbles.me/img/scrot/2014-07-03/clean_small.png)](http://shmibbles.me/img/scrot/2014-07-03/clean.png)[![dirty](http://shmibbles.me/img/scrot/2014-07-03/dirty_small.png)](http://shmibbles.me/img/scrot/2014-07-03/dirty.png)
+[![clean](http://shmibbles.me/img/scrot/current/clean_small.png)](http://shmibbles.me/img/scrot/current/clean.png)[![dirty](http://shmibbles.me/img/scrot/current/dirty_small.png)](http://shmibbles.me/img/scrot/current/dirty.png)
 
 ##Current Utilities
 
