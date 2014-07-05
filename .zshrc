@@ -120,3 +120,45 @@ ssh-firefox() {
 	# this shouldn't be necessary, but just to make sure
 	xpra stop ssh:shmibs@shmibbles.me:1
 }
+
+ssh-scrot() {
+	archey3
+
+	if [[ "$1" != "" ]]; then
+		name=$1
+	else
+		echo -n "name: "
+		read name
+	fi
+	
+	date=$(date +'%Y-%m-%d')
+	
+	ssh shmibbles.me "mkdir -p http/img/scrot/$date"
+	
+	if [[ "${?#0}" != "" ]]; then
+		return 1
+	fi
+	
+	for i in {3..1}; do
+		echo -n "$i "
+		sleep 1
+	done
+	
+	echo 'cheese!'
+	sleep .1
+
+	scrot /tmp/$name.png
+	convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
+
+	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:/home/shmibs/http/img/scrot/$date
+
+	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
+	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
+
+	echo 'sent!'
+
+	rm /tmp/$name.png /tmp/${name}_small.png
+
+}
