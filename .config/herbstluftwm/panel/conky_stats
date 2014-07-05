@@ -4,6 +4,7 @@ out_to_x no
 update_interval 2.0
 total_run_times 0
 use_spacer none
+short_units yes
 
 TEXT
-stats	mem: %%${memperc}  cpu: %%${cpu cpu0}
+stats	%%${cpu cpu0}	%%${memperc}	${downspeed wlp7s0}	${upspeed wlp7s0}

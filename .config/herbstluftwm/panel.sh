@@ -25,15 +25,16 @@ bg_normal=$(echo -n $alpha; echo "$bg_normal" | tr -d '#')
 fg_normal=$(echo -n '#ff'; echo "$fg_normal" | tr -d '#')
 bg_focus=$(echo -n $alpha; echo "$bg_focus" | tr -d '#')
 fg_focus=$(echo -n '#ff'; echo "$fg_focus" | tr -d '#')
-bg_urgent=$(echo -n '#ff'; echo "$bg_urgent" | tr -d '#')
+bg_urgent=$(echo -n $alpha; echo "$bg_urgent" | tr -d '#')
 fg_urgent=$(echo -n '#ff'; echo "$fg_urgent" | tr -d '#')
 
 fg_grey=$(echo -n '#ff'; echo "$fg_grey" | tr -d '#')
+fg_red=$(echo -n '#ff'; echo "$fg_red" | tr -d '#')
+fg_green=$(echo -n '#ff'; echo "$fg_green" | tr -d '#')
+fg_yellow=$(echo -n '#ff'; echo "$fg_yellow" | tr -d '#')
+fg_blue=$(echo -n '#ff'; echo "$fg_blue" | tr -d '#')
 
 hc pad $monitor $bheight
-
-# global content variables
-winlist=""
 
 
 
@@ -116,9 +117,7 @@ fields[8]="%{F${bg_focus}}|    %{F${fg_normal}}"
 get_stat() {
 	{
 		conky -c ~/.config/herbstluftwm/panel/conky_stats
-	# suppress lines that do not differ from
-	# previous lines
-	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+	}
 }
 
 get_date() {
@@ -187,11 +186,36 @@ get_when() {
 		# accordingly
 		case "${event[0]}" in
 			date)
-				fields[7]="%{F${bg_focus}}|%{F${fg_normal} A:date:} ${event[@]:1} %{A}"
+				fields[7]="%{F${bg_focus}}|%{F${fg_normal} A:date:} \uE015 ${event[@]:1} %{A}"
 				;;
+				
 			stats)
-				fields[6]="%{F${bg_focus}}|%{F${fg_normal} A:stats:} ${event[@]:1} %{A}"
+				# enforce fixed widths with sed. printf
+				# pads in the other direction
+				event[1]=$(echo ${event[1]} | sed \
+					-e 's/^\(..\)$/\1  /' \
+					-e 's/^\(...\)$/\1 /')
+				event[2]=$(echo ${event[2]} | sed \
+					-e 's/^\(..\)$/\1  /' \
+					-e 's/^\(...\)$/\1 /')
+				event[3]=$(echo ${event[3]} | sed \
+					-e 's/^\(..\)$/\1   /' \
+					-e 's/^\(...\)$/\1  /' \
+					-e 's/^\(....\)$/\1 /')
+				event[4]=$(echo ${event[4]} | sed \
+					-e 's/^\(..\)$/\1   /' \
+					-e 's/^\(...\)$/\1  /' \
+					-e 's/^\(....\)$/\1 /')
+				fields[6]=$(
+					echo -n "%{F${bg_focus}}|%{F${fg_normal} A:stats:} "
+					echo -n "%{F${fg_blue}}\uE023%{F${fg_normal}} ${event[1]} "
+					echo -n "%{F${fg_yellow}}\uE020%{F${fg_normal}} ${event[2]} "
+					echo -n "%{F${bg_focus}}|%{F${fg_normal}} "
+					echo -n "%{F${fg_green}}\uE07B%{F${fg_normal}} ${event[3]} "
+					echo -n "%{F${fg_red}}\uE07C%{F${fg_normal}} ${event[4]} "
+					echo -n "%{A}")
 				;;
+				
 			when)
 				if [[ "${events[1]}" -eq 1 ]]; then
 					fields[4]="%{F${bg_focus}}|%{F${fg_normal} A:when:} * %{A}"
@@ -204,6 +228,7 @@ get_when() {
 			focus_changed|window_title_changed)
 				fields[2]=$(update_winlist)
 				;;
+				
 			tag_changed|tag_flags)
 				fields[1]=$(update_taglist)
 				fields[2]=$(update_winlist)
@@ -215,9 +240,10 @@ get_when() {
 		
 		# i wish i could just print the entire array
 		# this easily, but that inserts spaces
-		#echo "${fields[@]}"
-		echo -n "${fields[1]}${fields[2]}${fields[3]}${fields[4]}"
-		echo "${fields[5]}${fields[6]}${fields[7]}${fields[8]}"
+		#echo -e "${fields[@]}"
+		
+		echo -en "${fields[1]}${fields[2]}${fields[3]}${fields[4]}"
+		echo -e "${fields[5]}${fields[6]}${fields[7]}${fields[8]}"
 		
 	done
 	

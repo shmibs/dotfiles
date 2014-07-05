@@ -8,8 +8,12 @@ bg_urgent='#ff4070'
 fg_urgent='#efefef'
 
 fg_grey='#ababab'
+fg_red='#ff6699'
+fg_green='#d5f85f'
+fg_yellow='#ffa466'
+fg_blue='#00aad4'
 
 bheight=18
 
-dfont='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
+dfont='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*,-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
 efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'
