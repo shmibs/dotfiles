@@ -170,7 +170,7 @@ hc set smart_window_surroundings 1
 # rules
 hc unrule -F
 hc rule focus=on 
-# unmanage docs, dropdowns, etc
+# unmanage docks, dropdowns, etc
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on

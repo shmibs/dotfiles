@@ -71,7 +71,7 @@ update_winlist() {
 	# formatting, and finally delete win ids and merge
 	# lines
 	
-	for c in $(herbstclient layout | grep -Eo '0x[0-9a-f]*'); do
+	for c in $(hc layout | grep -Eo '0x[0-9a-f]*'); do
 		xwininfo -id $c | sed -n 2p | sed -e 's/"//' -e 's/"$//' -e 's/$/\t/' | cut -c -70 | sed \
 		-e 's/xwininfo: Window id: //' \
 		-e 's/$/.../' -e 's/\t\.\.\.$//' \
@@ -164,6 +164,9 @@ get_when() {
 	for id in ${child[@]}; do
 		kill $id
 	done
+
+	pkill bar
+	
 } 2> /dev/null | {
 
 
@@ -217,8 +220,9 @@ get_when() {
 				;;
 				
 			when)
-				if [[ "${events[1]}" -eq 1 ]]; then
-					fields[4]="%{F${bg_focus}}|%{F${fg_normal} A:when:} * %{A}"
+				if [[ "${event[1]}" -eq 1 ]]; then
+					fields[4]=$(echo -n "%{F${bg_focus}}|%{F${fg_normal} A:when:}"
+						echo -n "%{F${fg_red}} \uE0AE %{F${fg_normal} A}")
 				else
 					fields[4]=""
 				fi
@@ -263,7 +267,7 @@ get_when() {
 				notify-send "$(cal)"
 				;;
 			stats)
-				urxvt -e htop
+				urxvt -e htop &
 				;;
 			when)
 				notify-send "$(when)"
