@@ -133,11 +133,14 @@ ssh-scrot() {
 	
 	date=$(date +'%Y-%m-%d')
 	
-	ssh shmibbles.me "mkdir -p http/img/scrot/$date"
+	folder="http/img/scrot"
+	ssh shmibbles.me "mkdir -p $folder/$date"
 	
 	if [[ "${?#0}" != "" ]]; then
 		return 1
 	fi
+
+	ssh shmibbles.me "rm $folder/current 2>/dev/null; ln -s $folder/$date $folder/current"
 	
 	for i in {3..1}; do
 		echo -n "$i "
@@ -161,4 +164,35 @@ ssh-scrot() {
 
 	rm /tmp/$name.png /tmp/${name}_small.png
 
+}
+
+# yay imagemagick
+update-backdrops() {
+	resolution=( ${(s:x:)$(xrandr | grep "*+" | cut -d ' ' -f 4)} )
+	IFS=$'\n'
+	for f in $(find ~/backdrops/(*.png|*.jpg)); do
+		
+		base="$(basename $f)"
+		geometry=( ${(s: :)$(identify -format "%w %h" $f)} )
+		if [[ $(calc "(${geometry[0]}/${geometry[1]}) > 1.7778" | \
+			tr -d '\t') != "0" ]]; then
+			scale="x${resolution[1]}"
+			crop="${resolution[0]}x"
+		else
+			scale="${resolution[0]}x"
+			crop="x${resolution[1]}"
+		fi
+		
+		if [[ ! -f "$HOME/backdrops/shadowed/$base" ]]; then
+			echo "$base..."
+			convert \
+			-page +0+0 "$f" \
+			-scale $scale \
+			-crop $crop \
+			-page +0+0 "$HOME/backdrops/dropshadow/shadow.png" \
+			-composite \
+			"$HOME/backdrops/shadowed/$base"
+		fi
+		
+	done
 }
