@@ -1,8 +1,23 @@
 #!/bin/bash
 
+## arch blue
+#bg_normal='#333333'
+#fg_normal='#efefef'
+#bg_focus='#00aad4'
+#fg_focus='#efefef'
+#bg_urgent='#ff4070'
+#fg_urgent='#efefef'
+#
+#fg_grey='#ababab'
+#fg_red='#ff6699'
+#fg_green='#d5f85f'
+#fg_yellow='#ffa466'
+#fg_blue='#00aad4'
+
+## section 9
 bg_normal='#333333'
 fg_normal='#efefef'
-bg_focus='#00aad4'
+bg_focus='#714BA7'
 fg_focus='#efefef'
 bg_urgent='#ff4070'
 fg_urgent='#efefef'

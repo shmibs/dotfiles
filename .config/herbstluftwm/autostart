@@ -197,5 +197,10 @@ done
 # add a tray
 tray=~/.config/herbstluftwm/tray.sh
 if [ -x "$tray" ]; then
-	"$tray"
+	"$tray" &
 fi
+
+# run dunst with theme colours
+dunst -lb $bg_normal -nb $bg_normal -cb $bg_focus \
+	-lf $fg_normal -nf $fg_normal -cf $fg_focus \
+	-frame_color $bg_focus
