@@ -27,6 +27,8 @@ nnoremap <C-g> :buffers<CR>:b<Space>
 nnoremap <C-n> :tabn<CR>
 nnoremap <C-p> :tabp<CR>
 nnoremap <C-t> <C-w>s<C-w>T
+nnoremap <C-w><C-n> :tabm +1<CR>
+nnoremap <C-w><C-p> :tabm -1<CR>
 
 "insert lines below
 nnoremap ++ ==
@@ -74,6 +76,7 @@ autocmd FileType cpp     call Settings_cpp()
 autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType make    call Settings_script()
+autocmd FileType matlab  call Settings_matlab()
 autocmd FileType perl    call Settings_script()
 autocmd FileType python  call Settings_script()
 autocmd FileType sh      call Settings_script()
@@ -109,6 +112,12 @@ function! Settings_haskell()
 	"settings
 	"mappings
 	nnoremap -- O--<Space>
+endfunction
+
+function! Settings_matlab()
+	"settings
+	"mappings
+	nnoremap -- O%<Space>
 endfunction
 
 function! Settings_script()

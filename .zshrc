@@ -72,15 +72,30 @@ alias diff='colordiff'
 alias less='less -R'
 alias latex='latex -output-format=pdf'
 
+alias def='sdcv'
+alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
+alias thesaurus='aiksaurus'
 alias vmount='udevil mount'
 alias vumount='udevil umount'
-alias def='sdcv'
-alias thesaurus='aiksaurus'
 
 export EDITOR="vim"
 export PAGER="less -R"
 
 ################## FUNCTIONS ##################
+b2h() {
+	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+	sindex=1
+	val=$1
+	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+	
+	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
+		val=$(echo "scale=2; $val / 1024" | bc)
+		let sindex=sindex+1
+	done
+	
+	echo "${val}${suffixes[$sindex]}"
+}
+
 send() {
 	if [ "$1" ]; then
 		scp $@ shmibbles.me:/srv/http/tmp/

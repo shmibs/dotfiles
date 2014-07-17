@@ -45,6 +45,22 @@ hc pad $monitor $bheight
 # functions for retrieving and processing data
 # upon events
 
+# bytes to human readable, cropped to 4 chars wide
+#b2hc() {
+#	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+#	sindex=0
+#	val=$1
+#	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+#	
+#	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
+#		val=$(echo "scale=2; $val / 1024" | bc)
+#		let sindex=sindex+1
+#	done
+#	
+#	val=$(echo $val | sed
+#	echo "${val}${suffixes[$sindex]}"
+#}
+
 update_taglist() {
 	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
 	hc tag_status | tr '\t' '\n' | sed \
@@ -132,7 +148,7 @@ get_date() {
 get_when() {
 	{
 		while true; do
-			if [[ "$(when --future=1 | sed '1,2d')" == "" ]]; then
+			if [[ "$(when --future=2 | sed '1,2d')" == "" ]]; then
 				echo -e 'when\t0'
 			else
 				echo -e 'when\t1'
