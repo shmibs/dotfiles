@@ -10,10 +10,10 @@ URxvt*buffered: on
 ! URxvt*geometry: geom
 
 ! Use the specified colour as the windows background colour [default White]; option -bg.
-URxvt*background: #252525
+URxvt*background: #262626
 
 ! Use the specified colour as the windows foreground colour [default Black]; option -fg.
-URxvt*foreground: #FEFEFE
+URxvt*foreground: #c1b48e
 
 ! Use the specified colour for the colour value n, where 0-7 corresponds to low-intensity (normal) colours and 8-15 corresponds to high-intensity (bold = bright
 !! black
@@ -48,13 +48,14 @@ URxvt*foreground: #FEFEFE
 !URxvt*color7: #E0E0E0
 !! light white
 !URxvt*color15: #FEFEFE
+! black
 URxvt*color0: #4e4e4e
 ! light black
 URxvt*color8: #7d7d7d
 ! red
-URxvt*color1: #ff4070
+URxvt*color1: #ff3842
 ! light red
-URxvt*color9: #ff6699
+URxvt*color9: #ff5757
 ! green
 URxvt*color2: #d5f85f
 ! light green
@@ -68,9 +69,9 @@ URxvt*color4: #00a1e4
 ! light blue
 URxvt*color12: #00b4ff
 ! magenta
-URxvt*color5: #7d66ff
+URxvt*color5: #d0758b
 ! light magenta
-URxvt*color13: #a982ff
+URxvt*color13: #d0758b
 ! cyan
 URxvt*color6: #00ccff
 ! light cyan

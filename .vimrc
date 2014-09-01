@@ -1,6 +1,5 @@
 syntax on
 filetype plugin indent on
-"set omnifunc=syntaxcomplete#Complete
 set autoindent
 
 "colours!
@@ -19,6 +18,13 @@ set hidden
 "gvim-specific settings
 set guifont=Tamsyn\ 11
 set guioptions=aegimt
+
+"i keep accidentally typing these over and over
+command W w
+command Wq wq
+command WQ wq
+command Q q
+command E e
 
 "buffer / tab controls
 nnoremap <C-j> :bn<CR>
@@ -130,8 +136,14 @@ endfunction
 
 function! Settings_tex()
 	"settings
+	setlocal noautoindent
+	setlocal nocindent
+	setlocal nosmartindent
+	setlocal indentexpr=
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	let g:tex_comment_nospell=1
+	set spell
 	"mappings
 	nnoremap -- O%<Space>
 	nnoremap <Leader>c :!latex -output-format=pdf %<CR><CR>

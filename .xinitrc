@@ -33,11 +33,8 @@ xset s off
 #urxvt daemon
 urxvtd &
 
-#smplayer screenshot tmp dir
-if [ ! -d /tmp/smplayer_screenshots ]
-then
-	mkdir /tmp/smplayer_screenshots
-fi
+#QT style mimic gtk
+#export QT_STYLE_OVERRIDE=gtk
 
 xsetroot -cursor_name left_ptr
 compton -b --backend glx --vsync opengl &

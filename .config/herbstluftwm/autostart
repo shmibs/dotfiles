@@ -174,7 +174,7 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(freeciv-sdl|milkytracker|FTL|Tegaki-recognize|Pcsx2|Tilem2|Wine)' pseudotile=on focus=on
+hc rule class~'(SleepIsDeathApp|freeciv-sdl|milkytracker|FTL|Tegaki-recognize|PlayOnLinux|Pcsx2|Tilem2|Wine)' pseudotile=on focus=on
 
 # unlock, just to be sure
 hc unlock
@@ -193,12 +193,6 @@ for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
     # start it on each monitor
     "$panel" $monitor &
 done
-
-# add a tray
-tray=~/.config/herbstluftwm/tray.sh
-if [ -x "$tray" ]; then
-	"$tray" &
-fi
 
 # run dunst with theme colours
 dunst -lb $bg_normal -nb $bg_normal -cb $bg_focus \

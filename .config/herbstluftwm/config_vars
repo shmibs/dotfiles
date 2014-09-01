@@ -1,6 +1,9 @@
 #!/bin/bash
 
-## arch blue
+###############
+#  Arch Blue  #
+###############
+#
 #bg_normal='#333333'
 #fg_normal='#efefef'
 #bg_focus='#00aad4'
@@ -14,19 +17,39 @@
 #fg_yellow='#ffa466'
 #fg_blue='#00aad4'
 
-## section 9
-bg_normal='#333333'
-fg_normal='#efefef'
-bg_focus='#714BA7'
-fg_focus='#efefef'
+###############
+#  Section 9  #
+###############
+#
+#bg_normal='#333333'
+#fg_normal='#efefef'
+#bg_focus='#714BA7'
+#fg_focus='#efefef'
+#bg_urgent='#ff4070'
+#fg_urgent='#efefef'
+#
+#fg_grey='#ababab'
+#fg_red='#ff6699'
+#fg_green='#d5f85f'
+#fg_yellow='#ffa466'
+#fg_blue='#00aad4'
+
+###############
+#  Lain Blind #
+###############
+
+bg_normal='#262626'
+fg_normal='#c1b48e'
+bg_focus='#d0758b'
+fg_focus='#262626'
 bg_urgent='#ff4070'
 fg_urgent='#efefef'
 
-fg_grey='#ababab'
-fg_red='#ff6699'
-fg_green='#d5f85f'
-fg_yellow='#ffa466'
-fg_blue='#00aad4'
+fg_grey='#808080'
+fg_red='#d0758b'
+fg_green='#d0758b'
+fg_yellow='#d0758b'
+fg_blue='#d0758b'
 
 bheight=18
 

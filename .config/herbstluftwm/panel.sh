@@ -119,7 +119,7 @@ fields[6]=""
 # date
 fields[7]=""
 # vertical separator and gap for tray
-fields[8]="%{F${bg_focus}}|    %{F${fg_normal}}"
+#fields[8]="%{F${bg_focus}}|    %{F${fg_normal}}"
 
 
 ######################
