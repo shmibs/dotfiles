@@ -19,8 +19,7 @@ bindkey -e
 setopt notify
 unsetopt beep
 
-# PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[blue]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
-PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[magenta]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
+PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[blue]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
 
 ################# KEYBINDINGS #################
 typeset -g -A key

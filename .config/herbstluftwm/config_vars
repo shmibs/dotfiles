@@ -41,7 +41,7 @@
 bg_normal='#262626'
 fg_normal='#c1b48e'
 bg_focus='#d0758b'
-fg_focus='#262626'
+fg_focus='#efefef'
 bg_urgent='#ff4070'
 fg_urgent='#efefef'
 
