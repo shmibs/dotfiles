@@ -123,6 +123,7 @@ hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
 hc keybind Mod4-Return  spawn urxvt
 hc keybind Mod4-Shift-d spawn ~/games/desura/desura
 hc keybind Mod4-Shift-f spawn firefox
+hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
