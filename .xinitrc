@@ -34,8 +34,9 @@ export INFINALITY_FT_FILTER_PARAMS="16 20 28 20 16"
 xset -dpms
 xset s off
 
-#urxvt daemon
+#daemons
 urxvtd &
+compton -b --backend glx --vsync drm
 
 #QT style mimic gtk
 #export QT_STYLE_OVERRIDE=gtk
@@ -46,8 +47,6 @@ urxvtd &
 command -v optirun && $(echo "" | optirun bar)
 
 xsetroot -cursor_name left_ptr
-compton -b --backend glx --vsync drm
-#ibus-daemon -x &
-nitrogen --restore &
+nitrogen --restore
 
 exec mate-session
