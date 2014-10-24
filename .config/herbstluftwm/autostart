@@ -130,13 +130,7 @@ hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name "vim" -e vim
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
-
-# banshee
-hc keybind Mod4-Shift-Up   spawn banshee --show
-hc keybind Mod4-Shift-Down spawn banshee --hide
-hc keybind Mod4-Left       spawn banshee --restart-or-previous
-hc keybind Mod4-Right      spawn banshee --next
-hc keybind Mod4-Down       spawn banshee --toggle-playing
+hc keybind Mod4-Shift-p spawn urxvt -e pms
 
 # dmenu
 hc keybind Mod4-0 spawn dmenu_run -fn $efont -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal \

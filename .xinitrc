@@ -46,7 +46,7 @@ urxvtd &
 command -v optirun && $(echo "" | optirun bar)
 
 xsetroot -cursor_name left_ptr
-compton -b --backend glx --vsync drm &
+compton -b --backend glx --vsync drm
 #ibus-daemon -x &
 nitrogen --restore &
 

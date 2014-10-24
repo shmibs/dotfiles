@@ -112,7 +112,7 @@ fields[2]=$(update_winlist)
 fields[3]="%{r}"
 # when
 fields[4]=""
-# banshee np
+# mpd
 fields[5]=""
 # conky stats
 fields[6]=""
@@ -130,12 +130,6 @@ fields[7]=""
 # with the first element in the line as a
 # unique identifier for the event type
 
-get_stat() {
-	{
-		conky -c ~/.config/herbstluftwm/panel/conky_stats
-	}
-}
-
 get_date() {
 	{
 		while true; do
@@ -143,6 +137,12 @@ get_date() {
 			sleep 1
 		done
 	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
+get_stat() {
+	{
+		conky -c ~/.config/herbstluftwm/panel/conky_stats
+	}
 }
 
 get_when() {
@@ -156,6 +156,12 @@ get_when() {
 			sleep 10
 		done
 	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
+get_mpd() {
+	while true; do
+		mpc current -f "mpd\t%artist%\t%album%\t%title%" --wait
+	done
 }
 
 
@@ -174,6 +180,8 @@ get_when() {
 	child[2]=$!
 	get_when &
 	child[3]=$!
+	#get_mpd &
+	#child[4]=$!
 	
 	hc --idle
 	
@@ -282,6 +290,15 @@ get_when() {
 			date)
 				notify-send "$(cal)"
 				;;
+			#mpd)
+			#	artist=$(mpc current -f '%artist%')  
+			#	albumartist=$(mpc current -f '%albumartist%')
+			#	if [[ "$artist" != "$albumartist" ]]; then
+			#		artist=$(echo -e "album artist: $albumartist\nartist: $artist")
+			#	else
+			#		artist=$(echo "artist: $artist")
+			#	fi
+			#	file="/home/shmibs/music/$(mpc current -f '%file%')"
 			stats)
 				urxvt -e htop &
 				;;

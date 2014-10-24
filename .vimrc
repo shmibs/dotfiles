@@ -139,7 +139,6 @@ function! Settings_tex()
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
-	setlocal indentexpr=
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	let g:tex_comment_nospell=1
