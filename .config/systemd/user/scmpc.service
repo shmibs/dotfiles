@@ -1,0 +1,10 @@
+[Unit]
+Description=Scrobbling Demon
+After=network.target sound.target
+
+[Service]
+ExecStart=/usr/bin/scmpc -f ~/.config/scmpc/scmpc.conf
+Type=forking
+
+[Install]
+WantedBy=default.target
