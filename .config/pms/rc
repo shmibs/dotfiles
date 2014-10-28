@@ -1,0 +1,42 @@
+set startuplist=library
+set scroll=centered
+set playmode=random
+set ignorecase
+set noregexsearch
+
+unmap F1
+
+unmap h
+unmap l
+unmap F12
+map l play
+map > next
+map < prev
+map ^N next
+map ^P prev
+
+unmap insert
+map v toggle-select
+map a add
+map A add-all
+map ^A add-to
+
+unmap M
+map m mute
+
+unmap t
+unmap T
+unmap R
+map g move-home
+map G move-end
+map J goto-current
+
+unmap C
+unmap ^X
+unmap delete
+map s filter
+map S clear-filters
+map d remove
+map c clear
+
+map r playmode
