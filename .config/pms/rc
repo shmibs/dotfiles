@@ -1,6 +1,9 @@
 set startuplist=library
-set scroll=centered
 set playmode=random
+
+set scroll=centered
+set followcursor
+
 set ignorecase
 set noregexsearch
 
