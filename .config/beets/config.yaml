@@ -1,0 +1,35 @@
+##########
+#  MAIN  #
+##########
+
+directory: ~/music
+library: ~/.config/beets/library.blb
+        
+###############
+#  IMPORTING  #
+###############
+        
+import:
+        copy: yes
+        group_albums: yes
+        timid: no
+
+match:
+        ignored: missing_tracks unmatched_tracks
+
+#############
+#  PLUGINS  #
+#############
+
+plugins: discogs fetchart fuzzy info mpdupdate scrub
+        
+fetchart:
+        auto: yes
+                
+fuzzy:
+        prefix: '@'
+        threshold: 0.8
+                
+mpd:
+        host: localhost
+        port: 6600
