@@ -16,14 +16,14 @@ mate-session
 i was using awesome for a while, but dealing with all
 that lua got annoying. herbstluftwm has the really
 interesting concept of allowing manual tiling of frames
-and then providing automatic layouts for inside the
+and then providing automatic layouts for inside those
 frames. in theory, it's the best of both worlds, but
-gets kind of confusing, so i've just set the layout
-to always be max so frames basically just have multiple
-tabs for me that can by cycled through. it's really
-neat for saving screen space! (try splitting a screen
-with both an editor and a terminal on one side and
-all your documentation on the other)
+it gets kind of confusing, so i've just set the layout
+to always be max. this way frames basically just have
+multiple tabs for me that can by cycled through. it's
+really neat for saving screen space! (try splitting a
+screen with both an editor and a terminal on one side
+and all your documentation on the other)
 
 ###urxvt
 yay for mouseless copy-pasta!
@@ -46,6 +46,6 @@ suddenly a browser is no longer a thing that necessarily
 breaks your workflow when you have to refer to it for
 information. oh, and try [setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
 
-###dunst/dmenu/trayer/compton/bar/nitrogen
+###dunst/dmenu/compton/bar/nitrogen
 useful things all around. i'm still trying to figure out
 alternative mouse buttons with bar.
