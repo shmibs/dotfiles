@@ -121,16 +121,18 @@ hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
 
 # spawn
 hc keybind Mod4-Return  spawn urxvt
+hc keybind Mod4-Shift-b spawn primusrun VBoxSDL --startvm arch
+hc keybind Mod4-Shift-c spawn cvlc v4l2://
 hc keybind Mod4-Shift-d spawn ~/games/desura/desura
 hc keybind Mod4-Shift-f spawn firefox
 hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
+hc keybind Mod4-Shift-p spawn urxvt -e pms
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name "vim" -e vim
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
-hc keybind Mod4-Shift-p spawn urxvt -e pms
 
 # dmenu
 hc keybind Mod4-0 spawn dmenu_run -fn $efont -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal \
