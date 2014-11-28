@@ -1,0 +1,10 @@
+[Unit]
+Description=Scrobbling Demon
+
+After=mpd.service network.target
+
+[Service]
+ExecStart=/usr/bin/mpdas -c /home/shmibs/.config/mpdas/mpdasrc
+
+[Install]
+WantedBy=default.target
