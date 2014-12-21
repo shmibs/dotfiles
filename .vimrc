@@ -27,12 +27,12 @@ highlight Column80 ctermbg=black
 call matchadd('Column80', '\%81v', 100)
 
 "highlight space before tab
-highlight SpaceBeforeTab ctermbg=234
+highlight SpaceBeforeTab ctermbg=black
 call matchadd('SpaceBeforeTab', '^\ \+\t')
 
 "highlight trailing spaces
-highlight TrailingSpace ctermbg=234
-call matchadd('TrailingSpace', '\S\s\+$')
+"highlight TrailingSpace ctermbg=black
+"call matchadd('TrailingSpace', '\S\s\+$')
 
 """""""""""""
 "  ALIASES  "
