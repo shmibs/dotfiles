@@ -26,6 +26,13 @@ set guioptions=aegimt
 highlight Column80 ctermbg=black
 call matchadd('Column80', '\%81v', 100)
 
+"highlight space before tab
+highlight SpaceBeforeTab ctermbg=234
+call matchadd('SpaceBeforeTab', '^\ \+\t')
+
+"highlight trailing spaces
+highlight TrailingSpace ctermbg=234
+call matchadd('TrailingSpace', '\S\s\+$')
 
 """""""""""""
 "  ALIASES  "
@@ -58,16 +65,6 @@ nmap ga <Plug>(EasyAlign)
 """"""""""""""
 "  MAPPINGS  "
 """"""""""""""
-
-"buffer / tab controls
-nnoremap <C-j> :bn<CR>
-nnoremap <C-k> :bp<CR>
-nnoremap <C-g> :buffers<CR>:b<Space>
-nnoremap <C-n> :tabn<CR>
-nnoremap <C-p> :tabp<CR>
-nnoremap <C-t> <C-w>s<C-w>T
-nnoremap <C-w><C-n> :tabm +1<CR>
-nnoremap <C-w><C-p> :tabm -1<CR>
 
 "insert lines below
 nnoremap ++ ==
