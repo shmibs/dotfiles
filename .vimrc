@@ -1,10 +1,13 @@
+""""""""""""""
+"  SETTINGS  "
+""""""""""""""
+
 syntax on
 filetype plugin indent on
 set autoindent
 
 "colours!
-colorscheme anotherdark
-set background=dark
+colorscheme shmibs
 
 "enable status-line
 set laststatus=2
@@ -19,12 +22,42 @@ set hidden
 set guifont=Tamsyn\ 11
 set guioptions=aegimt
 
+"visual marker for 80th column
+highlight Column80 ctermbg=black
+call matchadd('Column80', '\%81v', 100)
+
+
+"""""""""""""
+"  ALIASES  "
+"""""""""""""
+
 "i keep accidentally typing these over and over
-command W w
+command W  w
 command Wq wq
 command WQ wq
-command Q q
-command E e
+command Q  q
+command E  e
+
+
+"""""""""""""""""""
+"  PLUGIN THINGS  "
+"""""""""""""""""""
+
+"Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+"Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"lightline things
+"let g:lightline = {
+"	\ 'colorscheme': 'shmibsline'
+"	\ }
+
+
+""""""""""""""
+"  MAPPINGS  "
+""""""""""""""
 
 "buffer / tab controls
 nnoremap <C-j> :bn<CR>
@@ -68,23 +101,32 @@ if &term != "linux"
 	xnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
 end
 
+
+"""""""""""""""""""""""
+"  FILETYPE SETTINGS  "
+"""""""""""""""""""""""
+
+"always use rust instead of hercules
+au BufNewFile,BufRead *.rs set filetype=rust
+
 "annoying syntax-related values that need to be set before files are
 "opened
 let g:c_no_comment_fold = 1
 let g:c_no_if0_fold = 1
 
 "other filetype-specific settings. i can't figure out how to stick all
-"the FileTypes in one list (mostly because i have no idea what i'm
+"the FileTypes in one dict (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
-autocmd FileType cpp     call Settings_cpp()
+autocmd FileType cpp     call Settings_c()
 autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
 autocmd FileType perl    call Settings_script()
 autocmd FileType python  call Settings_script()
+autocmd FileType rust    call Settings_c()
 autocmd FileType sh      call Settings_script()
 autocmd FileType vim     call Settings_vim()
 autocmd FileType zsh     call Settings_script()
@@ -97,14 +139,6 @@ function! Settings_asm()
 endfunction
 
 function! Settings_c()
-	"settings
-	setlocal foldmethod=syntax
-	"mappings
-	nnoremap <Leader>c :!make<CR>
-	nnoremap -- O<Space>*/<Esc>hhi/*<Space>
-endfunction
-
-function! Settings_cpp()
 	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4

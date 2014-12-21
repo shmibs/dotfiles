@@ -1,6 +1,7 @@
 zstyle ':completion:*' completer _complete _ignored 
 zstyle :compinstall filename '/home/shmibs/.zshrc'
 setopt completealiases
+setopt interactivecomments
 
 autoload -U compinit
 compinit
@@ -20,6 +21,21 @@ setopt notify
 unsetopt beep
 
 PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[blue]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
+
+################# HIGHLIGHTING ################
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
+
+#ZSH_HIGHLIGHT_STYLES[alias]="fg=yellow"
+#ZSH_HIGHLIGHT_STYLES[builtin]="fg=yellow"
+#ZSH_HIGHLIGHT_STYLES[function]="fg=yellow"
+#ZSH_HIGHLIGHT_STYLES[command]="fg=yellow"
+
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=red"
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=red"
+
+# highlight comments
+ZSH_HIGHLIGHT_PATTERNS+=('\#*' 'fg=cyan')
 
 ################# KEYBINDINGS #################
 typeset -g -A key
@@ -95,6 +111,14 @@ b2h() {
 	done
 	
 	echo "${val}${suffixes[$sindex]}"
+}
+
+scap() {
+	archey3
+	sleep .1
+	rm /tmp/out.webm
+	ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
+		-c:v libvpx -b:v 4M -threads 4 /tmp/out.webm > /dev/null 2>&1
 }
 
 send() {
