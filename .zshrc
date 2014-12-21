@@ -94,6 +94,7 @@ alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
 alias thesaurus='aiksaurus'
 alias vmount='udevil mount'
 alias vumount='udevil umount'
+alias :q='exit'
 
 export EDITOR="vim"
 export PAGER="less -R"
