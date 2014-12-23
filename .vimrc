@@ -18,11 +18,15 @@ set noshowmode
 "allow edited background buffers
 set hidden
 
+"spelling
+set spelllang=en_gb
+
 "gvim-specific settings
 set guifont=Tamsyn\ 11
 set guioptions=aegimt
 
-"visual marker for 80th column
+
+"visual marker for overflowing the 80th column
 highlight Column80 ctermbg=black
 call matchadd('Column80', '\%81v', 100)
 
@@ -55,11 +59,6 @@ vmap <Enter> <Plug>(EasyAlign)
 
 "Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-
-"lightline things
-"let g:lightline = {
-"	\ 'colorscheme': 'shmibsline'
-"	\ }
 
 
 """"""""""""""
@@ -172,12 +171,12 @@ function! Settings_tex()
 	setlocal nosmartindent
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	setlocal spell
 	let g:tex_comment_nospell=1
-	set spell
 	"mappings
 	nnoremap -- O%<Space>
-	nnoremap <Leader>c :!latex -output-format=pdf %<CR><CR>
-	nnoremap <Leader>C :!latex -output-format=pdf %<CR>
+	nnoremap <Leader>c :!latex -output-format=pdf "%"<CR><CR>
+	nnoremap <Leader>C :!latex -output-format=pdf "%"<CR>
 endfunction
 
 function! Settings_vim()
