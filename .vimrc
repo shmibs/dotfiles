@@ -65,6 +65,9 @@ nmap ga <Plug>(EasyAlign)
 "  MAPPINGS  "
 """"""""""""""
 
+"gr is pretty useless, and gq is too cumbersome for reflow commands
+noremap gr gq
+
 "insert lines below
 nnoremap ++ ==
 nnoremap = Oa<C-u><Esc>j

@@ -88,6 +88,7 @@ alias diff='colordiff'
 alias less='less -R'
 alias latex='latex -output-format=pdf'
 alias ag='ag --color-match "1;34"'
+alias svim='sudo -E vim'
 
 alias def='sdcv'
 alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
