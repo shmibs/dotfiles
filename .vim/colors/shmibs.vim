@@ -18,6 +18,7 @@ hi! Pmenu        ctermfg=white ctermbg=magenta
 hi! PmenuSel     ctermfg=black ctermbg=lightmagenta
 hi! Question     ctermfg=green
 hi! Statement    ctermfg=yellow
+hi! SignColumn   ctermfg=NONE ctermbg=NONE cterm=NONE
 hi! Special      ctermfg=magenta
 hi! SpecialKey   ctermfg=green
 hi! SpellBad     ctermfg=NONE ctermbg=NONE cterm=underline
