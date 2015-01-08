@@ -10,6 +10,10 @@ hi! Constant     ctermfg=red
 hi! CursorLine   ctermfg=NONE ctermbg=236 cterm=NONE
 hi! CursorLineNr ctermfg=white ctermbg=236 cterm=bold
 hi! Directory    ctermfg=cyan
+hi! DiffAdd ctermfg=green ctermbg=NONE cterm=bold
+hi! DiffDelete ctermfg=red ctermbg=NONE cterm=bold
+hi! DiffChange ctermfg=NONE ctermbg=NONE
+hi! DiffText ctermfg=magenta ctermbg=NONE cterm=bold
 hi! Folded       ctermfg=240 ctermbg=NONE
 hi! Identifier   cterm=bold ctermfg=cyan
 hi! NonText      ctermfg=yellow ctermbg=234 cterm=bold
@@ -22,6 +26,7 @@ hi! SignColumn   ctermfg=NONE ctermbg=NONE cterm=NONE
 hi! Special      ctermfg=magenta
 hi! SpecialKey   ctermfg=green
 hi! SpellBad     ctermfg=NONE ctermbg=NONE cterm=underline
+hi! SpellRare    ctermfg=NONE ctermbg=NONE
 hi! Title        ctermfg=magenta
 hi! Todo         ctermfg=black ctermbg=yellow
 hi! Type         ctermfg=green

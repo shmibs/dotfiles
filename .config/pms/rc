@@ -2,9 +2,11 @@ set startuplist=library
 set playmode=random
 
 set scroll=centered
+set sort=track disc album
 
 set ignorecase
 set noregexsearch
+
 
 unmap F1
 

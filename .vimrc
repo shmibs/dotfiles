@@ -25,7 +25,6 @@ set spelllang=en_gb
 set guifont=Tamsyn\ 11
 set guioptions=aegimt
 
-
 "visual marker for overflowing the 80th column
 highlight Column80 ctermbg=black
 call matchadd('Column80', '\%81v', 100)
@@ -78,12 +77,17 @@ nnoremap fc zC
 nnoremap fm zM
 nnoremap fr zR
 
+"buffer-handling
+nnoremap <C-j> :bn<CR>
+nnoremap <C-k> :bp<CR>
+nnoremap <C-g> :buffers<CR>:b<Space>
+
 "copy words from above and below the cursor
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>" : matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 "use the X clipboard for things when running in a virtual terminal, because yes
-if &term != "linux"
+if &term != "linux" && has('clipboard')
 	nnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
 	nnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
 	xnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
@@ -108,6 +112,9 @@ end
 "always use rust instead of hercules
 au BufNewFile,BufRead *.rs set filetype=rust
 
+"always use LaTeX
+au BufNewFile,BufRead *.tex set filetype=tex
+
 "annoying syntax-related values that need to be set before files are
 "opened
 let g:c_no_comment_fold = 1
@@ -123,10 +130,11 @@ autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
+autocmd FileType nim     call Settings_nim()
 autocmd FileType perl    call Settings_script()
 autocmd FileType python  call Settings_script()
 autocmd FileType ruby    call Settings_script()
-autocmd FileType rust    call Settings_c()
+autocmd FileType rust    call Settings_rust()
 autocmd FileType sh      call Settings_script()
 autocmd FileType vim     call Settings_vim()
 autocmd FileType zsh     call Settings_script()
@@ -135,7 +143,7 @@ function! Settings_asm()
 	"settings
 	setlocal foldmethod=syntax
 	"mappings
-	nnoremap -- A<Tab>;<Space>
+	nnoremap <buffer> -- A<Tab>;<Space>
 endfunction
 
 function! Settings_c()
@@ -144,20 +152,34 @@ function! Settings_c()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	"mappings
-	nnoremap <Leader>c :!make<CR>
-	nnoremap -- O<Space>*/<Esc>hhi/*<Space>
+	nnoremap <buffer> - O<Space>*/<Esc>hhi/*<Space>
 endfunction
 
 function! Settings_haskell()
 	"settings
 	"mappings
-	nnoremap -- O--<Space>
+	nnoremap <buffer> -- O--<Space>
 endfunction
 
 function! Settings_matlab()
 	"settings
 	"mappings
-	nnoremap -- O%<Space>
+	nnoremap <buffer> -- O%<Space>
+endfunction
+
+function! Settings_nim()
+	call Settings_script()
+	function! JumpToDef()
+		if exists("*GotoDefinition_" . &filetype)
+			call GotoDefinition_{&filetype}()
+		else
+			execute "norm! <C-]>"
+		endif
+	endfunction
+	"mappings
+	nnoremap <buffer> <M-g> :call JumpToDef()<cr>
+	inoremap <buffer> <M-g> <esc>:call JumpToDef()<cr>i
+	nnoremap <buffer> -_ O##<Space>
 endfunction
 
 function! Settings_script()
@@ -165,7 +187,12 @@ function! Settings_script()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	"mappings
-	nnoremap -- O#<Space>
+	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_rust()
+	call Settings_c()
+	nnoremap <buffer> -_ O///<Space>
 endfunction
 
 function! Settings_tex()
@@ -178,13 +205,15 @@ function! Settings_tex()
 	setlocal spell
 	let g:tex_comment_nospell=1
 	"mappings
-	nnoremap -- O%<Space>
-	nnoremap <Leader>c :!latex -output-format=pdf "%"<CR><CR>
-	nnoremap <Leader>C :!latex -output-format=pdf "%"<CR>
+	nnoremap <buffer> -- O%<Space>
+	nnoremap <buffer> <Leader>c :!latex -output-format=pdf "%"<CR><CR>
+	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
 endfunction
 
 function! Settings_vim()
 	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
 	"mappings
-	nnoremap -- O"
+	nnoremap <buffer> -- O"
 endfunction

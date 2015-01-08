@@ -21,7 +21,13 @@ match:
 #  PLUGINS  #
 #############
 
-plugins: discogs fetchart fuzzy info mpdupdate scrub
+plugins: convert discogs fetchart fuzzy info mpdupdate scrub
+
+convert:
+        auto: no
+        copy_album_art: no
+        embed: no
+        never_convert_lossy_files: yes
         
 fetchart:
         auto: yes

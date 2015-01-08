@@ -4,6 +4,7 @@ fs=yes
 ass-hinting=native
 vo=opengl-hq
 slang=en,eng
+framedrop=no
 
 # audio
 alang=jp,jpn,jap,en,eng

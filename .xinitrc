@@ -22,6 +22,9 @@ fcitx &
 sxiv -c
 export XDG_CACHE_HOME=/home/shmibs/.cache
 
+#clear vimtags
+rm ~/.vimtags
+
 #load local fonts
 xset +fp /usr/share/fonts/local
 xset fp rehash
