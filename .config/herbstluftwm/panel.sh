@@ -45,22 +45,6 @@ hc pad $monitor $bheight
 # functions for retrieving and processing data
 # upon events
 
-# bytes to human readable, cropped to 4 chars wide
-#b2hc() {
-#	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
-#	sindex=0
-#	val=$1
-#	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
-#	
-#	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
-#		val=$(echo "scale=2; $val / 1024" | bc)
-#		let sindex=sindex+1
-#	done
-#	
-#	val=$(echo $val | sed
-#	echo "${val}${suffixes[$sindex]}"
-#}
-
 update_taglist() {
 	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
 	hc tag_status | tr '\t' '\n' | sed \
@@ -225,21 +209,10 @@ get_mpd() {
 				event[2]=$(echo ${event[2]} | sed \
 					-e 's/^\(..\)$/\1  /' \
 					-e 's/^\(...\)$/\1 /')
-				event[3]=$(echo ${event[3]} | sed \
-					-e 's/^\(..\)$/\1   /' \
-					-e 's/^\(...\)$/\1  /' \
-					-e 's/^\(....\)$/\1 /')
-				event[4]=$(echo ${event[4]} | sed \
-					-e 's/^\(..\)$/\1   /' \
-					-e 's/^\(...\)$/\1  /' \
-					-e 's/^\(....\)$/\1 /')
 				fields[6]=$(
 					echo -n "%{F${bg_focus}}|%{F${fg_normal} A:stats:} "
 					echo -n "%{F${fg_blue}}\uE023%{F${fg_normal}} ${event[1]} "
 					echo -n "%{F${fg_yellow}}\uE020%{F${fg_normal}} ${event[2]} "
-					echo -n "%{F${bg_focus}}|%{F${fg_normal}} "
-					echo -n "%{F${fg_green}}\uE07B%{F${fg_normal}} ${event[3]} "
-					echo -n "%{F${fg_red}}\uE07C%{F${fg_normal}} ${event[4]} "
 					echo -n "%{A}")
 				;;
 				
@@ -266,12 +239,8 @@ get_mpd() {
 				;;
 		esac
 		
-		# i wish i could just print the entire array
-		# this easily, but that inserts spaces
-		#echo -e "${fields[@]}"
-		
-		echo -en "${fields[1]}${fields[2]}${fields[3]}${fields[4]}"
-		echo -e "${fields[5]}${fields[6]}${fields[7]}${fields[8]}"
+		# finally, echo all the fields in order
+		printf '%b' "${fields[@]}" '\n'
 		
 	done
 	

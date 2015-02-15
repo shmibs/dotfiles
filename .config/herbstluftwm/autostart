@@ -118,6 +118,7 @@ hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
+hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e vim ~/notes
 
 # spawn
 hc keybind Mod4-Return  spawn urxvt
