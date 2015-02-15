@@ -59,6 +59,15 @@ vmap <Enter> <Plug>(EasyAlign)
 "Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+"timeout on keycodes to prevent fcitx-switcher from lagging
+set ttimeoutlen=100
+
+"vertical split ultisnips edit
+let g:UltiSnipsEditSplit="vertical"
+
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
 
 """"""""""""""
 "  MAPPINGS  "
@@ -152,7 +161,7 @@ function! Settings_c()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	"mappings
-	nnoremap <buffer> - O<Space>*/<Esc>hhi/*<Space>
+	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
 endfunction
 
 function! Settings_haskell()
