@@ -4,35 +4,36 @@
 # where C/M/S indicate Ctrl/Meta(Alt)/Shift modifier states and KEY is the X
 # keysym as listed in /usr/include/X11/keysymdef.h without the "XK_" prefix.
 
-case "$1" in
-"y")
-        echo -n "$2" | xclip -selection clipboard ;;
-"C-d")
-        rm "$2" ;;
-"g")
-        gimp "$2" & ;;
-"s")
-
-	scp "$2" shmibbles.me:/srv/http/tmp/
-	if [ $? -ne 0 ]; then
-		notify-send "uploading $(basename $2) to /tmp/ failed"
-	else
-		name=$(echo "http://shmibbles.me/tmp/$(basename $2)" | sed 's/ /%20/g')
-		echo "$name" | tr -d '\n' | xclip -i -selection clipboard
-		echo "$name" | tr -d '\n' | xclip -i -selection primary
-		notify-send "uploaded $(basename $2) to /tmp/"
-	fi
-	;;
-"i")
-	scp "$2" shmibbles.me:/srv/http/img/
-	if [ $? -ne 0 ]; then
-		notify-send "uploading $(basename $2) to /img/ failed"
-	else
-		name=$(echo "http://shmibbles.me/img/$(basename $2)" | sed 's/ /%20/g')
-		echo "$name" | tr -d '\n' | xclip -i -selection clipboard
-		echo "$name" | tr -d '\n' | xclip -i -selection primary
-		notify-send "uploaded $(basename $2) to /img/"
-	fi
-	;;
-
-esac
+while read file
+do
+	case "$1" in
+	"y")
+		echo -n "$file" | xclip -selection clipboard ;;
+	"C-d")
+		rm "$file" ;;
+	"g")
+		gimp "$file" & ;;
+	"s")
+		scp "$file" shmibbles.me:/srv/http/tmp/
+		if [ $? -ne 0 ]; then
+			notify-send "uploading $(basename $file) to /tmp/ failed"
+		else
+			name=$(echo "http://shmibbles.me/tmp/$(basename $file)" | sed 's/ /%20/g')
+			echo "$name" | tr -d '\n' | xclip -i -selection clipboard
+			echo "$name" | tr -d '\n' | xclip -i -selection primary
+			notify-send "uploaded $(basename $file) to /tmp/"
+		fi
+		;;
+	"i")
+		scp "$file" shmibbles.me:/srv/http/img/
+		if [ $? -ne 0 ]; then
+			notify-send "uploading $(basename $file) to /img/ failed"
+		else
+			name=$(echo "http://shmibbles.me/img/$(basename $file)" | sed 's/ /%20/g')
+			echo "$name" | tr -d '\n' | xclip -i -selection clipboard
+			echo "$name" | tr -d '\n' | xclip -i -selection primary
+			notify-send "uploaded $(basename $file) to /img/"
+		fi
+		;;
+	esac
+done
