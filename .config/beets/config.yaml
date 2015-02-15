@@ -12,7 +12,8 @@ library: ~/.config/beets/library.blb
 import:
         copy: yes
         group_albums: yes
-        timid: no
+        timid: yes
+        write: yes
 
 match:
         ignored: missing_tracks unmatched_tracks
@@ -21,13 +22,16 @@ match:
 #  PLUGINS  #
 #############
 
-plugins: convert discogs fetchart fuzzy info mpdupdate scrub
+plugins: convert chroma discogs fetchart fuzzy info mpdupdate scrub
 
 convert:
         auto: no
         copy_album_art: no
         embed: no
         never_convert_lossy_files: yes
+
+chroma:
+        auto: yes
         
 fetchart:
         auto: yes
