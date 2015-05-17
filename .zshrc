@@ -125,7 +125,7 @@ scap() {
 
 send() {
 	if [ "$1" ]; then
-		scp $@ shmibbles.me:/srv/http/tmp/
+		scp $@ shmibbles.me:http/tmp/
 		if [ $? -eq 0 ]; then
 			for name in "$@"
 			do
@@ -142,7 +142,7 @@ send() {
 
 sendi() {
 	if [ "$1" ]; then
-		scp $@ shmibbles.me:/srv/http/img/
+		scp $@ shmibbles.me:http/img/
 		if [ $? -eq 0 ]; then
 			for name in "$@"
 			do
@@ -195,7 +195,7 @@ ssh-scrot() {
 	scrot /tmp/$name.png
 	convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
 
-	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:/home/shmibs/http/img/scrot/$date
+	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:http/img/scrot/$date
 
 	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
 	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
@@ -239,3 +239,64 @@ update-backdrops() {
 	done
 }
 
+make-gif() {
+
+	if [[ -z "$1" ]]; then
+		break
+	fi
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+	
+	rm -f make-gif-in
+	
+	ln -s "$1" make-gif-in
+	
+	echo -n "start [00:00:00]: "
+	read start
+	if [[ -z "$start" ]]; then
+		start="00:00:00"
+	fi
+	
+	echo -n "length [full]: "
+	read length
+	if [[ -z "$length" ]]; then
+		t=""
+		length=""
+	else
+		t="-t"
+	fi
+	
+	echo -n "width [480]: "
+	read width
+	if [[ -z "$width" ]]; then
+		width="480"
+	fi
+
+	echo -n "use subtitles? [y/N]: "
+	read subs
+	if [[ "$subs" == "y" || "$subs" == "Y" ]]; then
+		subs="true"
+	else 
+		subs=""
+	fi
+	
+	if [[ $subs ]]; then
+		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
+			-copyts -vf "subtitles=make-gif-in,fps=10,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png \
+			-copyts -filter_complex \
+			"subtitles=make-gif-in,fps=10,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			out.gif
+	else
+		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
+			$sub1 $sub2 -vf "fps=10,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png -filter_complex \
+			"fps=10,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			out.gif
+	fi
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+}
