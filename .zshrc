@@ -267,6 +267,12 @@ make-gif() {
 	else
 		t="-t"
 	fi
+
+	echo -n "fps [10]: "
+	read fps
+	if [[ -z "$fps" ]]; then
+		fps="10"
+	fi
 	
 	echo -n "width [480]: "
 	read width
@@ -284,16 +290,16 @@ make-gif() {
 	
 	if [[ $subs ]]; then
 		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
-			-copyts -vf "subtitles=make-gif-in,fps=10,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+			-copyts -vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
 		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png \
 			-copyts -filter_complex \
-			"subtitles=make-gif-in,fps=10,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
 			out.gif
 	else
 		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
-			$sub1 $sub2 -vf "fps=10,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+			$sub1 $sub2 -vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
 		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png -filter_complex \
-			"fps=10,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
 			out.gif
 	fi
 
