@@ -291,14 +291,14 @@ make-gif() {
 	if [[ $subs ]]; then
 		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
 			-copyts -vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
-		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png \
+		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png \
 			-copyts -filter_complex \
 			"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
 			out.gif
 	else
 		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
-			$sub1 $sub2 -vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
-		ffmpeg -ss "$start" $t "$length" -i "$1" $sub1 $sub2 -i make-gif-palette.png -filter_complex \
+			-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png -filter_complex \
 			"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
 			out.gif
 	fi
