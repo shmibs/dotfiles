@@ -135,8 +135,11 @@ let g:c_no_if0_fold = 1
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
 autocmd FileType cpp     call Settings_c()
+autocmd FileType css     call Settings_c()
 autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
+autocmd FileType html    call Settings_html()
+autocmd FileType xhtml   call Settings_html()
 autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
 autocmd FileType nim     call Settings_nim()
@@ -145,6 +148,7 @@ autocmd FileType python  call Settings_script()
 autocmd FileType ruby    call Settings_script()
 autocmd FileType rust    call Settings_rust()
 autocmd FileType sh      call Settings_script()
+autocmd FileType text    call Settings_text()
 autocmd FileType vim     call Settings_vim()
 autocmd FileType zsh     call Settings_script()
 
@@ -160,6 +164,7 @@ function! Settings_c()
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
 endfunction
@@ -168,6 +173,16 @@ function! Settings_haskell()
 	"settings
 	"mappings
 	nnoremap <buffer> -- O--<Space>
+endfunction
+
+function! Settings_html()
+	"settings
+	setlocal foldmethod=syntax
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	setlocal softtabstop=4
+	"mappings
+	nnoremap <buffer> -- O<Space>--><Esc>hhhi<!--<Space>
 endfunction
 
 function! Settings_matlab()
@@ -195,6 +210,7 @@ function! Settings_script()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O#<Space>
 endfunction
@@ -211,18 +227,28 @@ function! Settings_tex()
 	setlocal nosmartindent
 	setlocal shiftwidth=4
 	setlocal tabstop=4
-	setlocal spell
-	let g:tex_comment_nospell=1
+	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O%<Space>
 	nnoremap <buffer> <Leader>c :!latex -output-format=pdf "%"<CR><CR>
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
 endfunction
 
+function! Settings_text()
+	setlocal formatoptions+=ta
+	setlocal noautoindent
+	setlocal nocindent
+	setlocal nosmartindent
+	setlocal tabstop=4
+	setlocal softtabstop=4
+	setlocal spell
+endfunction
+
 function! Settings_vim()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
+	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O"
 endfunction
