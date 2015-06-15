@@ -78,7 +78,7 @@ noremap gr gq
 
 "insert lines below
 nnoremap ++ ==
-nnoremap = Oa<C-u><Esc>j
+nnoremap = O<Esc>j
 
 "folds!
 nnoremap fo zO
@@ -118,16 +118,18 @@ end
 "  FILETYPE SETTINGS  "
 """""""""""""""""""""""
 
-"always use rust instead of hercules
-au BufNewFile,BufRead *.rs set filetype=rust
-
-"always use LaTeX
-au BufNewFile,BufRead *.tex set filetype=tex
-
 "annoying syntax-related values that need to be set before files are
 "opened
 let g:c_no_comment_fold = 1
 let g:c_no_if0_fold = 1
+
+if has("autocmd")
+	
+"always use rust instead of hercules
+autocmd BufNewFile,BufRead *.rs set filetype=rust
+
+"always use LaTeX
+autocmd BufNewFile,BufRead *.tex set filetype=tex
 
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one dict (mostly because i have no idea what i'm
@@ -252,3 +254,5 @@ function! Settings_vim()
 	"mappings
 	nnoremap <buffer> -- O"
 endfunction
+
+endif "autocmd

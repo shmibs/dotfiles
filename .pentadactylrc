@@ -3,8 +3,8 @@
 loadplugins '\.(js|penta)$'
 group user
 highlight Hint font: bold 12px "Droid Sans Mono", monospace !important; margin: -.2ex; padding: 0 0 0 1px; outline: 1px solid rgba(0, 0, 0, .5); background: rgba(255, 248, 231, .8); color: black; text-transform: uppercase;
-map -count -modes=n,v ! <count>:tabopen<Space>duckduckgo<Space>!
-map -count -modes=n,v s <count>:tabopen<Space>duckduckgo<Space>
+map -count -modes=n,v ! <count>:tabopen<Space>duckduckgo-lite<Space>!
+map -count -modes=n,v s <count>:tabopen<Space>duckduckgo-lite<Space>
 map -count -modes=n,v S <count>:open<Space>duckduckgo<Space>
 map -count -modes=n,v <C-g> -builtin <count>\b
 set hintkeys=sldkfjgh

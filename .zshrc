@@ -82,16 +82,27 @@ bindkey '^N' down-history
 
 
 ################### ALIASES ##################
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias diff='colordiff'
-alias less='less -R'
-alias latex='latex -output-format=pdf'
 alias ag='ag --color-match "1;34"'
-alias svim='sudo -E vim'
+alias diff='colordiff'
+alias grep='grep --color=auto'
+alias latex='latex -output-format=pdf'
+alias less='less -R'
+alias ls='ls --color=auto'
+
+# ignore non-tracked files
+git() {
+	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
+		shift
+		$(which -p git) status -uno "$@"
+	else
+		$(which -p git) "$@"
+	fi
+}
 
 alias def='sdcv'
+alias dvd='mpv --deinterlace=yes dvd://'
 alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
+alias svim='sudo -E vim'
 alias thesaurus='aiksaurus'
 alias vmount='udevil mount'
 alias vumount='udevil umount'
@@ -305,4 +316,23 @@ make-gif() {
 
 	rm -f make-gif-palette.png
 	rm -f make-gif-in
+}
+
+fuck() {
+	fuck="fuck"
+	while true; do
+		echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
+
+		for i in {1..4}; do
+			if [[ $((RANDOM%2)) -eq 1 ]]; then
+				echo -n $fuck[$i] | tr '[:lower:]' '[:upper:]'
+			else
+				echo -n $fuck[$i]
+			fi
+		done
+
+		for i in {1..$((RANDOM%20))}; do
+			echo -n " "
+		done
+	done
 }

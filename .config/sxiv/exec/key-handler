@@ -14,7 +14,7 @@ do
 	"g")
 		gimp "$file" & ;;
 	"s")
-		scp "$file" shmibbles.me:/srv/http/tmp/
+		scp "$file" shmibbles.me:http/tmp/
 		if [ $? -ne 0 ]; then
 			notify-send "uploading $(basename $file) to /tmp/ failed"
 		else
@@ -25,7 +25,7 @@ do
 		fi
 		;;
 	"i")
-		scp "$file" shmibbles.me:/srv/http/img/
+		scp "$file" shmibbles.me:http/img/
 		if [ $? -ne 0 ]; then
 			notify-send "uploading $(basename $file) to /img/ failed"
 		else

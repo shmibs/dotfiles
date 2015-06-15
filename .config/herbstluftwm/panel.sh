@@ -34,6 +34,12 @@ fg_green=$(echo -n '#ff'; echo "$fg_green" | tr -d '#')
 fg_yellow=$(echo -n '#ff'; echo "$fg_yellow" | tr -d '#')
 fg_blue=$(echo -n '#ff'; echo "$fg_blue" | tr -d '#')
 
+# these are annoying, but i can't figure out a stateless way to handle rotation
+declare -i mpd_offset
+declare -i mpd_length
+declare mpd_current
+declare mpd_playing
+
 hc pad $monitor $bheight
 
 
@@ -44,6 +50,20 @@ hc pad $monitor $bheight
 
 # functions for retrieving and processing data
 # upon events
+
+update_mpd() {
+		echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
+		echo -n "%{F${fg_green}}\uE05C%{F${fg_normal}} "
+		#echo -n "$mpd_current" | cut -c -$(expr 20 - "$mpd_offset")
+		echo "%{A}"
+		if [[ $mpd_length -gt 20 ]]; then
+			if [[ $mpd_offset -lt $[mpd_length-1] ]]; then
+				mpd_offset=$[mpd_offset+1]
+			else
+				mpd_offset=0
+			fi
+		fi
+}
 
 update_taglist() {
 	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
@@ -62,7 +82,7 @@ update_taglist() {
 update_winlist() {
 	focus_id=$(hc get_attr clients.focus.winid)
 
-	if [[ "$focus_id" == "" ]]; then
+	if [[ -z "$focus_id" ]]; then
 		return
 	fi
 
@@ -102,8 +122,7 @@ fields[5]=""
 fields[6]=""
 # date
 fields[7]=""
-# vertical separator and gap for tray
-#fields[8]="%{F${bg_focus}}|    %{F${fg_normal}}"
+
 
 
 ######################
@@ -123,6 +142,17 @@ get_date() {
 	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
 }
 
+get_mpd() {
+	while true; do
+		if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
+			echo -e "mpd\tpaused"
+		else
+			echo -e "mpd\tplaying"
+		fi
+		mpc idle player
+	done
+}
+
 get_stat() {
 	{
 		conky -c ~/.config/herbstluftwm/panel/conky_stats
@@ -132,7 +162,7 @@ get_stat() {
 get_when() {
 	{
 		while true; do
-			if [[ "$(when --future=2 | sed '1,2d')" == "" ]]; then
+			if [[ -z "$(when --future=2 | sed '1,2d')" ]]; then
 				echo -e 'when\t0'
 			else
 				echo -e 'when\t1'
@@ -140,12 +170,6 @@ get_when() {
 			sleep 10
 		done
 	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
-}
-
-get_mpd() {
-	while true; do
-		mpc current -f "mpd\t%artist%\t%album%\t%title%" --wait
-	done
 }
 
 
@@ -164,8 +188,8 @@ get_mpd() {
 	child[2]=$!
 	get_when &
 	child[3]=$!
-	#get_mpd &
-	#child[4]=$!
+	get_mpd &
+	child[4]=$!
 	
 	hc --idle
 	
@@ -173,7 +197,7 @@ get_mpd() {
 		kill $id
 	done
 
-	pkill bar
+	pkill lemonbar
 	
 } 2> /dev/null | {
 
@@ -198,6 +222,24 @@ get_mpd() {
 		case "${event[0]}" in
 			date)
 				fields[7]="%{F${bg_focus}}|%{F${fg_normal} A:date:} \uE015 ${event[@]:1} %{A}"
+				if [[ $mpd_playing ]]; then
+					fields[5]=$(update_mpd)
+				fi
+				;;
+				
+			mpd)
+				if [[ "${event[1]}" == "playing" ]]; then
+					mpd_offset=0
+					mpd_current="$(mpc current) "
+					mpd_length=${#mpd_current}
+					mpd_playing=true
+					fields[5]=$(update_mpd)
+				else
+					mpd_offset=0
+					mpd_length=0
+					mpd_current=""
+					mpd_playing=false
+				fi
 				;;
 				
 			stats)
@@ -245,7 +287,8 @@ get_mpd() {
 	done
 	
 	# pass the events into bar
-} 2> /dev/null | bar -f $dfont -g${width}x${bheight}+${xpos}+${ypos} \
+} 2> /dev/null | lemonbar -f "$bfont1" -f "$bfont2" \
+	-g${width}x${bheight}+${xpos}+${ypos} \
 	-B ${bg_normal} -F ${fg_normal} | \
 {
 
@@ -259,15 +302,9 @@ get_mpd() {
 			date)
 				notify-send "$(cal)"
 				;;
-			#mpd)
-			#	artist=$(mpc current -f '%artist%')  
-			#	albumartist=$(mpc current -f '%albumartist%')
-			#	if [[ "$artist" != "$albumartist" ]]; then
-			#		artist=$(echo -e "album artist: $albumartist\nartist: $artist")
-			#	else
-			#		artist=$(echo "artist: $artist")
-			#	fi
-			#	file="/home/shmibs/music/$(mpc current -f '%file%')"
+			mpd)
+				notify-send "$(mpc status)"
+				;;
 			stats)
 				urxvt -e htop &
 				;;
