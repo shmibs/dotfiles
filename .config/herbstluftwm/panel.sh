@@ -150,6 +150,9 @@ get_mpd() {
 			echo -e "mpd\tplaying"
 		fi
 		mpc idle player
+		if [[ $? ]]; then
+			break
+		fi
 	done
 }
 
