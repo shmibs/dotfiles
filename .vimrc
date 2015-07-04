@@ -77,8 +77,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 noremap gr gq
 
 "insert lines below
-nnoremap ++ ==
-nnoremap = O<Esc>j
+nnoremap <silent>= :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 "folds!
 nnoremap fo zO
@@ -136,14 +135,17 @@ autocmd BufNewFile,BufRead *.tex set filetype=tex
 "doing with viml), so separate lines it is.
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
+autocmd FileType coffee  call Settings_coffee()
 autocmd FileType cpp     call Settings_c()
 autocmd FileType css     call Settings_c()
+autocmd FileType d       call Settings_c()
 autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType html    call Settings_html()
 autocmd FileType xhtml   call Settings_html()
 autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
+autocmd FileType mkd     call Settings_text()
 autocmd FileType nim     call Settings_nim()
 autocmd FileType perl    call Settings_script()
 autocmd FileType python  call Settings_script()
@@ -169,6 +171,16 @@ function! Settings_c()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
+endfunction
+
+function! Settings_coffee()
+	"settings
+	setlocal foldmethod=syntax
+	setlocal shiftwidth=2
+	setlocal tabstop=2
+	setlocal softtabstop=2
+	"mappings
+	nnoremap <buffer> -- O#<Space>
 endfunction
 
 function! Settings_haskell()
