@@ -24,16 +24,8 @@ do
 			notify-send "uploaded $(basename $file) to /tmp/"
 		fi
 		;;
-	"i")
-		scp "$file" shmibbles.me:http/img/
-		if [ $? -ne 0 ]; then
-			notify-send "uploading $(basename $file) to /img/ failed"
-		else
-			name=$(echo "http://shmibbles.me/img/$(basename $file)" | sed 's/ /%20/g')
-			echo "$name" | tr -d '\n' | xclip -i -selection clipboard
-			echo "$name" | tr -d '\n' | xclip -i -selection primary
-			notify-send "uploaded $(basename $file) to /img/"
-		fi
+	*)
+		notify-send "command not recognised"
 		;;
 	esac
 done

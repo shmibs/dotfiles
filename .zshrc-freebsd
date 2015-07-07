@@ -1,0 +1,40 @@
+################### ALIASES ##################
+alias ls='ls -G'
+alias ll='ls -lG'
+alias grep='grep --color=auto'
+alias diff='colordiff'
+alias less='less -R'
+alias ag='ag --color-match "1;34"'
+alias svim='sudo -E vim'
+
+alias :q='exit'
+
+export EDITOR="vim"
+export PAGER="less -R"
+
+################## FUNCTIONS ##################
+
+# bits to human readable value
+b2h() {
+	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+	sindex=1
+	val=$1
+	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+	
+	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
+		val=$(echo "scale=2; $val / 1024" | bc)
+		let sindex=sindex+1
+	done
+	
+	echo "${val}${suffixes[$sindex]}"
+}
+
+# ignore non-tracked files
+git() {
+	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
+		shift
+		$(which -p git) status -uno "$@"
+	else
+		$(which -p git) "$@"
+	fi
+}

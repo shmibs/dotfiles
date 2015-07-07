@@ -1,5 +1,5 @@
 zstyle ':completion:*' completer _complete _ignored 
-zstyle :compinstall filename '/home/shmibs/.zshrc'
+zstyle :compinstall filename '~/.zshrc'
 setopt completealiases
 setopt interactivecomments
 
@@ -23,7 +23,11 @@ unsetopt beep
 PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[blue]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
 
 ################# HIGHLIGHTING ################
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -f '/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]]; then
+	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+	source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 #ZSH_HIGHLIGHT_STYLES[alias]="fg=yellow"
@@ -80,259 +84,14 @@ bindkey '^U' backward-kill-line
 bindkey '^P' up-history
 bindkey '^N' down-history
 
-
-################### ALIASES ##################
-alias ag='ag --color-match "1;34"'
-alias diff='colordiff'
-alias grep='grep --color=auto'
-alias latex='latex -output-format=pdf'
-alias less='less -R'
-alias ls='ls --color=auto'
-
-# ignore non-tracked files
-git() {
-	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
-		shift
-		$(which -p git) status -uno "$@"
-	else
-		$(which -p git) "$@"
-	fi
-}
-
-alias def='sdcv'
-alias dvd='mpv --deinterlace=yes dvd://'
-alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
-alias svim='sudo -E vim'
-alias thesaurus='aiksaurus'
-alias vmount='udevil mount'
-alias vumount='udevil umount'
-alias :q='exit'
-
-export EDITOR="vim"
-export PAGER="less -R"
-
-################## FUNCTIONS ##################
-b2h() {
-	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
-	sindex=1
-	val=$1
-	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
-	
-	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
-		val=$(echo "scale=2; $val / 1024" | bc)
-		let sindex=sindex+1
-	done
-	
-	echo "${val}${suffixes[$sindex]}"
-}
-
-scap() {
-	archey3
-	sleep .1
-	rm /tmp/out.webm
-	ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
-		-c:v libvpx -b:v 4M -threads 4 /tmp/out.webm > /dev/null 2>&1
-}
-
-send() {
-	if [ "$1" ]; then
-		scp $@ shmibbles.me:http/tmp/
-		if [ $? -eq 0 ]; then
-			for name in "$@"
-			do
-				name=$(echo "http://shmibbles.me/tmp/$(basename $name)"\
-				| sed 's/ /%20/g')
-				echo $name | tr -d '\n' | xclip -i -selection clipboard
-				echo $name | tr -d '\n' | xclip -i -selection primary
-			done
-		fi
-	else
-		echo "specify at least one file to send"
-	fi
-}
-
-sendi() {
-	if [ "$1" ]; then
-		scp $@ shmibbles.me:http/img/
-		if [ $? -eq 0 ]; then
-			for name in "$@"
-			do
-				name=$(echo "http://shmibbles.me/img/$(basename $name)"\
-				| sed 's/ /%20/g')
-				echo $name | tr -d '\n' | xclip -i -selection clipboard
-				echo $name | tr -d '\n' | xclip -i -selection primary
-			done
-		fi
-	else
-		echo "specify at least one file to send"
-	fi
-}
-
-ssh-firefox() {
-	xpra start ssh:shmibs@shmibbles.me:1 --pulseaudio --exit-with-children --start-child="firefox" 
-	# this shouldn't be necessary, but just to make sure
-	xpra stop ssh:shmibs@shmibbles.me:1
-}
-
-ssh-scrot() {
-	archey3
-
-	if [[ "$1" != "" ]]; then
-		name=$1
-	else
-		echo -n "name: "
-		read name
-	fi
-	
-	date=$(date +'%Y-%m-%d')
-	
-	folder="http/img/scrot"
-	ssh shmibbles.me "mkdir -p $folder/$date"
-	
-	if [[ "${?#0}" != "" ]]; then
-		return 1
-	fi
-
-	ssh shmibbles.me "rm $folder/current 2>/dev/null; ln -s $folder/$date $folder/current"
-	
-	for i in {3..1}; do
-		echo -n "$i "
-		sleep 1
-	done
-	
-	echo 'cheese!'
-	sleep .1
-
-	scrot /tmp/$name.png
-	convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
-
-	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:http/img/scrot/$date
-
-	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
-	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
-	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
-	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
-
-	echo 'sent!'
-
-	rm /tmp/$name.png /tmp/${name}_small.png
-
-}
-
-# yay imagemagick
-update-backdrops() {
-	resolution=( ${(s:x:)$(xrandr | grep "*+" | cut -d ' ' -f 4)} )
-	IFS=$'\n'
-	for f in $(find ~/backdrops/(*.png|*.jpg)); do
-		
-		base="$(basename $f)"
-		geometry=( ${(s: :)$(identify -format "%w %h" $f)} )
-		if [[ $(calc "(${geometry[0]}/${geometry[1]}) > 1.7778" | \
-			tr -d '\t') != "0" ]]; then
-			scale="x${resolution[1]}"
-			crop="${resolution[0]}x"
-		else
-			scale="${resolution[0]}x"
-			crop="x${resolution[1]}"
-		fi
-		
-		if [[ ! -f "$HOME/backdrops/shadowed/$base" ]]; then
-			echo "$base..."
-			convert \
-			-page +0+0 "$f" \
-			-scale $scale \
-			-crop $crop \
-			-page +0+0 "$HOME/backdrops/dropshadow/shadow.png" \
-			-composite \
-			"$HOME/backdrops/shadowed/$base"
-		fi
-		
-	done
-}
-
-make-gif() {
-
-	if [[ -z "$1" ]]; then
-		break
-	fi
-
-	rm -f make-gif-palette.png
-	rm -f make-gif-palette.png
-	rm -f make-gif-in
-	
-	rm -f make-gif-in
-	
-	ln -s "$1" make-gif-in
-	
-	echo -n "start [00:00:00]: "
-	read start
-	if [[ -z "$start" ]]; then
-		start="00:00:00"
-	fi
-	
-	echo -n "length [full]: "
-	read length
-	if [[ -z "$length" ]]; then
-		t=""
-		length=""
-	else
-		t="-t"
-	fi
-
-	echo -n "fps [10]: "
-	read fps
-	if [[ -z "$fps" ]]; then
-		fps="10"
-	fi
-	
-	echo -n "width [480]: "
-	read width
-	if [[ -z "$width" ]]; then
-		width="480"
-	fi
-
-	echo -n "use subtitles? [y/N]: "
-	read subs
-	if [[ "$subs" == "y" || "$subs" == "Y" ]]; then
-		subs="true"
-	else 
-		subs=""
-	fi
-	
-	if [[ $subs ]]; then
-		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
-			-copyts -vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
-		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png \
-			-copyts -filter_complex \
-			"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
-			out.gif
-	else
-		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
-			-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
-		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png -filter_complex \
-			"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
-			out.gif
-	fi
-
-	rm -f make-gif-palette.png
-	rm -f make-gif-in
-}
-
-fuck() {
-	fuck="fuck"
-	while true; do
-		echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
-
-		for i in {1..4}; do
-			if [[ $((RANDOM%2)) -eq 1 ]]; then
-				echo -n $fuck[$i] | tr '[:lower:]' '[:upper:]'
-			else
-				echo -n $fuck[$i]
-			fi
-		done
-
-		for i in {1..$((RANDOM%20))}; do
-			echo -n " "
-		done
-	done
-}
+################# OS SPECIFIC #################
+case $(uname) in 
+	FreeBSD)
+		source ~/.zshrc-freebsd
+		;;
+	Linux)
+		source ~/.zshrc-linux
+		;;
+	*)
+		echo -e '[-- OS UNRECOGNISED --]'
+esac

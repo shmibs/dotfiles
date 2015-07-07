@@ -1,0 +1,212 @@
+################### ALIASES ##################
+alias ag='ag --color-match "1;34"'
+alias diff='colordiff'
+alias grep='grep --color=auto'
+alias latex='latex -output-format=pdf'
+alias less='less -R'
+alias ls='ls --color=auto'
+alias ll='ls -l --color=auto'
+
+alias def='sdcv'
+alias dvd='mpv --deinterlace=yes dvd://'
+alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
+alias svim='sudo -E vim'
+alias thesaurus='aiksaurus'
+alias vmount='udevil mount'
+alias vumount='udevil umount'
+alias :q='exit'
+
+export EDITOR="vim"
+export PAGER="less -R"
+
+################## FUNCTIONS ##################
+
+# bits to human readable value
+b2h() {
+	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+	sindex=1
+	val=$1
+	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+	
+	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
+		val=$(echo "scale=2; $val / 1024" | bc)
+		let sindex=sindex+1
+	done
+	
+	echo "${val}${suffixes[$sindex]}"
+}
+
+# ignore non-tracked files
+git() {
+	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
+		shift
+		$(which -p git) status -uno "$@"
+	else
+		$(which -p git) "$@"
+	fi
+}
+
+# capture webm
+scap() {
+	archey3
+	sleep .1
+	if [[ -f '/tmp/out.webm' ]]; then
+		rm /tmp/out.webm
+	fi
+	echo 'recording...'
+	ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
+		-c:v libvpx -b:v 4M -threads 4 /tmp/out.webm > /dev/null 2>&1
+}
+
+# quickly send a file to hosted tmp dir
+send() {
+	if [ "$1" ]; then
+		scp $@ shmibbles.me:http/tmp/
+		if [ $? -eq 0 ]; then
+			for name in "$@"
+			do
+				name=$(echo "http://shmibbles.me/tmp/$(basename $name)"\
+				| sed 's/ /%20/g')
+				echo $name | tr -d '\n' | xclip -i -selection clipboard
+				echo $name | tr -d '\n' | xclip -i -selection primary
+			done
+		fi
+	else
+		echo "specify at least one file to send"
+	fi
+}
+
+# take a screenshot, upload to /img/scrot, and update current symlink
+ssh-scrot() {
+	archey3
+
+	if [[ "$1" != "" ]]; then
+		name=$1
+	else
+		echo -n "name: "
+		read name
+	fi
+	
+	date=$(date +'%Y-%m-%d')
+	
+	folder="http/img/scrot"
+	ssh shmibbles.me "mkdir -p $folder/$date"
+	
+	if [[ "${?#0}" != "" ]]; then
+		return 1
+	fi
+
+	ssh shmibbles.me "rm $folder/current 2>/dev/null; ln -s $folder/$date $folder/current"
+	
+	for i in {3..1}; do
+		echo -n "$i "
+		sleep 1
+	done
+	
+	echo 'cheese!'
+	sleep .1
+
+	scrot /tmp/$name.png
+	convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
+
+	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:http/img/scrot/$date
+
+	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
+	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
+
+	echo 'sent!'
+
+	rm /tmp/$name.png /tmp/${name}_small.png
+
+}
+
+# export a section of a video to gif
+make-gif() {
+
+	if [[ -z "$1" ]]; then
+		break
+	fi
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+	
+	rm -f make-gif-in
+	
+	ln -s "$1" make-gif-in
+	
+	echo -n "start [00:00:00]: "
+	read start
+	if [[ -z "$start" ]]; then
+		start="00:00:00"
+	fi
+	
+	echo -n "length [full]: "
+	read length
+	if [[ -z "$length" ]]; then
+		t=""
+		length=""
+	else
+		t="-t"
+	fi
+
+	echo -n "fps [10]: "
+	read fps
+	if [[ -z "$fps" ]]; then
+		fps="10"
+	fi
+	
+	echo -n "width [480]: "
+	read width
+	if [[ -z "$width" ]]; then
+		width="480"
+	fi
+
+	echo -n "use subtitles? [y/N]: "
+	read subs
+	if [[ "$subs" == "y" || "$subs" == "Y" ]]; then
+		subs="true"
+	else 
+		subs=""
+	fi
+	
+	if [[ $subs ]]; then
+		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
+			-copyts -vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png \
+			-copyts -filter_complex \
+			"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			out.gif
+	else
+		ffmpeg -y -ss "$start" $t "$length" -i "$1" \
+			-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -ss "$start" $t "$length" -i "$1" -i make-gif-palette.png -filter_complex \
+			"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			out.gif
+	fi
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+}
+
+# um...
+fuck() {
+	fuck="fuck"
+	while true; do
+		echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
+
+		for i in {1..4}; do
+			if [[ $((RANDOM%2)) -eq 1 ]]; then
+				echo -n $fuck[$i] | tr '[:lower:]' '[:upper:]'
+			else
+				echo -n $fuck[$i]
+			fi
+		done
+
+		for i in {1..$((RANDOM%20))}; do
+			echo -n " "
+		done
+	done
+}
