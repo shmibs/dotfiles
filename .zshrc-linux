@@ -60,9 +60,10 @@ scap() {
 
 # quickly send a file to hosted tmp dir
 send() {
-	if [ "$1" ]; then
+	if [[ "$1" ]]; then
 		scp $@ shmibbles.me:http/tmp/
-		if [ $? -eq 0 ]; then
+		ssh shmibbles.me "cd http/tmp; chmod o+r '$@'"
+		if [[ $? -eq 0 ]]; then
 			for name in "$@"
 			do
 				name=$(echo "http://shmibbles.me/tmp/$(basename $name)"\
