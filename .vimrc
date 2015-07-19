@@ -1,12 +1,69 @@
-""""""""""""""
-"  SETTINGS  "
-""""""""""""""
+""""""""""""
+"  VUNDLE  "
+""""""""""""
+
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+"FILETYPES
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'zah/nim.vim'
+Plugin 'cespare/vim-toml'
+Plugin 'rust-lang/rust.vim'
+
+"FUNCTIONALITY
+Plugin 'junegunn/vim-easy-align'
+
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+
+Plugin 'lilydjwg/fcitx.vim'
+
+Plugin 'airblade/vim-gitgutter'
+
+Plugin 'itchyny/lightline.vim'
+
+Plugin 'tomtom/tcomment_vim'
+
+Plugin 'SirVer/ultisnips'
+
+call vundle#end()
+
+
+"""""""""""""""""""""
+"  PLUGIN SETTINGS  "
+"""""""""""""""""""""
+
+"Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+"Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"timeout on keycodes to prevent fcitx-switcher from lagging
+set ttimeoutlen=100
+
+"vertical split ultisnips edit
+let g:UltiSnipsEditSplit="vertical"
+
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+
+""""""""""""""""""""""
+"  GENERAL SETTINGS  "
+""""""""""""""""""""""
 
 syntax on
 filetype plugin indent on
 set autoindent
 
-"colours!
 colorscheme shmibs
 
 "enable status-line
@@ -33,9 +90,6 @@ call matchadd('Column80', '\%81v', 100)
 highlight SpaceBeforeTab ctermbg=black
 call matchadd('SpaceBeforeTab', '^\ \+\t')
 
-"highlight trailing spaces
-"highlight TrailingSpace ctermbg=black
-"call matchadd('TrailingSpace', '\S\s\+$')
 
 """""""""""""
 "  ALIASES  "
@@ -49,32 +103,9 @@ command Q  q
 command E  e
 
 
-"""""""""""""""""""
-"  PLUGIN THINGS  "
-"""""""""""""""""""
-
-"Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
-
-"Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"timeout on keycodes to prevent fcitx-switcher from lagging
-set ttimeoutlen=100
-
-"vertical split ultisnips edit
-let g:UltiSnipsEditSplit="vertical"
-
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-
 """"""""""""""
 "  MAPPINGS  "
 """"""""""""""
-
-"gr is pretty useless, and gq is too cumbersome for reflow commands
-noremap gr gq
 
 "insert lines below
 nnoremap <silent>= :set paste<CR>m`O<Esc>``:set nopaste<CR>
@@ -121,6 +152,8 @@ end
 "opened
 let g:c_no_comment_fold = 1
 let g:c_no_if0_fold = 1
+
+let g:sh_fold_enabled = 1
 
 if has("autocmd")
 	
