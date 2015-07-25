@@ -62,11 +62,12 @@ scap() {
 send() {
 	if [[ "$1" ]]; then
 		scp $@ shmibbles.me:http/tmp/
-		ssh shmibbles.me "cd http/tmp; chmod o+r '$@'"
 		if [[ $? -eq 0 ]]; then
 			for name in "$@"
 			do
-				name=$(echo "http://shmibbles.me/tmp/$(basename $name)"\
+				basename=$(basename $name)
+				ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
+				name=$(echo "http://shmibbles.me/tmp/$basename"\
 				| sed 's/ /%20/g')
 				echo $name | tr -d '\n' | xclip -i -selection clipboard
 				echo $name | tr -d '\n' | xclip -i -selection primary
