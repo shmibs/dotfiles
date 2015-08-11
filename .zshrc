@@ -20,7 +20,21 @@ bindkey -e
 setopt notify
 unsetopt beep
 
-PROMPT="%{%B$fg[white]%}[%{%(!.$fg[red].$fg[magenta])%}%n@%M %{$fg[blue]%}%c%{$fg[white]%}]: %{%b$reset_color%}"
+#################### PROMPT ###################
+PROMPT="%{%B$fg[white]%}┌["
+# if non-zero, previous return val
+PROMPT+="%(0?..$fg[red]%?$fg[white]:)"
+# if any, number of jobs
+PROMPT+="%(1j.$fg[green]%j$fg[white]:.)"
+# name and host (red for root)
+PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+# current location, with one level of parent context
+PROMPT+="%{$fg[blue]%}%2c"
+# newline
+PROMPT+="%{$fg[white]%}]%{%b$reset_color%}
+"
+PROMPT+="%{%B$fg[white]%}└: %{%b$reset_color%}"
+
 
 ################# HIGHLIGHTING ################
 if [[ -f '/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]]; then
