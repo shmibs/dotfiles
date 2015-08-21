@@ -105,6 +105,9 @@ case $(uname) in
 		;;
 	Linux)
 		source ~/.zshrc-linux
+		if [[ -e ~/.zshrc-linux-desktop ]]; then
+			source ~/.zshrc-linux-desktop
+		fi
 		;;
 	*)
 		echo -e '[-- OS UNRECOGNISED --]'
