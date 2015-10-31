@@ -1,5 +1,17 @@
 ################## FUNCTIONS ##################
 
+# power off after finishing mpd playlist
+mpc-sleep() {
+	mpc play
+	while true; do
+		mpc status
+		mpc idle player
+		if [[ -z "$(mpc status | grep playing)" ]]; then
+			poweroff
+		fi
+	done
+}
+
 # capture webm
 scap() {
 	archey3
