@@ -1,5 +1,4 @@
 set startuplist=library
-set playmode=random
 
 set scroll=centered
 set sort=track disc album
@@ -43,4 +42,4 @@ map S clear-filters
 map d remove
 map c clear
 
-map r playmode
+map r random

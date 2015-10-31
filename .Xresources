@@ -133,7 +133,7 @@ URxvt*color15: #f0f0f0
 ! URxvt*borderColor: colour
 
 ! Select the fonts to be used. This is a comma separated list of font names that are checked in order when trying to find glyphs for characters. The first font
-URxvt*font: xft:Tamsyn:size=15, xft:MS Gothic:size=15, xft:Dotum:size=15
+URxvt*font: xft:Tamsyn:size=12, xft:MS Gothic:size=12, xft:Dotum:size=12
 
 ! URxvt*boldFont: fontlist
 
