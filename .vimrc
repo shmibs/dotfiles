@@ -14,8 +14,9 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'zah/nim.vim'
-Plugin 'cespare/vim-toml'
+Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
+Plugin 'cespare/vim-toml'
 
 "FUNCTIONALITY
 Plugin 'junegunn/vim-easy-align'
