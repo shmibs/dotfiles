@@ -1,0 +1,4 @@
+if [[ $TERM != "screen" ]]; then
+	tmux
+	logout
+fi
