@@ -33,6 +33,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tomtom/tcomment_vim'
 
 Plugin 'SirVer/ultisnips'
+Plugin 'kiith-sa/DSnips'
 
 call vundle#end()
 

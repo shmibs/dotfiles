@@ -34,14 +34,11 @@ fg_green=$(echo -n '#ff'; echo "$fg_green" | tr -d '#')
 fg_yellow=$(echo -n '#ff'; echo "$fg_yellow" | tr -d '#')
 fg_blue=$(echo -n '#ff'; echo "$fg_blue" | tr -d '#')
 
-# these are annoying, but i can't figure out a stateless way to handle rotation
-declare -i mpd_offset
-declare -i mpd_length
-declare mpd_current
-declare mpd_playing
-
 hc pad $monitor $bheight
 
+declare -i mpd_connected
+declare mpc_current
+declare mpc_rot
 
 
 #################
@@ -52,17 +49,40 @@ hc pad $monitor $bheight
 # upon events
 
 update_mpd() {
-		echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
-		echo -n "%{F${fg_green}}\uE05C%{F${fg_normal}} "
-		#echo -n "$mpd_current" | cut -c -$(expr 20 - "$mpd_offset")
-		echo "%{A}"
-		if [[ $mpd_length -gt 20 ]]; then
-			if [[ $mpd_offset -lt $[mpd_length-1] ]]; then
-				mpd_offset=$[mpd_offset+1]
-			else
-				mpd_offset=0
-			fi
+	echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
+
+	# failed to connect or stopped
+	if [[ -z "$(mpc current)" ]]; then
+		if [[ $? ]]; then
+			mpd_connected=0
 		fi
+		echo "%{F${fg_red}}\uE05C %{F${fg_normal} A}"
+		return
+	else
+		if [[ "$(mpc current -f \"%title\")" == "$mpc_current" ]]; then
+			if [[ ${#mpc_rot} -gt 10 ]]; then
+				mpc_rot=$(echo "$mpc_rot" | sed -e 's/\(.\)\(.*\)/\2\1/')
+			fi
+		else
+			mpc_current="$(mpc current -f \"%title%\")"
+			mpc_rot=mpc_current
+		fi
+
+		echo -n "%{F${fg_green}}"
+		# if you want separate icons for paused / playing
+		# if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
+		# 	echo -n "paused icon"
+		# else
+		# 	echo -n "playing icon"
+		# fi
+		echo -n "\uE05C "
+
+		echo "$mpc_rot" | cut -c 10 | tr -d '\n'
+
+		echo "%{F${fg_normal} A}"
+	fi
+
+	mpd_connected=1
 }
 
 update_taglist() {
@@ -100,6 +120,11 @@ update_winlist() {
 	done
 }
 
+update_date() {
+	echo -n "%{F${bg_focus}}|%{F${fg_normal} A:date:} \uE015 "
+	date +$'%a, %b %d, %H:%M:%S' | tr -d '\n'
+	echo " %{A}"
+}
 
 
 #######################
@@ -117,11 +142,11 @@ fields[3]="%{r}"
 # when
 fields[4]=""
 # mpd
-fields[5]=""
+fields[5]="$(update_mpd)"
 # conky stats
 fields[6]=""
 # date
-fields[7]=""
+fields[7]="$(update_date)"
 
 
 
@@ -133,36 +158,37 @@ fields[7]=""
 # with the first element in the line as a
 # unique identifier for the event type
 
-get_date() {
-	{
-		while true; do
-			date +$'date\t%a, %b %d, %H:%M:%S'
-			sleep 1
-		done
-	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
-}
-
-get_mpd() {
+# an event passed once a second
+event_tick() {
 	while true; do
-		if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
-			echo -e "mpd\tpaused"
-		else
-			echo -e "mpd\tplaying"
-		fi
-		mpc idle player
-		if [[ $? ]]; then
-			break
-		fi
+		sleep 1
+		echo "tick"
 	done
 }
 
-get_stat() {
+event_mpd() {
+	mpc status
+	while true; do
+		if [[ $? ]]; then
+			mpd_connected=0
+			echo -e "mpd\tdisconnected"
+			sleep 10
+			break
+		else
+			mpd_connected=1
+			echo -e "mpd\tconnected"
+		fi
+		mpc idle player
+	done
+}
+
+event_stat() {
 	{
 		conky -c ~/.config/herbstluftwm/panel/conky_stats
 	}
 }
 
-get_when() {
+event_when() {
 	{
 		while true; do
 			if [[ -z "$(when --future=2 | sed '1,2d')" ]]; then
@@ -185,13 +211,13 @@ get_when() {
 # their outputs multiplexed 
 
 {
-	get_stat &
+	event_tick &
 	child[1]=$!
-	get_date &
+	event_stat &
 	child[2]=$!
-	get_when &
+	event_when &
 	child[3]=$!
-	get_mpd &
+	event_mpd &
 	child[4]=$!
 	
 	hc --idle
@@ -223,37 +249,20 @@ get_when() {
 		# determine event type and act
 		# accordingly
 		case "${event[0]}" in
-			date)
-				fields[7]="%{F${bg_focus}}|%{F${fg_normal} A:date:} \uE015 ${event[@]:1} %{A}"
-				if [[ $mpd_playing ]]; then
+			tick)
+				fields[7]=$(update_date)
+				if [[ $mpd_connected ]]; then
 					fields[5]=$(update_mpd)
 				fi
 				;;
 				
 			mpd)
-				if [[ "${event[1]}" == "playing" ]]; then
-					mpd_offset=0
-					mpd_current="$(mpc current) "
-					mpd_length=${#mpd_current}
-					mpd_playing=true
-					fields[5]=$(update_mpd)
-				else
-					mpd_offset=0
-					mpd_length=0
-					mpd_current=""
-					mpd_playing=false
-				fi
+				fields[5]=$(update_mpd)
 				;;
 				
 			stats)
-				# enforce fixed widths with sed. printf
-				# pads in the other direction
-				event[1]=$(echo ${event[1]} | sed \
-					-e 's/^\(..\)$/\1  /' \
-					-e 's/^\(...\)$/\1 /')
-				event[2]=$(echo ${event[2]} | sed \
-					-e 's/^\(..\)$/\1  /' \
-					-e 's/^\(...\)$/\1 /')
+				event[1]=$(printf "%-4s" ${event[1]})
+				event[2]=$(printf "%-4s" ${event[2]})
 				fields[6]=$(
 					echo -n "%{F${bg_focus}}|%{F${fg_normal} A:stats:} "
 					echo -n "%{F${fg_blue}}\uE023%{F${fg_normal}} ${event[1]} "
@@ -278,6 +287,11 @@ get_when() {
 			tag_changed|tag_flags)
 				fields[1]=$(update_taglist)
 				fields[2]=$(update_winlist)
+				;;
+
+			quit_panel)
+				pkill dunst
+				break
 				;;
 				
 			*)
