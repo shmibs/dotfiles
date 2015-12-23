@@ -1,4 +1,59 @@
-if [[ $TERM != "screen" ]]; then
-	tmux
+[[ $TERM != "screen" ]]; then
+	tmux has-session 2>/dev/null
+	if [[ "$?" != "0" ]]; then
+		tmux
+	fi
+
+	tmux has-session 2>/dev/null
+	if [[ "$?" != "0" ]]; then
+		logout
+	fi
+
+	{
+		while true; do
+			tmux has-session 2>/dev/null
+			if [[ "$?" != "0" ]]; then
+				logout
+			fi
+
+			echo ""
+			tmux list-sessions
+
+			echo -n "> "
+			read -A args
+			case "${args[1]}" in
+				a)
+					if [[ "${args[2]}" != "" ]]; then
+						tmux has-session -t "${args[2]}"
+						if [[ "$?" == "0" ]]; then
+							tmux attach-session -t "${args[2]}"
+						fi
+					fi
+					;;
+
+				k)
+					if [[ "${args[2]}" != "" ]]; then
+						tmux has-session -t "${args[2]}"
+						if [[ "$?" == "0" ]]; then
+							tmux kill-session -t "${args[2]}"
+						fi
+					fi
+					;;
+
+				n)
+					tmux new-session
+					;;
+
+				q)
+					break;
+					;;
+
+				*)
+					;;
+			esac
+
+		done
+	}
+
 	logout
 fi
