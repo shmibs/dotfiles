@@ -1,4 +1,4 @@
-[[ $TERM != "screen" ]]; then
+if [[ $TERM != "screen" ]]; then
 	tmux has-session 2>/dev/null
 	if [[ "$?" != "0" ]]; then
 		tmux
