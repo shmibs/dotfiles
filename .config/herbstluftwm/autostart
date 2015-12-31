@@ -126,7 +126,7 @@ hc keybind Mod4-Return  spawn urxvt
 hc keybind Mod4-Shift-b spawn primusrun VBoxSDL --startvm arch
 hc keybind Mod4-Shift-c spawn cvlc v4l2://
 hc keybind Mod4-Shift-d spawn ~/games/desura/desura
-hc keybind Mod4-Shift-f spawn firefox
+hc keybind Mod4-Shift-f spawn firejail --netfilter=/etc/firejail/nolocal.net firefox
 hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
