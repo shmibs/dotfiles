@@ -12,8 +12,8 @@ hi! CursorLineNr ctermfg=white ctermbg=236 cterm=bold
 hi! Directory    ctermfg=cyan
 hi! DiffAdd ctermfg=green ctermbg=NONE cterm=bold
 hi! DiffDelete ctermfg=red ctermbg=NONE cterm=bold
-hi! DiffChange ctermfg=NONE ctermbg=NONE
-hi! DiffText ctermfg=magenta ctermbg=NONE cterm=bold
+hi! DiffChange ctermfg=NONE ctermbg=236
+hi! DiffText ctermfg=black ctermbg=yellow cterm=bold
 hi! Folded       ctermfg=240 ctermbg=NONE
 hi! Identifier   cterm=bold ctermfg=cyan
 hi! NonText      ctermfg=yellow ctermbg=234 cterm=bold
