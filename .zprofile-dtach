@@ -1,0 +1,57 @@
+if [[ -z "${DTACH_SUB}" ]]; then
+{
+	setopt NULL_GLOB
+
+	while true; do
+		set -- /tmp/dtach*
+		if [[ "$#" -gt 0 ]]; then
+			# session exists, so show the menu
+			{
+				while true; do
+					set -- /tmp/dtach*
+					if [[ "$#" -eq 0 ]]; then
+						# logout if all sessions terminated
+						clear
+						logout
+					fi
+
+					# list sessions
+					set -- /tmp/dtach*
+					if [[ "$#" -gt 0 ]]; then
+						ls /tmp/dtach* | sed 's/\/tmp\/dtach-//g'
+					fi
+
+					echo -n "> "
+					read -A args
+					case "${args[1]}" in
+						q)
+							break;
+							;;
+
+						*)
+							if [[ "${args[1]}" != "q" ]]; then
+								DTACH_SUB=true dtach -A "/tmp/dtach-${args[1]}" -z zsh
+								clear
+							fi
+							;;
+					esac
+
+				done
+			}
+
+			clear
+			logout
+		else
+			# create the main session
+			DTACH_SUB=true dtach -A /tmp/dtach-1 -z zsh
+			clear
+			set -- /tmp/dtach*
+			if [[ "$#" -eq 0 ]]; then
+				# logout if all sessions terminated
+				clear
+				logout
+			fi
+		fi
+	done
+}
+fi
