@@ -15,14 +15,16 @@ do
 		gimp "$file" & ;;
 	"s")
 		scp "$file" shmibbles.me:http/tmp/
+		basename=$(basename $file)
 		if [[ $? -ne 0 ]]; then
-			notify-send "uploading $(basename $file) to /tmp/ failed"
+			notify-send "uploading $basename to /tmp/ failed"
 		else
-			ssh shmibbles.me "chmod o+r 'http/tmp/$(basename $file)'"
-			name=$(echo "http://shmibbles.me/tmp/$(basename $file)" | sed 's/ /%20/g')
-			echo "$name" | tr -d '\n' | xclip -i -selection clipboard
-			echo "$name" | tr -d '\n' | xclip -i -selection primary
-			notify-send "uploaded $(basename $file) to /tmp/"
+			ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
+			name=$(echo "https://shmibbles.me/tmp/$basename"\
+			| sed -e 's/ /%20/g' -e 's/?/%3f/g')
+			echo $name | tr -d '\n' | xclip -i -selection clipboard
+			echo $name | tr -d '\n' | xclip -i -selection primary
+			notify-send "uploaded $basename to /tmp/"
 		fi
 		;;
 	*)
