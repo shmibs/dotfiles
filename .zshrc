@@ -112,8 +112,3 @@ case $(uname) in
 	*)
 		echo -e '[-- OS UNRECOGNISED --]'
 esac
-
-############# CONNECTING OVER SSH #############
-if [[ -a ~/.zshrc-remote ]]; then
-	source ~/.zshrc-remote
-fi
