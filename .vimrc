@@ -221,6 +221,10 @@ endfunction
 
 function! Settings_haskell()
 	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	setlocal softtabstop=4
+	setlocal expandtab
 	"mappings
 	nnoremap <buffer> -- O--<Space>
 endfunction
@@ -254,6 +258,13 @@ function! Settings_nim()
 	nnoremap <buffer> <M-g> :call JumpToDef()<cr>
 	inoremap <buffer> <M-g> <esc>:call JumpToDef()<cr>i
 	nnoremap <buffer> -_ O##<Space>
+endfunction
+
+function! Settings_python()
+	call Settings_script()
+	"settings
+	setlocal expandtab
+	"mappings
 endfunction
 
 function! Settings_script()
