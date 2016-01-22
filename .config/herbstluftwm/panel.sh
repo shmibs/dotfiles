@@ -17,7 +17,7 @@ ypos=${geometry[1]}
 width=${geometry[2]}
 
 # grab standardised colours
-source ~/.config/herbstluftwm/config_vars
+source ~/.config/init/vars
 
 # set alpha for background colours
 alpha='#ff'
@@ -36,10 +36,6 @@ fg_blue=$(echo -n '#ff'; echo "$fg_blue" | tr -d '#')
 
 hc pad $monitor $bheight
 
-declare -i mpd_connected
-declare mpc_current
-declare mpc_rot
-
 
 #################
 #  SUBROUTINES  #
@@ -48,42 +44,42 @@ declare mpc_rot
 # functions for retrieving and processing data
 # upon events
 
-update_mpd() {
-	echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
-
-	# failed to connect or stopped
-	if [[ -z "$(mpc current)" ]]; then
-		if [[ $? ]]; then
-			mpd_connected=0
-		fi
-		echo "%{F${fg_red}}\uE05C %{F${fg_normal} A}"
-		return
-	else
-		if [[ "$(mpc current -f \"%title\")" == "$mpc_current" ]]; then
-			if [[ ${#mpc_rot} -gt 10 ]]; then
-				mpc_rot=$(echo "$mpc_rot" | sed -e 's/\(.\)\(.*\)/\2\1/')
-			fi
-		else
-			mpc_current="$(mpc current -f \"%title%\")"
-			mpc_rot=mpc_current
-		fi
-
-		echo -n "%{F${fg_green}}"
-		# if you want separate icons for paused / playing
-		# if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
-		# 	echo -n "paused icon"
-		# else
-		# 	echo -n "playing icon"
-		# fi
-		echo -n "\uE05C "
-
-		echo "$mpc_rot" | cut -c 10 | tr -d '\n'
-
-		echo "%{F${fg_normal} A}"
-	fi
-
-	mpd_connected=1
-}
+#update_mpd() {
+#	echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
+#
+#	# failed to connect or stopped
+#	if [[ -z "$(mpc current)" ]]; then
+#		if [[ $? ]]; then
+#			mpd_connected=0
+#		fi
+#		echo "%{F${fg_red}}\uE05C %{F${fg_normal} A}"
+#		return
+#	else
+#		if [[ "$(mpc current -f \"%title\")" == "$mpc_current" ]]; then
+#			if [[ ${#mpc_rot} -gt 10 ]]; then
+#				mpc_rot=$(echo "$mpc_rot" | sed -e 's/\(.\)\(.*\)/\2\1/')
+#			fi
+#		else
+#			mpc_current="$(mpc current -f \"%title%\")"
+#			mpc_rot=mpc_current
+#		fi
+#
+#		echo -n "%{F${fg_green}}"
+#		# if you want separate icons for paused / playing
+#		# if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
+#		# 	echo -n "paused icon"
+#		# else
+#		# 	echo -n "playing icon"
+#		# fi
+#		echo -n "\uE05C "
+#
+#		echo "$mpc_rot" | cut -c 10 | tr -d '\n'
+#
+#		echo "%{F${fg_normal} A}"
+#	fi
+#
+#	mpd_connected=1
+#}
 
 update_taglist() {
 	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
@@ -142,7 +138,7 @@ fields[3]="%{r}"
 # when
 fields[4]=""
 # mpd
-fields[5]="$(update_mpd)"
+fields[5]="" #"$(update_mpd)"
 # conky stats
 fields[6]=""
 # date
@@ -166,21 +162,21 @@ event_tick() {
 	done
 }
 
-event_mpd() {
-	mpc status
-	while true; do
-		if [[ $? ]]; then
-			mpd_connected=0
-			echo -e "mpd\tdisconnected"
-			sleep 10
-			break
-		else
-			mpd_connected=1
-			echo -e "mpd\tconnected"
-		fi
-		mpc idle player
-	done
-}
+#event_mpd() {
+#	mpc status
+#	while true; do
+#		if [[ $? ]]; then
+#			mpd_connected=0
+#			echo -e "mpd\tdisconnected"
+#			sleep 10
+#			break
+#		else
+#			mpd_connected=1
+#			echo -e "mpd\tconnected"
+#		fi
+#		mpc idle player
+#	done
+#}
 
 event_stat() {
 	{
@@ -217,8 +213,8 @@ event_when() {
 	child[2]=$!
 	event_when &
 	child[3]=$!
-	event_mpd &
-	child[4]=$!
+	#event_mpd &
+	#child[4]=$!
 	
 	hc --idle
 	
@@ -251,14 +247,14 @@ event_when() {
 		case "${event[0]}" in
 			tick)
 				fields[7]=$(update_date)
-				if [[ $mpd_connected ]]; then
-					fields[5]=$(update_mpd)
-				fi
+				#if [[ $mpd_connected ]]; then
+				#	fields[5]=$(update_mpd)
+				#fi
 				;;
 				
-			mpd)
-				fields[5]=$(update_mpd)
-				;;
+			#mpd)
+			#	fields[5]=$(update_mpd)
+			#	;;
 				
 			stats)
 				event[1]=$(printf "%-4s" ${event[1]})

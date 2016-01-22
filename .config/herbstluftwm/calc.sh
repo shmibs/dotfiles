@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.config/herbstluftwm/config_vars
+source ~/.config/init/vars
 
 acc=0
 in="first"

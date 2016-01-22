@@ -1,7 +1,7 @@
 #!/bin/bash
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 
-source ~/.config/herbstluftwm/config_vars
+source ~/.config/init/vars
 
 run=""
 while [ -z "$run" ]; do

@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-source ~/.config/herbstluftwm/config_vars
+source ~/.config/init/vars
 
 list=$(wmctrl -l)
 IFS=$'\r\n' nums=($(echo $list | cut -d ' ' -f 1))

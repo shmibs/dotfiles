@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/.config/herbstluftwm/config_vars
+source ~/.config/init/vars
 
 hc() {
     herbstclient "$@"
@@ -143,9 +143,10 @@ hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh
 hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
 # tunes
+hc keybind Mod4-Up spawn ~/.config/herbstluftwm/mpc-status.sh
 hc keybind Mod4-Down spawn mpc toggle
-hc keybind Mod4-Right spawn mpc next
-hc keybind Mod4-Left spawn mpc prev
+hc keybind Mod4-Right spawn ~/.config/herbstluftwm/mpc-status.sh next
+hc keybind Mod4-Left spawn ~/.config/herbstluftwm/mpc-status.sh prev
 
 ############## end launchers ##############
 
@@ -178,8 +179,8 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|milkytracker)' pseudotile=on focus=on
-hc rule class~'(FTL|Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine)' pseudotile=on focus=on
+hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL)' pseudotile=on focus=on
+hc rule class~'(Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine)' pseudotile=on focus=on
 hc rule class~'(mednafen)' pseudotile=on focus=on
 
 # unlock, just to be sure
@@ -195,7 +196,7 @@ herbstclient set tree_style '╾│ ├└╼─┐'
 # run the panel
 panel=~/.config/herbstluftwm/panel.sh
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(herbstclient list_monitors | cut -d: -f1) ; do
+for monitor in $(hc list_monitors | cut -d: -f1) ; do
     # start it on each monitor
     "$panel" $monitor &
 done
@@ -203,4 +204,5 @@ done
 # run dunst with theme colours
 dunst -lb $bg_normal -nb $bg_normal -cb $bg_focus \
 	-lf $fg_normal -nf $fg_normal -cf $fg_focus \
-	-frame_color $bg_focus
+	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))"
+

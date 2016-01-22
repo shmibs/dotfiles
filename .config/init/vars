@@ -1,9 +1,16 @@
 #!/bin/bash
 
-###############
-#  Arch Blue  #
-###############
-#
+#############
+#  general  #
+#############
+
+ttfont='Fira Mono 10'
+
+############
+#  themes  #
+############
+
+# Arch Blue
 #bg_normal='#333333'
 #fg_normal='#efefef'
 #bg_focus='#00aad4'
@@ -17,10 +24,7 @@
 #fg_yellow='#ffa466'
 #fg_blue='#00aad4'
 
-###############
-#  Section 9  #
-###############
-#
+# Section 9
 #bg_normal='#333333'
 #fg_normal='#efefef'
 #bg_focus='#714BA7'
@@ -34,10 +38,7 @@
 #fg_yellow='#ffa466'
 #fg_blue='#00aad4'
 
-###############
-#  Lain Blind #
-###############
-#
+# Lain Blind
 #bg_normal='#262626'
 #fg_normal='#c1b48e'
 #bg_focus='#d0758b'
@@ -51,10 +52,7 @@
 #fg_yellow='#d0758b'
 #fg_blue='#d0758b'
 
-###########
-#  Aigis  #
-###########
-
+#  Aigis
 bg_normal='#262626'
 fg_normal='#c1b48e'
 bg_focus='#d0758b'
@@ -68,11 +66,13 @@ fg_green='#badbb4'
 fg_yellow='#b9c780'
 fg_blue='#99cff3'
 
+##############
+#  lemonbar  #
+##############
+
 bheight=18
 
 #dfont='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*,-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
 bfont1='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*'
 bfont2='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
 efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'
-
-
