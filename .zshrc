@@ -20,6 +20,17 @@ bindkey -e
 setopt notify
 unsetopt beep
 
+##################### MISC ####################
+
+# path for haskell builds
+if [[ -d ~/.cabal/bin ]]; then
+	PATH=$PATH:~/.cabal/bin
+fi
+
+if [[ -d ~/.cabal-sandbox/bin ]]; then
+	PATH=$PATH:~/.cabal-sandbox/bin
+fi
+
 #################### PROMPT ###################
 PROMPT="%{%B$fg[white]%}┌["
 # if non-zero, previous return val
