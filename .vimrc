@@ -171,6 +171,7 @@ autocmd BufNewFile,BufRead *.tex set filetype=tex
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
 autocmd FileType coffee  call Settings_coffee()
+autocmd FileType conf    call Settings_script()
 autocmd FileType cpp     call Settings_c()
 autocmd FileType css     call Settings_c()
 autocmd FileType d       call Settings_c()

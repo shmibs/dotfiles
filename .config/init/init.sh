@@ -1,4 +1,4 @@
 #!/bin/bash
 source ~/.config/init/vars
 
-source gen-zathurarc.sh
+source ~/.config/init/gen-zathurarc.sh

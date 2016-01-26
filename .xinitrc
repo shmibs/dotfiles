@@ -1,3 +1,6 @@
+#initialise configs to auto-match themes
+~/.config/init/init.sh
+
 #merge Xresources
 if [ -s ~/.Xresources ]
 then

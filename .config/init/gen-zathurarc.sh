@@ -1,6 +1,6 @@
 {
 
-echo "
+echo "\
 set font                    \"$ttfont\"
 
 set highlight-color         \"$bg_normal\"

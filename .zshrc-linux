@@ -5,7 +5,7 @@ alias grep='grep --color=auto'
 alias latex='latex -output-format=pdf'
 alias less='less -R'
 alias ls='ls --color=auto'
-alias ll='ls -l --color=auto'
+alias ll='ls -lh --color=auto'
 
 alias def='sdcv'
 alias dvd='mpv --deinterlace=yes dvd://'
