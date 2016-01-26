@@ -77,6 +77,8 @@ set noshowmode
 "allow edited background buffers
 set hidden
 
+set title
+
 "spelling
 set spelllang=en_gb
 

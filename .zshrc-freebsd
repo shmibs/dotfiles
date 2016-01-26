@@ -1,6 +1,6 @@
 ################### ALIASES ##################
 alias ls='ls -G'
-alias ll='ls -lG'
+alias ll='ls -lGh'
 alias grep='grep --color=auto'
 alias diff='colordiff'
 alias less='less -R'

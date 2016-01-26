@@ -31,6 +31,19 @@ if [[ -d ~/.cabal-sandbox/bin ]]; then
 	PATH=$PATH:~/.cabal-sandbox/bin
 fi
 
+# dynamic title
+if [[ "$TERM" == "rxvt-256color" ]]; then
+
+	precmd() {
+		print -Pn "\e]0;zsh: %(1j,%j job%(2j|s|); ,)%~\a"
+	}
+
+	preexec() {
+		printf "\033]0;%s\a" "$1"
+	}
+
+fi
+
 #################### PROMPT ###################
 PROMPT="%{%B$fg[white]%}┌["
 # if non-zero, previous return val
