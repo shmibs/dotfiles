@@ -41,45 +41,12 @@ hc pad $monitor $bheight
 #  SUBROUTINES  #
 #################
 
+unique_line() {
+	awk '$0 != l { print ; l=$0 ; fflush(); }'
+}
+
 # functions for retrieving and processing data
 # upon events
-
-#update_mpd() {
-#	echo -n "%{F${bg_focus}}|%{F${fg_normal} A:mpd:} "
-#
-#	# failed to connect or stopped
-#	if [[ -z "$(mpc current)" ]]; then
-#		if [[ $? ]]; then
-#			mpd_connected=0
-#		fi
-#		echo "%{F${fg_red}}\uE05C %{F${fg_normal} A}"
-#		return
-#	else
-#		if [[ "$(mpc current -f \"%title\")" == "$mpc_current" ]]; then
-#			if [[ ${#mpc_rot} -gt 10 ]]; then
-#				mpc_rot=$(echo "$mpc_rot" | sed -e 's/\(.\)\(.*\)/\2\1/')
-#			fi
-#		else
-#			mpc_current="$(mpc current -f \"%title%\")"
-#			mpc_rot=mpc_current
-#		fi
-#
-#		echo -n "%{F${fg_green}}"
-#		# if you want separate icons for paused / playing
-#		# if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
-#		# 	echo -n "paused icon"
-#		# else
-#		# 	echo -n "playing icon"
-#		# fi
-#		echo -n "\uE05C "
-#
-#		echo "$mpc_rot" | cut -c 10 | tr -d '\n'
-#
-#		echo "%{F${fg_normal} A}"
-#	fi
-#
-#	mpd_connected=1
-#}
 
 update_taglist() {
 	echo -n "%{l}%{B${bg_normal} F${fg_normal} U${fg_normal}}"
@@ -138,7 +105,7 @@ fields[3]="%{r}"
 # when
 fields[4]=""
 # mpd
-fields[5]="" #"$(update_mpd)"
+fields[5]=""
 # conky stats
 fields[6]=""
 # date
@@ -162,39 +129,41 @@ event_tick() {
 	done
 }
 
-#event_mpd() {
-#	mpc status
-#	while true; do
-#		if [[ $? ]]; then
-#			mpd_connected=0
-#			echo -e "mpd\tdisconnected"
-#			sleep 10
-#			break
-#		else
-#			mpd_connected=1
-#			echo -e "mpd\tconnected"
-#		fi
-#		mpc idle player
-#	done
-#}
+event_mpd() {
+	while true; do
+		echo -en "mpd\t"
+		mpc status >/dev/null 2>&1
+		if [[ $? -ne 0 ]]; then
+			echo "disconnected"
+			sleep 5
+		else
+			if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
+				if [[ -z "$(mpc status | grep '\[paused\]')" ]]; then
+					echo "stopped"
+				else
+					echo "paused"
+				fi
+			else
+				echo "playing"
+			fi
+			mpc idle player >/dev/null 2>&1
+		fi
+	done > >(unique_line)
+}
 
 event_stat() {
-	{
-		conky -c ~/.config/herbstluftwm/panel/conky_stats
-	}
+	conky -c ~/.config/herbstluftwm/panel/conky_stats
 }
 
 event_when() {
-	{
-		while true; do
-			if [[ -z "$(when --future=2 | sed '1,2d')" ]]; then
-				echo -e 'when\t0'
-			else
-				echo -e 'when\t1'
-			fi
-			sleep 10
-		done
-	} |	awk '$0 != l { print ; l=$0 ; fflush(); }'
+	while true; do
+		if [[ -z "$(when --future=2 | sed '1,2d')" ]]; then
+			echo -e 'when\t0'
+		else
+			echo -e 'when\t1'
+		fi
+		sleep 10
+	done > >(unique_line)
 }
 
 
@@ -213,17 +182,14 @@ event_when() {
 	child[2]=$!
 	event_when &
 	child[3]=$!
-	#event_mpd &
-	#child[4]=$!
+	event_mpd &
+	child[4]=$!
 	
 	hc --idle
 	
 	for id in ${child[@]}; do
 		kill $id
 	done
-
-	pkill lemonbar
-	
 } 2> /dev/null | {
 
 
@@ -247,14 +213,26 @@ event_when() {
 		case "${event[0]}" in
 			tick)
 				fields[7]=$(update_date)
-				#if [[ $mpd_connected ]]; then
-				#	fields[5]=$(update_mpd)
-				#fi
 				;;
 				
-			#mpd)
-			#	fields[5]=$(update_mpd)
-			#	;;
+			mpd)
+				fields[5]="%{F${bg_focus}}|%{A:mpd: F"
+				case "${event[1]}" in
+					playing)
+						fields[5]+=$(echo -n "${fg_green}} \uE0FE \uE09A")
+						;;
+					paused)
+						fields[5]+=$(echo -n "${fg_yellow}} \uE0FE \uE09B")
+						;;
+					stopped)
+						fields[5]+=$(echo -n "${fg_blue}} \uE0FE \uE099")
+						;;
+					*)
+						fields[5]+=$(echo -n "${fg_red}} \uE0FE \uE09E")
+						;;
+				esac
+				fields[5]+=" %{F${fg_normal} A}"
+				;;
 				
 			stats)
 				event[1]=$(printf "%-4s" ${event[1]})
@@ -269,7 +247,7 @@ event_when() {
 			when)
 				if [[ "${event[1]}" -eq 1 ]]; then
 					fields[4]=$(echo -n "%{F${bg_focus}}|%{F${fg_normal} A:when:}"
-						echo -n "%{F${fg_red}} \uE0AE %{F${fg_normal} A}")
+						echo -n "%{F${fg_yellow}} \uE0AE %{F${fg_normal} A}")
 				else
 					fields[4]=""
 				fi
@@ -285,9 +263,8 @@ event_when() {
 				fields[2]=$(update_winlist)
 				;;
 
-			quit_panel)
-				pkill dunst
-				break
+			quit_panel|reload)
+				exit
 				;;
 				
 			*)
@@ -316,7 +293,7 @@ event_when() {
 				notify-send "$(cal)"
 				;;
 			mpd)
-				notify-send "$(mpc status)"
+				~/.config/herbstluftwm/mpc-status.sh
 				;;
 			stats)
 				urxvt -e htop &
