@@ -8,8 +8,7 @@
 
 ###MATE
 
-i'm using mate as a backend to handle all that dconf garbage etc. apart from a
-few daemons, everything is launched from mate-session
+i'm using mate as a backend to handle dconf garbage / themes / etc.
 
 ###herbstluftwm
 
@@ -24,16 +23,14 @@ with lots of slightly annoying things to get rid of.
 
 ###urxvt
 
-yay for mouseless copy-pasta! if you've never seen it, check out
+check out
 [urxvt-perls](https://github.com/muennich/urxvt-perls).
 
-###ranger
+###ranger/sxiv
 
-yay for everything about ranger!
-
-###sxiv
-
-s'great, but still needs some way to communicate selections to ranger.
+both are fantastic for keyboard-driven file management, but still've got to
+figure out how to write a ranger extension that can receive selections from
+sxiv, because squinting at filenames is just bleh.
 
 ###pentadactyl
 
@@ -42,4 +39,9 @@ keyboard-driven browsing ^_^. try
 
 ###dunst/dmenu/compton/lemonbar/nitrogen
 
-useful things all around.
+useful things all around. i forked dunst to make SIGUSR1 clear all
+notifications, which is used by
+[mpc-status.sh](.config/herbstluftwm/mpc-status.sh)
+and probably any other similar things i add in the future. not sure what the
+default behaviour (pause / unpause notification display) was supposed to be
+used for ┐(¯-¯)┌.
