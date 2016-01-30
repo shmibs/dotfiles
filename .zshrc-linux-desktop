@@ -79,10 +79,10 @@ ssh-scrot() {
 
 	scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:http/img/scrot/$date
 
-	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
-	echo "http://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
-	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
-	echo "http://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
+	echo "https://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "https://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
+	echo "https://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
+	echo "https://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
 
 	echo 'sent!'
 
