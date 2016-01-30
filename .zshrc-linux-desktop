@@ -1,3 +1,6 @@
+################### ALIASES ##################
+alias hc='herbstclient'
+
 ################## FUNCTIONS ##################
 
 # power off after finishing mpd playlist
