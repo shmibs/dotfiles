@@ -63,24 +63,30 @@ update_taglist() {
 }
 
 update_winlist() {
-	focus_id=$(hc get_attr clients.focus.winid)
+	tag_id=$(hc get_attr tags.focus.index)
+	focus_id=$(hc get_attr clients.focus.winid | sed 's/^0x0*//')
 
 	if [[ -z "$focus_id" ]]; then
-		return
+		focus_id=0
 	fi
 
-	# grab current window list, limit to current desktop,
-	# clean up output, cut to length,add focused window 
-	# formatting, and finally delete win ids and merge
-	# lines
-	
-	for c in $(hc layout | grep -Eo '0x[0-9a-f]*'); do
-		xwininfo -id $c | sed -n 2p | sed -e 's/"//' -e 's/"$//' -e 's/$/\t/' | cut -c -70 | sed \
-		-e 's/xwininfo: Window id: //' \
-		-e 's/$/.../' -e 's/\t\.\.\.$//' \
-		-e "s/${focus_id} \(.*\)/%{B${bg_focus} F${fg_focus}} \1 %{B${bg_normal} F${fg_normal}}/" \
-		-e 's/0x[a-f0-9]* \(.*\)/ \1 /' | tr -d '\n'
+	lines=$(wmctrl -l | sed 's/^0x0*//')
+
+	# kind of messy. use hc dump's ordering but wmctrl -l for pairing
+	# ids with titles
+	for c in $(hc dump | grep -Eo '0x[0-9a-f]*' | sed 's/^0x0*//'); do
+		echo "$lines" | grep "$c"
+	done | while read -ra line
+	do
+		# is it focussed?
+		if [[ $((16#${line[0]})) -eq $((16#$focus_id)) ]]; then
+			echo -n " %{B${bg_focus} F${fg_focus}} "
+		else
+			echo -n " %{B${bg_normal} F${fg_normal}} "
+		fi
+		echo -n "${line[@]:3}" | sed -r 's/(.{60}).*/\1\.\.\./'
 	done
+	echo -n " %{B${bg_normal} F${fg_normal}}"
 }
 
 update_date() {
@@ -177,19 +183,15 @@ event_when() {
 
 {
 	event_tick &
-	child[1]=$!
+	echo -e "child\t$!"
 	event_stat &
-	child[2]=$!
+	echo -e "child\t$!"
 	event_when &
-	child[3]=$!
+	echo -e "child\t$!"
 	event_mpd &
-	child[4]=$!
+	echo -e "child\t$!"
 	
 	hc --idle
-	
-	for id in ${child[@]}; do
-		kill $id
-	done
 } 2> /dev/null | {
 
 
@@ -263,7 +265,15 @@ event_when() {
 				fields[2]=$(update_winlist)
 				;;
 
+			# append children to kill list
+			child)
+				child[((${#child[@]}+1))]=event[1]
+				;;
+
 			quit_panel|reload)
+				for id in ${child[@]}; do
+					kill $id
+				done
 				exit
 				;;
 				
