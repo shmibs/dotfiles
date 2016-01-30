@@ -8,10 +8,39 @@ hc() {
 
 # always start frames max (pt. 1)
 hc set default_frame_layout 2
+hc set_layout max
+
+hc set tree_style '╾│ ├└╼─┐'
 
 hc emit_hook reload
 
-xsetroot -solid '#5A8E3A'
+###########
+#  THEME  #
+###########
+
+hc set frame_border_normal_color $bg_normal
+hc set frame_border_active_color $bg_focus
+hc set frame_bg_normal_color $bg_normal
+hc set frame_bg_active_color $bg_focus
+hc set window_border_normal_color $bg_normal
+hc set window_border_active_color $bg_focus
+hc set frame_border_width 2
+hc set frame_border_inner_width 0
+hc set window_border_width 2
+hc set window_border_inner_width 0
+hc set always_show_frame 0
+hc set frame_bg_transparent 1
+hc set frame_normal_opacity 100
+hc set frame_active_opacity 100
+hc set frame_transparent_width 0
+hc set frame_gap 0
+hc set frame_padding 0
+hc set smart_frame_surroundings 1
+hc set smart_window_surroundings 1
+
+#################
+#  KEYBINDINGS  #
+#################
 
 # remove all existing keybindings
 hc keyunbind --all
@@ -69,9 +98,6 @@ for i in ${!tag_names[@]} ; do
     fi
 done
 
-# always start frames max (pt. 2)
-hc set_layout max
-
 # cycle through tags
 hc keybind Mod4-n use_index +1 --skip-visible
 hc keybind Mod4-p use_index -1 --skip-visible
@@ -94,7 +120,7 @@ hc keybind Mod4-BackSpace   cycle_monitor
 hc keybind Mod4-i jumpto urgent
 
 
-################ launchers ################
+## launchers
 
 # tegaki
 hc keybind Mod4-r spawn tegaki-recognize
@@ -148,31 +174,13 @@ hc keybind Mod4-Down spawn mpc toggle
 hc keybind Mod4-Right spawn ~/.config/herbstluftwm/mpc-status.sh next
 hc keybind Mod4-Left spawn ~/.config/herbstluftwm/mpc-status.sh prev
 
-############## end launchers ##############
+## end launchers
 
 
-# borders
-hc set frame_border_normal_color $bg_normal
-hc set frame_border_active_color $bg_focus
-hc set frame_bg_normal_color $bg_normal
-hc set frame_bg_active_color $bg_focus
-hc set window_border_normal_color $bg_normal
-hc set window_border_active_color $bg_focus
-hc set frame_border_width 2
-hc set frame_border_inner_width 0
-hc set window_border_width 2
-hc set window_border_inner_width 0
-hc set always_show_frame 0
-hc set frame_bg_transparent 1
-hc set frame_normal_opacity 100
-hc set frame_active_opacity 100
-hc set frame_transparent_width 0
-hc set frame_gap 0
-hc set frame_padding 0
-hc set smart_frame_surroundings 1
-hc set smart_window_surroundings 1
+###########
+#  RULES  #
+###########
 
-# rules
 hc unrule -F
 hc rule focus=on 
 # unmanage docks, dropdowns, etc
@@ -186,12 +194,9 @@ hc rule class~'(mednafen)' pseudotile=on focus=on
 # unlock, just to be sure
 hc unlock
 
-herbstclient set tree_style '╾│ ├└╼─┐'
-
-# do multi monitor setup here, e.g.:
-# hc set_monitors 1280x1024+0+0 1280x1024+1280+0
-# or simply:
-# hc detect_monitors
+##############
+#  CHILDREN  #
+##############
 
 # run the panel
 panel=~/.config/herbstluftwm/panel.sh

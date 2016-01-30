@@ -4,6 +4,13 @@
 #  general  #
 #############
 
+bheight=18
+
+bfont1='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*'
+bfont2='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
+
+efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'
+
 ttfont='Fira Mono 10'
 
 ############
@@ -65,14 +72,3 @@ fg_red='#ba5654'
 fg_green='#badbb4'
 fg_yellow='#b9c780'
 fg_blue='#99cff3'
-
-##############
-#  lemonbar  #
-##############
-
-bheight=18
-
-#dfont='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*,-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
-bfont1='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*'
-bfont2='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
-efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'
