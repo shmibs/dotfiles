@@ -131,17 +131,19 @@ hc keybind Print        spawn mate-screenshot
 
 # ranger
 hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger /home/shmibs
-hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/backdrops
-hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/comics
+hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/books
+hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/comics
 hc keybind Mod4-Shift-Control-d      spawn urxvt -name "ranger" -e ranger /home/shmibs/downloads
-hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
-hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
 hc keybind Mod4-Shift-Control-g      spawn urxvt -name "ranger" -e ranger /home/shmibs/games
-hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
-hc keybind Mod4-Shift-Control-r      spawn urxvt -name "ranger" -e ranger /home/shmibs/romz
 hc keybind Mod4-Shift-Control-i      spawn urxvt -name "ranger" -e ranger /home/shmibs/images
+hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
+hc keybind Mod4-Shift-Control-n      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/manga
+hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
+hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
+hc keybind Mod4-Shift-Control-r      spawn urxvt -name "ranger" -e ranger /home/shmibs/romz
 hc keybind Mod4-Shift-Control-t      spawn urxvt -name "ranger" -e ranger /home/shmibs/thcool
 hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/shmibs/videos
+hc keybind Mod4-Shift-Control-w      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/writing
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
