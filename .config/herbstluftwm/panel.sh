@@ -80,13 +80,14 @@ update_winlist() {
 	do
 		# is it focussed?
 		if [[ $((16#${line[0]})) -eq $((16#$focus_id)) ]]; then
-			echo -n " %{B${bg_focus} F${fg_focus}} "
+			echo -n "%{B${bg_focus} F${fg_focus}} "
 		else
-			echo -n " %{B${bg_normal} F${fg_normal}} "
+			echo -n "%{B${bg_normal} F${fg_normal}} "
 		fi
 		echo -n "${line[@]:3}" | sed -r 's/(.{60}).*/\1\.\.\./'
+		echo -n " "
 	done
-	echo -n " %{B${bg_normal} F${fg_normal}}"
+	echo -n "%{B${bg_normal} F${fg_normal}}"
 }
 
 update_date() {
