@@ -43,8 +43,8 @@ mpd-filetypes() {
 		if [[ ${counts[$i]} -eq 0 ]]; then
 			percentages[$i]=0
 		else
-			# dunno how to make zsh math float without appending a . to integer numbers
-			percentages[$i]=$(calc -p "${counts[$i]} * 100 / $total" | tr -d '~' | cut -c -4)
+			percentages[$i]=$(calc -p "a=${counts[$i]} * 100 / $total; round(a, 4-digits(a), 16)"\
+				| tr -d '~')
 		fi
 
 		# get widths for padding.
@@ -70,7 +70,7 @@ mpd-filetypes() {
 	done
 
 	# print total
-	linelen=$(( $twidth + $cwidth + 9 ))
+	linelen=$(( $twidth + $cwidth + 10 ))
 	for (( i=0; i < $linelen; i++ )); do
 		echo -n "="
 	done
