@@ -114,7 +114,9 @@ fields[6]=""
 # date
 fields[7]="$(update_date)"
 
-
+unique_line() {
+	awk '$0 != l { print ; l=$0 ; fflush(); }' 
+}
 
 ######################
 #  EVENT GENERATORS  #
@@ -151,7 +153,7 @@ event_mpd() {
 			fi
 			mpc idle player >/dev/null 2>&1
 		fi
-	done > >(uniq)
+	done > >(unique_line)
 }
 
 event_stat() {
@@ -166,7 +168,7 @@ event_when() {
 			echo -e 'when\t1'
 		fi
 		sleep 10
-	done > >(uniq)
+	done > >(unique_line)
 }
 
 
