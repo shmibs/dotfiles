@@ -115,7 +115,7 @@ fields[6]=""
 fields[7]="$(update_date)"
 
 unique_line() {
-	awk '$0 != l { print ; l=$0 ; fflush(); }' 
+	stdbuf -i0 -o0 uniq
 }
 
 ######################
