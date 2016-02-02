@@ -16,9 +16,9 @@ export PAGER="less -R"
 
 # bits to human readable value
 b2h() {
-	suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
-	sindex=1
-	val=$1
+	local suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+	local sindex=1
+	local val=$1
 	[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
 	
 	while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do

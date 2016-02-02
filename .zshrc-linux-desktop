@@ -19,6 +19,7 @@ mpd-sleep() {
 # leaks memory for some reason, so don't run on a clean library
 # or it'll crash everything
 mpd-cover-convert() {
+	local d
 	find ~/music -type f -regextype posix-extended -regex ".*cover\.(png|jpg)"\
 		| while read file; do
 		d=$(dirname "$file")
@@ -142,6 +143,8 @@ scap() {
 
 # quickly send a file to hosted tmp dir
 send() {
+	local name
+	local basename
 	if [[ "$1" ]]; then
 		scp $@ shmibbles.me:http/tmp/
 		if [[ $? -eq 0 ]]; then
@@ -164,6 +167,7 @@ send() {
 ssh-scrot() {
 	archey3
 
+	local name
 	if [[ "$1" != "" ]]; then
 		name=$1
 	else
@@ -171,9 +175,9 @@ ssh-scrot() {
 		read name
 	fi
 	
-	date=$(date +'%Y-%m-%d')
+	local date=$(date +'%Y-%m-%d')
 	
-	folder="http/img/scrot"
+	local folder="http/img/scrot"
 	ssh shmibbles.me "mkdir -p $folder/$date"
 	
 	if [[ "${?#0}" != "" ]]; then
@@ -221,12 +225,14 @@ make-gif() {
 	
 	ln -s "$1" make-gif-in
 	
+	local start
 	echo -n "start [00:00:00]: "
 	read start
 	if [[ -z "$start" ]]; then
 		start="00:00:00"
 	fi
 	
+	local length
 	echo -n "length [full]: "
 	read length
 	if [[ -z "$length" ]]; then
@@ -236,18 +242,21 @@ make-gif() {
 		t="-t"
 	fi
 
+	local fps
 	echo -n "fps [10]: "
 	read fps
 	if [[ -z "$fps" ]]; then
 		fps="10"
 	fi
 	
+	local width
 	echo -n "width [480]: "
 	read width
 	if [[ -z "$width" ]]; then
 		width="480"
 	fi
 
+	local subs
 	echo -n "use subtitles? [y/N]: "
 	read subs
 	if [[ "$subs" == "y" || "$subs" == "Y" ]]; then
@@ -277,7 +286,7 @@ make-gif() {
 
 # um...
 fuck() {
-	fuck="fuck"
+	local fuck="fuck"
 	while true; do
 		echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
 
