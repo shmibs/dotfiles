@@ -11,6 +11,19 @@ case "$1" in
 		;;
 esac
 
+mpc status >/dev/null 2>&1
+if [[ $? -ne 0 ]]; then
+	killall -SIGUSR1 dunst
+	notify-send "mpd disconnected"
+	exit
+fi
+
+if [[ -z "$(mpc status | grep -E '\[(playing|paused)\]')" ]]; then
+	killall -SIGUSR1 dunst
+	notify-send "mpd stopped"
+	exit
+fi
+
 cd ~/music/
 dir=$(dirname "$(mpc current -f %file%)")
 # copying is necessary because notify-send can't into icon paths containing commas
