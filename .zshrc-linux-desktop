@@ -15,6 +15,16 @@ mpd-sleep() {
 	done
 }
 
+mpd-cover-convert() {
+	find ~/music -type f -regextype posix-extended -regex ".*cover\.(png|jpg)"\
+		| while read file; do
+		d=$(dirname "$file")
+		if [[ ! -f "$d/cover-small.png" ]]; then
+			convert "$file" -resize 250x "$d/cover-small.png"
+		fi
+	done
+}
+
 # list stats about mpd library file types, to motivate me
 # to do better!
 mpd-filetypes() {
@@ -23,7 +33,8 @@ mpd-filetypes() {
 	# hackily yoink recognised types from mpd --version
 	types=(); mpd --version \
 		| sed -n '1h; 1!H; ${g; s/.*Decoders plugins:\(.*\)Output.*/\1/g; p}'\
-		| tr -s ' ' '\n' | sed -e 's/.*\]//' -e '/^$/d' | sort | uniq | while read word; do
+		| tr -s ' ' '\n' | sed -e 's/.*\]//' -e '/^$/d' | sort | uniq\
+		| while read word; do
 	types[$(( ${#types} + 1 ))]="$word"
 	done
 	types[$(( ${#types} + 1 ))]="other"
