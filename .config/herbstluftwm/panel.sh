@@ -41,10 +41,6 @@ hc pad $monitor $bheight
 #  SUBROUTINES  #
 #################
 
-unique_line() {
-	awk '$0 != l { print ; l=$0 ; fflush(); }'
-}
-
 # functions for retrieving and processing data
 # upon events
 
@@ -155,7 +151,7 @@ event_mpd() {
 			fi
 			mpc idle player >/dev/null 2>&1
 		fi
-	done > >(unique_line)
+	done > >(uniq)
 }
 
 event_stat() {
@@ -170,7 +166,7 @@ event_when() {
 			echo -e 'when\t1'
 		fi
 		sleep 10
-	done > >(unique_line)
+	done > >(uniq)
 }
 
 
