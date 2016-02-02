@@ -31,65 +31,101 @@ mpd-cover-convert() {
 # list stats about mpd library file types, to motivate me
 # to do better!
 mpd-filetypes() {
-	total=$(mpc stats | grep Songs | sed 's/Songs: *//')
+	local pattern
 
-	# hackily yoink recognised types from mpd --version
-	types=(); mpd --version \
-		| sed -n '1h; 1!H; ${g; s/.*Decoders plugins:\(.*\)Output.*/\1/g; p}'\
-		| tr -s ' ' '\n' | sed -e 's/.*\]//' -e '/^$/d' | sort -u\
-		| while read word; do
-	types[$(( ${#types} + 1 ))]="$word"
+	# if args exist, read them as file extensions in a pattern
+	if 
+	if [[ ! -z "$@" ]]; then
+		pattern=$(echo "$@" | sed -e 's/\s/|/g' -e 's/\(.*\)/(\1)/')
+	else
+	# else hackily yoink recognised types from mpd --version
+		pattern=$(mpd --version \
+			| sed -n '1h; 1!H; ${g; s/.*Decoders plugins:\(.*\)Output.*/\1/g; p}' \
+			| sed -e 's/.*\]//' | tr -d '\n' \
+			| sed -e 's/^ //' -e 's/\s/|/g' -e 's/\(.*\)/(\1)/')
+	fi
+
+	# find file counts
+	local i=1
+	local total=0
+	local totalstr='total'
+	local counts=()
+	local types=()
+	find ~/music -type f -regextype posix-extended \
+		-regex ".*\.$pattern" | grep -oE "\.$pattern$" \
+		| sort | uniq -c | sed -e 's/^\s*\([0-9]* \)\./\1/' | \
+	while read -A line; do
+		counts[$i]=${line[1]}
+		types[$i]=${line[2]}
+		total=$(( $total + ${line[1]} ))
+		i=$(( $i + 1 ))
 	done
-	types[$(( ${#types} + 1 ))]="other"
 
-	# find the number of files of each type
-	counts[${#types}]=$total
-	for (( i=1; i < ${#types}; i++ )); do
-		# mpc search is a little faster, but
-		# return bad matches because no regex
-		counts[$i]=$(find ~/music/ -type f -regextype posix-extended -regex ".*\.${types[$i]}" | wc -l)
-		counts[${#types}]=$(( ${counts[${#types}]} - ${counts[$i]} ))
+	# calculate percentages
+	local twidth=0
+	local cwidth=0
+	local percentages=()
+	for i in {1..${#types}}; do
+		percentages[$i]="%$(calc -p \
+			"a=${counts[$i]} * 100 / $total; round(a, 5-digits(a), 16)" \
+			| tr -d '~')"
+
 	done
 
-	twidth=0
-	cwidth=0
-	for (( i=1; i <= ${#types}; i++ )); do
-		if [[ ${counts[$i]} -eq 0 ]]; then
-			percentages[$i]=0
+	types=( 'type' "${types[@]}" 'total' )
+	counts=( 'count' "${counts[@]}" $total )
+	percentages=( 'percent' "${percentages[@]}" '       ')
+
+	# calculate padding widths
+	for i in {1..${#types}}; do
+		if [[ ${#types[$i]} -gt $twidth ]]; then
+			twidth=${#types[$i]}
+		fi
+
+		if [[ ${#counts[$i]} -gt $cwidth ]]; then
+			cwidth=${#counts[$i]}
+		fi
+	done
+
+
+	# print results
+	local linelen=$(( $twidth + $cwidth + 13 ))
+	local j
+	echo -n "┌"
+	for (( j=0; j < $linelen; j++ )); do
+		echo -n "─"
+	done
+	echo "┐"
+
+	for i in {1..${#types}}; do
+		if [[ $i -eq 2 || $i -eq ${#types} ]]; then
+			echo -n "├"
+			for (( j=0; j < $linelen; j++ )); do
+				echo -n "─"
+			done
+			echo "┤"
+		fi
+
+		if [[ $i -eq 1 ]]; then
+			printf "│ %${twidth}s  " "${types[$i]}"
 		else
-			percentages[$i]=$(calc -p "a=${counts[$i]} * 100 / $total; round(a, 4-digits(a), 16)"\
-				| tr -d '~')
+			printf "│ %${twidth}s: " "${types[$i]}"
 		fi
 
-		# get widths for padding.
-		# exclude when count == 0
-		if [[ ${counts[$i]} -ne 0 ]]; then
-			if [[ ${#types[$i]} -gt $twidth ]]; then
-				twidth=${#types[$i]}
-			fi
-			if [[ ${#counts[$i]} -gt $cwidth ]]; then
-				cwidth=${#counts[$i]}
-			fi
-		fi
+		printf "%${cwidth}s" "${counts[$i]}"
 
-	done
-
-	# print non-empty result types
-	for (( i=1; i <= ${#types}; i++ )); do
-		if [[ ${counts[$i]} -ne 0 ]]; then
-			printf "%${twidth}s: " "${types[$i]}"
-			printf "%${cwidth}d" "${counts[$i]}"
-			echo ", %${percentages[$i]}"
+		if [[ $i -eq 1 || $i -eq ${#types} ]]; then
+			printf "  %-7s │\n" "${percentages[$i]}"
+		else
+			printf ", %-7s │\n" "${percentages[$i]}"
 		fi
 	done
 
-	# print total
-	linelen=$(( $twidth + $cwidth + 10 ))
-	for (( i=0; i < $linelen; i++ )); do
-		echo -n "="
+	echo -n "└"
+	for (( j=0; j < $linelen; j++ )); do
+		echo -n "─"
 	done
-
-	echo -e "\ntotal: $total"
+	echo "┘"
 }
 
 # capture webm
