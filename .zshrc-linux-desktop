@@ -15,6 +15,9 @@ mpd-sleep() {
 	done
 }
 
+# make small cover versions for mpc-notify.sh
+# leaks memory for some reason, so don't run on a clean library
+# or it'll crash everything
 mpd-cover-convert() {
 	find ~/music -type f -regextype posix-extended -regex ".*cover\.(png|jpg)"\
 		| while read file; do
@@ -33,7 +36,7 @@ mpd-filetypes() {
 	# hackily yoink recognised types from mpd --version
 	types=(); mpd --version \
 		| sed -n '1h; 1!H; ${g; s/.*Decoders plugins:\(.*\)Output.*/\1/g; p}'\
-		| tr -s ' ' '\n' | sed -e 's/.*\]//' -e '/^$/d' | sort | uniq\
+		| tr -s ' ' '\n' | sed -e 's/.*\]//' -e '/^$/d' | sort -u\
 		| while read word; do
 	types[$(( ${#types} + 1 ))]="$word"
 	done
