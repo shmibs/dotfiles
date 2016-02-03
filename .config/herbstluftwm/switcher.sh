@@ -2,13 +2,20 @@
 
 source ~/.config/init/vars
 
-list=$(wmctrl -l)
-IFS=$'\r\n' nums=($(echo $list | cut -d ' ' -f 1))
-choice=$(echo $list | cut -d ' ' -f 5- | nl -w 2 -s ") " | \
-	dmenu -fn $efont -i -h $bheight -nb $bg_normal -nf $fg_normal \
-	-sb $bg_focus -sf $fg_focus -p "Select:" -l 40 | \
-	cut -d ')' -f 1)
+typeset -i choice
+nums=()
+lines=""
+while read -rA line; do
+	nums=( "${nums[@]}" "${line[1]}" )
+	if [[ -z "$lines" ]]; then
+		lines="${line[@]:3}"
+	else
+		lines="${lines}\n${line[@]:3}"
+	fi
+done < <(wmctrl -l)
 
-if [ $choice ]; then
-	herbstclient jumpto ${nums[$choice]}
-fi
+echo -e "$lines" | nl -w 2 -s ") " | dmenu -fn $efont -i -h $bheight \
+		-nb $bg_normal -nf $fg_normal -sb $bg_focus -sf $fg_focus \
+		-p "Select:" -l 40 | cut -d ')' -f 1 | {read choice}
+
+herbstclient jumpto "${nums[$choice]}"
