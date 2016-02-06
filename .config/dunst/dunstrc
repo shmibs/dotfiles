@@ -1,6 +1,4 @@
 [global]
-    font = Tamsyn 16
-
     # Allow a small subset of html markup in notifications and formats:
     #   <b>bold</b>
     #   <i>italic</i>

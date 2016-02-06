@@ -9,81 +9,6 @@ URxvt*buffered: on
 ! Create the window with the specified X window geometry [default 80x24]; option -geometry.
 ! URxvt*geometry: geom
 
-! Use the specified colour as the windows background colour [default White]; option -bg.
-URxvt*background: #262626
-
-! Use the specified colour as the windows foreground colour [default Black]; option -fg.
-URxvt*foreground: #c1b48e
-
-! Use the specified colour for the colour value n, where 0-7 corresponds to low-intensity (normal) colours and 8-15 corresponds to high-intensity (bold = bright
-!! black
-!URxvt*color0: #2E3436
-!! light black
-!URxvt*color8: #555753
-!! red
-!URxvt*color1: #E6562E
-!! light red
-!URxvt*color9: #FA7955
-!! green
-!URxvt*color2: #59992F
-!! light green
-!URxvt*color10: #8AE234
-!! yellow
-!URxvt*color3: #D4A831
-!! light yellow
-!URxvt*color11: #FCE381
-!! blue
-!URxvt*color4: #5D8CB0
-!! light blue
-!URxvt*color12: #9BBBCF
-!! magenta
-!URxvt*color5: #9F79B8
-!! light magenta
-!URxvt*color13: #D9A1E3
-!! cyan
-!URxvt*color6: #06989A
-!! light cyan
-!URxvt*color14: #61E2E2
-!! white
-!URxvt*color7: #E0E0E0
-!! light white
-!URxvt*color15: #FEFEFE
-! black
-URxvt*color0: #4e4e4e
-! light black
-URxvt*color8: #7d7d7d
-! red
-URxvt*color1: #ff3842
-! light red
-URxvt*color9: #ff5757
-! green
-URxvt*color2: #d5f85f
-! light green
-URxvt*color10: #99ff66
-! yellow
-URxvt*color3: #ffa466
-! light yellow
-URxvt*color11: #faff66
-! blue
-URxvt*color4: #00a1e4
-! light blue
-URxvt*color12: #00d7ff
-! magenta
-URxvt*color5: #d0758b
-! light magenta
-URxvt*color13: #d0758b
-! cyan
-URxvt*color6: #00ccff
-! light cyan
-URxvt*color14: #26ded2
-! white
-URxvt*color7: #d6d6d6
-! light white
-URxvt*color15: #f0f0f0
-
-! 
-! URxvt*colorBD: colour
-
 ! Use the specified colour to display bold or italic characters when the foreground colour is the default. If font styles are not available (Compile styles) and
 ! URxvt*colorIT: colour
 
@@ -133,7 +58,7 @@ URxvt*color15: #f0f0f0
 ! URxvt*borderColor: colour
 
 ! Select the fonts to be used. This is a comma separated list of font names that are checked in order when trying to find glyphs for characters. The first font
-URxvt*font: xft:Tamsyn:size=12, xft:MS Gothic:size=12, xft:Dotum:size=12
+URxvt*font: xft:Droid Sans Mono:size=10, xft:Togoshi Mono:size=12
 
 ! URxvt*boldFont: fontlist
 

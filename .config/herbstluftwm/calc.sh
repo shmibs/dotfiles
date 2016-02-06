@@ -27,9 +27,9 @@ command_check() {
 }
 
 while [ "$in" != "" ]; do
-	in=$(echo "" | dmenu -fn $efont -q -h $bheight \
-		-nb $bg_normal -nf $fg_normal \
-		-sb $bg_focus -sf $fg_focus -p "$prompt" | \
+	in=$(dmenu -noinput -fn "${bfont}:size=${bfont_size}" -q -h "$bheight" \
+		-nb "$bg_normal" -nf "$fg_normal" \
+		-sb "$bg_focus" -sf "$fg_focus" -p "$prompt" | \
 		sed -e "s/ans/$acc/g")
 	if [[ $(command_check "$in" "$acc") -eq 1 ]]; then
 		break

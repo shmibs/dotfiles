@@ -2,20 +2,29 @@
 #  general  #
 #############
 
-bheight=18
+bheight=20
 
-bfont1='-*-stlarch-medium-r-*-*-10-*-*-*-*-*-*-*'
-bfont2='-*-fixed-medium-*-*-*-12-*-*-*-*-*-*-*'
+ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
+ifont_off='-2'
 
-efont='-*-tamsyn-medium-*-*-*-14-*-*-*-*-*-*-*'
+bfont='Droid Sans Mono'
+bfont_size='8'
+bfont_off='-2'
 
-ttfont='Fira Mono 10'
+jfont='Togoshi Mono'
+jfont_size='10'
+jfont_off='0'
+
+
+ttfont='Hack'
+ttfont_size='10'
 
 ############
 #  themes  #
 ############
 
 # Arch Blue
+#wallpaper='arch-sloppity.png'
 #bg_normal='#333333'
 #fg_normal='#efefef'
 #bg_focus='#00aad4'
@@ -23,13 +32,14 @@ ttfont='Fira Mono 10'
 #bg_urgent='#ff4070'
 #fg_urgent='#efefef'
 #
-#fg_grey='#ababab'
-#fg_red='#ff6699'
-#fg_green='#d5f85f'
-#fg_yellow='#ffa466'
-#fg_blue='#00aad4'
+#std_grey='#ababab'
+#std_red='#ff6699'
+#std_green='#d5f85f'
+#std_yellow='#ffa466'
+#std_blue='#00aad4'
 
 # Section 9
+#wallpaper='gits-city.jpg'
 #bg_normal='#333333'
 #fg_normal='#efefef'
 #bg_focus='#714BA7'
@@ -37,13 +47,14 @@ ttfont='Fira Mono 10'
 #bg_urgent='#ff4070'
 #fg_urgent='#efefef'
 #
-#fg_grey='#ababab'
-#fg_red='#ff6699'
-#fg_green='#d5f85f'
-#fg_yellow='#ffa466'
-#fg_blue='#00aad4'
+#std_grey='#ababab'
+#std_red='#ff6699'
+#std_green='#d5f85f'
+#std_yellow='#ffa466'
+#std_blue='#00aad4'
 
-# Lain Blind
+# Lain Bed
+#wallpaper='lain-bed.png'
 #bg_normal='#262626'
 #fg_normal='#c1b48e'
 #bg_focus='#d0758b'
@@ -51,22 +62,51 @@ ttfont='Fira Mono 10'
 #bg_urgent='#ff4070'
 #fg_urgent='#efefef'
 #
-#fg_grey='#808080'
-#fg_red='#d0758b'
-#fg_green='#d0758b'
-#fg_yellow='#d0758b'
-#fg_blue='#d0758b'
+#std_grey='#808080'
+#std_red='#d0758b'
+#std_green='#d0758b'
+#std_yellow='#d0758b'
+#std_blue='#d0758b'
 
-#  Aigis
-bg_normal='#262626'
-fg_normal='#c1b48e'
-bg_focus='#d0758b'
-fg_focus='#efefef'
-bg_urgent='#ff4070'
-fg_urgent='#efefef'
+# Aigis
+#wallpaper='aigis-1920x1080.png'
+#bg_normal='#262626'
+#fg_normal='#c1b48e'
+#bg_focus='#d0758b'
+#fg_focus='#efefef'
+#bg_urgent='#ff4070'
+#fg_urgent='#efefef'
+#
+#std_grey='#566a72'
+#std_red='#ba5654'
+#std_green='#badbb4'
+#std_yellow='#b9c780'
+#std_blue='#99cff3'
 
-fg_grey='#566a72'
-fg_red='#ba5654'
-fg_green='#badbb4'
-fg_yellow='#b9c780'
-fg_blue='#99cff3'
+# Pink
+wallpaper='kuvshinov-ilya.png'
+
+std_black='#262626'
+std_red='#ed4047'
+std_green='#6dd46b'
+std_yellow='#ccca7a'
+std_blue='#0075a6'
+std_magenta='#e1447b'
+std_cyan='#2dfac9'
+std_white='#e5e8ca'
+
+light_black='#566a72'
+light_red='#ff666c'
+light_green='#8ff78d'
+light_yellow='#ecea86'
+light_blue='#0094bf'
+light_magenta='#e06d94'
+light_cyan='#9effe4'
+light_white='#ffffff'
+
+bg_normal="$std_black"
+fg_normal="$std_white"
+bg_focus="$light_magenta"
+fg_focus="$light_white"
+bg_urgent="$std_red"
+fg_urgent="$light_red"

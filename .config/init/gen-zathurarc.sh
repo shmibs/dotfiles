@@ -1,7 +1,7 @@
 {
 
 echo "\
-set font                    \"$ttfont\"
+set font                    \"$ttfont $ttfont_size\"
 
 set highlight-color         \"$bg_normal\"
 set highlight-active-color  \"$bg_focus\"

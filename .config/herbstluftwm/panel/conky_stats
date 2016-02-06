@@ -7,4 +7,4 @@ use_spacer none
 short_units yes
 
 TEXT
-stats	%%${cpu cpu0}	%%${memperc}
+stats	%${cpu cpu0}	%${memperc}

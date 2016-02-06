@@ -1,4 +1,4 @@
-#initialise configs to auto-match themes
+#initialise configs to auto-match theme
 ~/.config/init/init.sh
 
 #merge Xresources
@@ -51,7 +51,7 @@ compton -b --backend glx --vsync opengl
 #this is an ugly hack which runs a dummy program
 #through bumblebee to get the fans on discrete
 #nvidia graphics cards to shut up
-command -v optirun && $(echo "" | optirun bar)
+command -v optirun && $(echo "" | optirun lemonbar)
 
 xsetroot -cursor_name left_ptr
 nitrogen --restore

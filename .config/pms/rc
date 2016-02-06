@@ -1,4 +1,4 @@
-set startuplist=library
+set startuplist=Library
 
 set scroll=centered
 set sort=track disc album

@@ -130,20 +130,20 @@ hc keybind Mod1-XF86PowerOff spawn mate-session-save --shutdown-dialog
 hc keybind Print        spawn mate-screenshot
 
 # ranger
-hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger /home/shmibs
-hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/books
-hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/comics
-hc keybind Mod4-Shift-Control-d      spawn urxvt -name "ranger" -e ranger /home/shmibs/downloads
-hc keybind Mod4-Shift-Control-g      spawn urxvt -name "ranger" -e ranger /home/shmibs/games
-hc keybind Mod4-Shift-Control-i      spawn urxvt -name "ranger" -e ranger /home/shmibs/images
-hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger /home/shmibs/music
-hc keybind Mod4-Shift-Control-n      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/manga
-hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger /home/shmibs/projects
-hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger /home/shmibs/desktop
-hc keybind Mod4-Shift-Control-r      spawn urxvt -name "ranger" -e ranger /home/shmibs/romz
-hc keybind Mod4-Shift-Control-t      spawn urxvt -name "ranger" -e ranger /home/shmibs/thcool
-hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger /home/shmibs/videos
-hc keybind Mod4-Shift-Control-w      spawn urxvt -name "ranger" -e ranger /home/shmibs/documents/writing
+hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger ~
+hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger ~/documents/books
+hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger ~/documents/comics
+hc keybind Mod4-Shift-Control-d      spawn urxvt -name "ranger" -e ranger ~/downloads
+hc keybind Mod4-Shift-Control-g      spawn urxvt -name "ranger" -e ranger ~/games
+hc keybind Mod4-Shift-Control-i      spawn urxvt -name "ranger" -e ranger ~/images
+hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger ~/music
+hc keybind Mod4-Shift-Control-n      spawn urxvt -name "ranger" -e ranger ~/documents/manga
+hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger ~/projects
+hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger ~/desktop
+hc keybind Mod4-Shift-Control-r      spawn urxvt -name "ranger" -e ranger ~/romz
+hc keybind Mod4-Shift-Control-t      spawn urxvt -name "ranger" -e ranger ~/thcool
+hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger ~/videos
+hc keybind Mod4-Shift-Control-w      spawn urxvt -name "ranger" -e ranger ~/documents/writing
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
@@ -165,8 +165,10 @@ hc keybind Mod4-Shift-v spawn urxvt -name "vim" -e vim
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
 
 # dmenu
-hc keybind Mod4-0 spawn dmenu_run -fn $efont -p "Run:" -h 18 -nb $bg_normal -nf $fg_normal \
-	-sb $bg_focus  -sf $fg_focus
+hc keybind Mod4-0 spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
+	-p "Run:" -h "$bheight" \
+	-nb "$bg_normal" -nf "$fg_normal" \
+	-sb "$bg_focus"  -sf "$fg_focus"
 hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh
 hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
@@ -212,5 +214,6 @@ done
 pkill dunst
 dunst -lb $bg_normal -nb $bg_normal -cb $bg_focus \
 	-lf $fg_normal -nf $fg_normal -cf $fg_focus \
-	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))"
+	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))" \
+	-fn "$ttfont $ttfont_size,$jfont $jfont_size"
 
