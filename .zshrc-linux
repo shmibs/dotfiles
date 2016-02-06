@@ -7,13 +7,6 @@ alias less='less -R'
 alias ls='ls --color=auto'
 alias ll='ls -lh --color=auto'
 
-alias def='sdcv'
-alias dvd='mpv --deinterlace=yes dvd://'
-alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
-alias svim='sudo -E vim'
-alias thesaurus='aiksaurus'
-alias vmount='udevil mount'
-alias vumount='udevil umount'
 alias :q='exit'
 
 export EDITOR="vim"
