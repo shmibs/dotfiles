@@ -4,6 +4,15 @@
 ##Screenshots
 [![clean](http://shmibbles.me/img/scrot/current/clean_small.png)](http://shmibbles.me/img/scrot/current/clean.png)[![dirty](http://shmibbles.me/img/scrot/current/dirty_small.png)](http://shmibbles.me/img/scrot/current/dirty.png)
 
+##Structure
+
+[.config/init/](.config/init) contains [vars](.config/init/vars), a file
+defining shared variables for the desktop which are sourced and used elsewhere,
+and a series of "gen-*.sh" files, which create configuration files in /tmp/ so
+programs not configurable via shell scripting will automatically match the
+current settings as well. i stick symlinks to the /tmp/ version where they
+would normally be.
+
 ##Current Utilities
 
 ###MATE
@@ -45,3 +54,12 @@ notifications, which is used by
 and probably any other similar things i add in the future. not sure what the
 default behaviour (pause / unpause notification display) was supposed to be
 used for ┐(¯-¯)┌.
+
+oh, also, using xft-compatible patches now.
+
+###infinality
+
+makes things look all purty n stuff. getting used to vector fonts, and they can
+be pretty clean and readable with the right settings / colours, even with
+non-ridiculous DPI screens.
+[this font's nice](https://sourcefoundry.org/hack/).

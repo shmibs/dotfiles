@@ -236,16 +236,16 @@ event_when() {
 				fields[5]="${sep}%{A:mpd: F"
 				case "${event[1]}" in
 					playing)
-						fields[5]+=$(echo -n "${std_green}} \uE0FE \uE09A")
+						fields[5]+=$(echo -n "${light_green}} \uE0FE \uE09A")
 						;;
 					paused)
-						fields[5]+=$(echo -n "${std_yellow}} \uE0FE \uE09B")
+						fields[5]+=$(echo -n "${light_yellow}} \uE0FE \uE09B")
 						;;
 					stopped)
-						fields[5]+=$(echo -n "${std_blue}} \uE0FE \uE099")
+						fields[5]+=$(echo -n "${light_blue}} \uE0FE \uE099")
 						;;
 					*)
-						fields[5]+=$(echo -n "${std_red}} \uE0FE \uE09E")
+						fields[5]+=$(echo -n "${light_red}} \uE0FE \uE09E")
 						;;
 				esac
 				fields[5]+=" %{F${fg_normal} A}"
@@ -256,15 +256,15 @@ event_when() {
 				event[2]=$(printf "%-4s" ${event[2]})
 				fields[6]=$(
 					echo -n "${sep}%{A:stats:} "
-					echo -n "%{F${std_blue}}\uE023%{F${fg_normal}} ${event[1]} "
-					echo -n "%{F${std_cyan}}\uE020%{F${fg_normal}} ${event[2]} "
+					echo -n "%{F${light_blue}}\uE023%{F${fg_normal}} ${event[1]} "
+					echo -n "%{F${light_cyan}}\uE020%{F${fg_normal}} ${event[2]} "
 					echo -n "%{A}")
 				;;
 				
 			when)
 				if [[ "${event[1]}" -eq 1 ]]; then
 					fields[4]=$(echo -n "${sep}%{A:when:}"
-						echo -n "%{F${std_red}} \uE0AE %{F${fg_normal} A}")
+						echo -n "%{F${light_red}} \uE0AE %{F${fg_normal} A}")
 				else
 					fields[4]=""
 				fi
