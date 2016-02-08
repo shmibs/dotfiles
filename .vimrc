@@ -57,6 +57,49 @@ let g:UltiSnipsEditSplit="vertical"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
+"lightline colours. modded from 16color
+function! s:Lightline_palette_init()
+	let l:black = [ 0, 0 ]
+	let l:lblack = [ 8, 8 ]
+	let l:red = [ 1, 1 ]
+	let l:lred = [ 9, 9 ]
+	let l:green = [ 2, 2 ]
+	let l:lgreen = [ 10, 10 ]
+	let l:yellow = [ 3, 3 ]
+	let l:lyellow = [ 11, 11 ]
+	let l:blue = [ 4, 4 ]
+	let l:lblue = [ 12, 12 ]
+	let l:magenta = [ 5, 5 ]
+	let l:lmagenta = [ 13, 13 ]
+	let l:cyan = [ 6, 6 ]
+	let l:lcyan = [ 14, 14 ]
+	let l:white = [ 7, 7 ]
+	let l:lwhite = [ 15, 15 ]
+
+	let l:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
+	let l:p.normal.left = [ [ l:lwhite, l:blue ], [ l:lwhite, l:lblack ] ]
+	let l:p.normal.right = [ [ l:black, l:white ], [ l:lwhite, l:lblack ] ]
+	let l:p.inactive.right = [ [ l:lblack, l:black ], [ l:lblack, l:black ] ]
+	let l:p.inactive.left =  [ [ l:lblack, l:black ], [ l:lblack, l:black ] ]
+	let l:p.insert.left = [ [ l:lwhite, l:green ], [ l:lwhite, l:lblack ] ]
+	let l:p.replace.left = [ [ l:lwhite, l:red ], [ l:lwhite, l:lblack ] ]
+	let l:p.visual.left = [ [ l:white, l:magenta ], [ l:lwhite, l:lblack ] ]
+	let l:p.normal.middle = [ [ l:white, l:black ] ]
+	let l:p.inactive.middle = [ [ l:white, l:black ] ]
+	let l:p.tabline.left = [ [ l:white, l:black ] ]
+	let l:p.tabline.tabsel = [ [ l:white, l:black ] ]
+	let l:p.tabline.middle = [ [ l:black, l:white ] ]
+	let l:p.tabline.right = copy(l:p.normal.right)
+	let l:p.normal.error = [ [ l:white, l:red ] ]
+	let l:p.normal.warning = [ [ l:white, l:yellow ] ]
+
+let g:lightline#colorscheme#shmibs#palette = lightline#colorscheme#flatten(l:p)
+	let g:lightline = { 'colorscheme': 'shmibs' }
+endfunction
+
+call s:Lightline_palette_init()
+
+
 
 """"""""""""""""""""""
 "  GENERAL SETTINGS  "
