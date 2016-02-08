@@ -106,7 +106,7 @@ light_white='#ffffff'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$magenta"
+bg_focus="$std_magenta"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
