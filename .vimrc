@@ -77,13 +77,13 @@ function! s:Lightline_palette_init()
 	let l:lwhite = [ 15, 15 ]
 
 	let l:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}}
-	let l:p.normal.left = [ [ l:lwhite, l:blue ], [ l:lwhite, l:lblack ] ]
+	let l:p.normal.left = [ [ l:lwhite, l:magenta ], [ l:lwhite, l:lblack ] ]
 	let l:p.normal.right = [ [ l:black, l:white ], [ l:lwhite, l:lblack ] ]
 	let l:p.inactive.right = [ [ l:lblack, l:black ], [ l:lblack, l:black ] ]
 	let l:p.inactive.left =  [ [ l:lblack, l:black ], [ l:lblack, l:black ] ]
-	let l:p.insert.left = [ [ l:lwhite, l:green ], [ l:lwhite, l:lblack ] ]
-	let l:p.replace.left = [ [ l:lwhite, l:red ], [ l:lwhite, l:lblack ] ]
-	let l:p.visual.left = [ [ l:white, l:magenta ], [ l:lwhite, l:lblack ] ]
+	let l:p.insert.left = [ [ l:lwhite, l:blue ], [ l:lwhite, l:lblack ] ]
+	let l:p.replace.left = [ [ l:lwhite, l:lred ], [ l:lwhite, l:lblack ] ]
+	let l:p.visual.left = [ [ l:white, l:red ], [ l:lwhite, l:lblack ] ]
 	let l:p.normal.middle = [ [ l:white, l:black ] ]
 	let l:p.inactive.middle = [ [ l:white, l:black ] ]
 	let l:p.tabline.left = [ [ l:white, l:black ] ]

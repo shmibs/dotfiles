@@ -8,15 +8,15 @@ ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
 ifont_off='-2'
 
 bfont='Droid Sans Mono'
-bfont_size='8'
-bfont_off='-2'
+bfont_size='9'
+bfont_off='-1'
 
 jfont='Togoshi Mono'
 jfont_size='10'
 jfont_off='0'
 
 
-ttfont='Hack'
+ttfont='Droid Sans Mono'
 ttfont_size='10'
 
 ############
@@ -88,25 +88,25 @@ wallpaper='kuvshinov-ilya.png'
 
 std_black='#262626'
 std_red='#ed4047'
-std_green='#6dd46b'
-std_yellow='#ccca7a'
+std_green='#6fbf6d'
+std_yellow='#f0b73d'
 std_blue='#0075a6'
-std_magenta='#e1447b'
-std_cyan='#2dfac9'
+std_magenta='#d95784'
+std_cyan='#5afad4'
 std_white='#e5e8ca'
 
 light_black='#566a72'
 light_red='#ff666c'
-light_green='#8ff78d'
-light_yellow='#ecea86'
+light_green='#a2f7a1'
+light_yellow='#ffcf69'
 light_blue='#0094bf'
-light_magenta='#e06d94'
-light_cyan='#9effe4'
+light_magenta='#e07499'
+light_cyan='#a6f5df'
 light_white='#ffffff'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$light_magenta"
+bg_focus="$magenta"
 fg_focus="$light_white"
 bg_urgent="$std_red"
-fg_urgent="$light_red"
+fg_urgent="$light_white"
