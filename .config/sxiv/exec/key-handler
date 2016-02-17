@@ -1,34 +1,57 @@
 #!/bin/zsh
 
+source ~/.config/init/vars
+
 # The key combo argument has the following form: "[C-][M-][S-]KEY",
 # where C/M/S indicate Ctrl/Meta(Alt)/Shift modifier states and KEY is the X
 # keysym as listed in /usr/include/X11/keysymdef.h without the "XK_" prefix.
 
-while read file
-do
+files=()
+while read line; do
+	files=( "${files[@]}" "$line" )
+done
+
+
+if [[ "${#files[@]}" -eq 1 ]]; then
 	case "$1" in
-	"y")
-		echo -n "$file" | xclip -selection clipboard ;;
-	"C-d")
-		rm "$file" ;;
-	"g")
-		gimp "$file" & ;;
+		"y")
+			echo -n "$files" | xclip -selection clipboard
+			echo -n "$files" | xclip -selection primary
+			exit
+			;;
+		"r")
+			dmenu "${dmenu_args[@]}" -q -noinput
+			exit
+			;;
+		*) ;;
+	esac
+fi
+
+case "$1" in
+	"C-d") rm "${files[@]}" ;;
+	"g") gimp "${files[@]}" & ;;
 	"s")
-		scp "$file" shmibbles.me:http/tmp/
-		basename=$(basename $file)
-		if [[ $? -ne 0 ]]; then
-			notify-send "uploading $basename to /tmp/ failed"
-		else
-			ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
-			name=$(echo "https://shmibbles.me/tmp/$basename"\
-			| sed -e 's/ /%20/g' -e 's/?/%3f/g')
-			echo $name | tr -d '\n' | xclip -i -selection clipboard
-			echo $name | tr -d '\n' | xclip -i -selection primary
-			notify-send "uploaded $basename to /tmp/"
-		fi
+		for file in "${files[@]}"; do
+			scp "$file" shmibbles.me:http/tmp/
+			basename=$(basename $file)
+			if [[ $? -ne 0 ]]; then
+				notify-send "uploading $basename to /tmp/ failed"
+			else
+				ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
+				name=$(echo "https://shmibbles.me/tmp/$basename"\
+				| sed -e 's/ /%20/g' -e 's/?/%3f/g')
+				echo $name | tr -d '\n' | xclip -i -selection clipboard
+				echo $name | tr -d '\n' | xclip -i -selection primary
+				notify-send "uploaded $basename to /tmp/"
+			fi
+		done
+		;;
+	"n")
+		for file in "${files[@]}"; do
+			notify-send "$file"
+		done
+		notify-send "${#files[@]}"
 		;;
 	*)
-		notify-send "command not recognised"
-		;;
-	esac
-done
+		notify-send "sxiv: command not recognised" ;;
+esac
