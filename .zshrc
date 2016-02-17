@@ -76,8 +76,6 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 ZSH_HIGHLIGHT_STYLES[single-quoted-argument]="fg=red"
 ZSH_HIGHLIGHT_STYLES[double-quoted-argument]="fg=red"
 
-# highlight comments
-ZSH_HIGHLIGHT_PATTERNS+=('\#*' 'fg=cyan')
 
 ################# KEYBINDINGS #################
 typeset -g -A key
