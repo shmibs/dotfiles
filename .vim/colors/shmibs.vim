@@ -16,7 +16,7 @@ hi! DiffChange   ctermfg=NONE ctermbg=8
 hi! DiffText     ctermfg=black ctermbg=yellow cterm=bold
 hi! Folded       ctermfg=8 ctermbg=NONE
 hi! Identifier   cterm=bold ctermfg=cyan
-hi! NonText      ctermfg=yellow ctermbg=8 cterm=bold
+hi! NonText      ctermfg=yellow ctermbg=black cterm=bold
 hi! PreProc      ctermfg=magenta
 hi! Pmenu        ctermfg=white ctermbg=magenta
 hi! PmenuSel     ctermfg=black ctermbg=lightmagenta
