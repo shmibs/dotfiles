@@ -2,82 +2,56 @@
 #  themes  #
 ############
 
-# Arch Blue
-#wallpaper='arch-sloppity.png'
-#bg_normal='#333333'
-#fg_normal='#efefef'
-#bg_focus='#00aad4'
-#fg_focus='#efefef'
-#bg_urgent='#ff4070'
-#fg_urgent='#efefef'
 #
-#std_grey='#ababab'
-#std_red='#ff6699'
-#std_green='#d5f85f'
-#std_yellow='#ffa466'
-#std_blue='#00aad4'
-
-# Section 9
-#wallpaper='gits-city.jpg'
-#bg_normal='#333333'
-#fg_normal='#efefef'
-#bg_focus='#714BA7'
-#fg_focus='#efefef'
-#bg_urgent='#ff4070'
-#fg_urgent='#efefef'
-#
-#std_grey='#ababab'
-#std_red='#ff6699'
-#std_green='#d5f85f'
-#std_yellow='#ffa466'
-#std_blue='#00aad4'
-
-# Lain Bed
-#wallpaper='lain-bed.png'
-#bg_normal='#262626'
-#fg_normal='#c1b48e'
-#bg_focus='#d0758b'
-#fg_focus='#efefef'
-#bg_urgent='#ff4070'
-#fg_urgent='#efefef'
-#
-#std_grey='#808080'
-#std_red='#d0758b'
-#std_green='#d0758b'
-#std_yellow='#d0758b'
-#std_blue='#d0758b'
-
-# Aigis
-#wallpaper='aigis-1920x1080.png'
-#bg_normal='#262626'
-#fg_normal='#c1b48e'
-#bg_focus='#d0758b'
-#fg_focus='#efefef'
-#bg_urgent='#ff4070'
-#fg_urgent='#efefef'
-#
-#std_grey='#566a72'
-#std_red='#ba5654'
-#std_green='#badbb4'
-#std_yellow='#b9c780'
-#std_blue='#99cff3'
-
 # Pink
-wallpaper='kuvshinov-ilya.png'
+#
 
-std_black='#262626'
+#wallpaper='kuvshinov-ilya.png'
+#
+#std_black='#262626'
+#std_red='#ed4047'
+#std_green='#72c76f'
+#std_yellow='#f0b73d'
+#std_blue='#0075a6'
+#std_magenta='#d95784'
+#std_cyan='#5afad4'
+#std_white='#e5e8ca'
+#
+#light_black='#566a72'
+#light_red='#ff666c'
+#light_green='#a2f7a1'
+#light_yellow='#ffcf69'
+#light_blue='#0094bf'
+#light_magenta='#e07499'
+#light_cyan='#a6f5df'
+#light_white='#ffffff'
+#
+#bg_normal="$std_black"
+#fg_normal="$std_white"
+#bg_focus="$std_magenta"
+#fg_focus="$light_white"
+#bg_urgent="$std_red"
+#fg_urgent="$light_white"
+
+#
+# Undercover
+#
+
+wallpaper='undercover.jpg'
+
+std_black='#26201d'
 std_red='#ed4047'
 std_green='#72c76f'
-std_yellow='#f0b73d'
+std_yellow='#d86d59'
 std_blue='#0075a6'
 std_magenta='#d95784'
 std_cyan='#5afad4'
-std_white='#e5e8ca'
+std_white='#e8ddc3'
 
-light_black='#566a72'
+light_black='#453832'
 light_red='#ff666c'
 light_green='#a2f7a1'
-light_yellow='#ffcf69'
+light_yellow='#eb9483'
 light_blue='#0094bf'
 light_magenta='#e07499'
 light_cyan='#a6f5df'
@@ -85,7 +59,7 @@ light_white='#ffffff'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$std_magenta"
+bg_focus="$std_yellow"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
