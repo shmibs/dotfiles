@@ -7,16 +7,16 @@ let g:colors_name="shmibs"
 
 hi! Comment      ctermfg=lightblue
 hi! Constant     ctermfg=red
-hi! CursorLine   ctermfg=NONE ctermbg=236 cterm=NONE
-hi! CursorLineNr ctermfg=white ctermbg=236 cterm=bold
+hi! CursorLine   ctermfg=NONE ctermbg=8 cterm=NONE
+hi! CursorLineNr ctermfg=white ctermbg=8 cterm=bold
 hi! Directory    ctermfg=cyan
-hi! DiffAdd ctermfg=green ctermbg=NONE cterm=bold
-hi! DiffDelete ctermfg=red ctermbg=NONE cterm=bold
-hi! DiffChange ctermfg=NONE ctermbg=236
-hi! DiffText ctermfg=black ctermbg=yellow cterm=bold
-hi! Folded       ctermfg=240 ctermbg=NONE
+hi! DiffAdd      ctermfg=green ctermbg=NONE cterm=bold
+hi! DiffDelete   ctermfg=red ctermbg=NONE cterm=bold
+hi! DiffChange   ctermfg=NONE ctermbg=8
+hi! DiffText     ctermfg=black ctermbg=yellow cterm=bold
+hi! Folded       ctermfg=8 ctermbg=NONE
 hi! Identifier   cterm=bold ctermfg=cyan
-hi! NonText      ctermfg=yellow ctermbg=234 cterm=bold
+hi! NonText      ctermfg=yellow ctermbg=8 cterm=bold
 hi! PreProc      ctermfg=magenta
 hi! Pmenu        ctermfg=white ctermbg=magenta
 hi! PmenuSel     ctermfg=black ctermbg=lightmagenta
@@ -31,7 +31,7 @@ hi! Title        ctermfg=magenta
 hi! Todo         ctermfg=black ctermbg=yellow
 hi! Type         ctermfg=green
 hi! Underlined   cterm=underline ctermfg=magenta
-hi! Visual       ctermbg=239
+hi! Visual       ctermbg=8
 
 "A => B
 hi! link Boolean        Constant
