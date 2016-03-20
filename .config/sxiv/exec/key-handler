@@ -34,7 +34,7 @@ case "$1" in
 		if [[ $? -ne 0 ]]; then
 			notify-send "sxiv: send to /tmp/ failed"
 		else
-			notify-send "sxiv: sent to /tmp/"
+			notify-send "sxiv: sent ${#files} images to /tmp/"
 		fi
 		;;
 	*)
