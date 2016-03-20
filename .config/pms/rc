@@ -1,7 +1,7 @@
 set startuplist=Library
 
-set scroll=centered
-set sort=track disc album
+set scroll=centred
+set sort=track album
 
 set ignorecase
 set noregexsearch
@@ -13,6 +13,7 @@ unmap h
 unmap l
 unmap F12
 map l play
+map p toggle-play
 map > next
 map < prev
 map ^N next

@@ -1,24 +1,3 @@
-#############
-#  general  #
-#############
-
-bheight=20
-
-ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
-ifont_off='-2'
-
-bfont='Droid Sans Mono'
-bfont_size='9'
-bfont_off='-1'
-
-jfont='Togoshi Mono'
-jfont_size='10'
-jfont_off='0'
-
-
-ttfont='Droid Sans Mono'
-ttfont_size='10'
-
 ############
 #  themes  #
 ############
@@ -88,7 +67,7 @@ wallpaper='kuvshinov-ilya.png'
 
 std_black='#262626'
 std_red='#ed4047'
-std_green='#6fbf6d'
+std_green='#72c76f'
 std_yellow='#f0b73d'
 std_blue='#0075a6'
 std_magenta='#d95784'
@@ -110,3 +89,45 @@ bg_focus="$std_magenta"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
+
+
+###############
+#  misc vars  #
+###############
+
+bheight=20
+
+# icon font
+ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
+ifont_off='-2'
+
+# bar font
+bfont='Droid Sans Mono'
+bfont_size='9'
+bfont_off='-1'
+
+# jp font
+jfont='Togoshi Mono'
+jfont_size='10'
+jfont_off='0'
+
+# backup font
+bkfont='Noto Sans'
+bkfont_size='10'
+bkfont_off='0'
+
+# main font
+mfont='Droid Sans Mono'
+mfont_size='10'
+dmenu_args=( -fn "${bfont}:size=${bfont_size}" -h "$bheight"
+             -nb "$bg_normal" -nf "$fg_normal" -sb "$bg_focus"
+			 -sf "$fg_focus" )
+
+
+###############
+#  functions  #
+###############
+hc() {
+	herbstclient "$@"
+}
+

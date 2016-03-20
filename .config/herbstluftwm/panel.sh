@@ -4,7 +4,6 @@
 #  SETUP  #
 ###########
 
-hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
 geometry=( $(herbstclient monitor_rect "$monitor") )
 if [ -z "$geometry" ] ;then
@@ -67,9 +66,10 @@ update_taglist() {
 		-e '$d' \
 		-e 's/\(.*\)/\1 /' \
 		-e 's/:/ /' \
-		-e "s/[#+\-%]\(.*\)/%{B${bg_focus} F${fg_focus}} \1%{B${bg_normal} F${fg_normal}}/" \
-		-e "s/!\(.*\)/%{B${bg_urgent} F${fg_urgent}} \1%{B${bg_normal} F${fg_normal}}/" \
-		-e "s/\.\(.*\)/%{B${bg_normal} F${light_black}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/^[-%]\(.*\)/%{B${light_black} F${fg_normal}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/^[#+]\(.*\)/%{B${bg_focus} F${fg_focus}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/^!\(.*\)/%{B${bg_urgent} F${fg_urgent}} \1%{B${bg_normal} F${fg_normal}}/" \
+		-e "s/^\.\(.*\)/%{B${bg_normal} F${light_black}} \1%{B${bg_normal} F${fg_normal}}/" \
 		| tr -d '\n'
 	echo "$sep"
 }
@@ -96,7 +96,13 @@ update_winlist() {
 		else
 			echo -n "%{B${bg_normal} F${fg_normal}} "
 		fi
-		echo -n "${line[@]:3}" | sed -r 's/(.{40}).*/\1\.\.\./'
+		{
+			if [[ -z "${line[@]:3}" ]]; then
+				echo -n "(has no name)"
+			else
+				echo -n "${line[@]:3}"
+			fi
+		} | sed -r 's/(.{40})...*/\1\.\.\./'
 		echo -n " "
 	done
 	echo -n "%{B${bg_normal} F${fg_normal}}"
@@ -198,13 +204,9 @@ event_when() {
 
 {
 	event_tick &
-	echo -e "child\t$!"
 	event_stats &
-	echo -e "child\t$!"
 	event_when &
-	echo -e "child\t$!"
 	event_mpd &
-	echo -e "child\t$!"
 	
 	hc --idle
 } 2> /dev/null | {
@@ -280,15 +282,8 @@ event_when() {
 				fields[2]=$(update_winlist)
 				;;
 
-			# append children to kill list
-			child)
-				child[((${#child[@]}+1))]=event[1]
-				;;
-
 			quit_panel|reload)
-				for id in ${child[@]}; do
-					kill $id
-				done
+				kill -- -$$
 				exit
 				;;
 				

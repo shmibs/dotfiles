@@ -93,7 +93,7 @@ function! s:Lightline_palette_init()
 	let l:p.normal.error = [ [ l:white, l:red ] ]
 	let l:p.normal.warning = [ [ l:white, l:yellow ] ]
 
-let g:lightline#colorscheme#shmibs#palette = lightline#colorscheme#flatten(l:p)
+	let g:lightline#colorscheme#shmibs#palette = lightline#colorscheme#flatten(l:p)
 	let g:lightline = { 'colorscheme': 'shmibs' }
 endfunction
 

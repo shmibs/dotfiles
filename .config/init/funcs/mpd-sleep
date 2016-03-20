@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+# power off after finishing mpd playlist
+mpc play > /dev/null
+while true; do
+	mpc idle player > /dev/null || return 1
+	if [[ -z "$(mpc status | grep playing)" ]]; then
+		poweroff
+	fi
+done

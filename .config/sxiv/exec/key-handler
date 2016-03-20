@@ -11,7 +11,6 @@ while read line; do
 	files=( "${files[@]}" "$line" )
 done
 
-
 if [[ "${#files[@]}" -eq 1 ]]; then
 	case "$1" in
 		"y")
@@ -31,26 +30,12 @@ case "$1" in
 	"C-d") rm "${files[@]}" ;;
 	"g") gimp "${files[@]}" & ;;
 	"s")
-		for file in "${files[@]}"; do
-			scp "$file" shmibbles.me:http/tmp/
-			basename=$(basename $file)
-			if [[ $? -ne 0 ]]; then
-				notify-send "uploading $basename to /tmp/ failed"
-			else
-				ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
-				name=$(echo "https://shmibbles.me/tmp/$basename"\
-				| sed -e 's/ /%20/g' -e 's/?/%3f/g')
-				echo $name | tr -d '\n' | xclip -i -selection clipboard
-				echo $name | tr -d '\n' | xclip -i -selection primary
-				notify-send "uploaded $basename to /tmp/"
-			fi
-		done
-		;;
-	"n")
-		for file in "${files[@]}"; do
-			notify-send "$file"
-		done
-		notify-send "${#files[@]}"
+		send "${files[@]}"
+		if [[ $? -ne 0 ]]; then
+			notify-send "sxiv: send to /tmp/ failed"
+		else
+			notify-send "sxiv: sent to /tmp/"
+		fi
 		;;
 	*)
 		notify-send "sxiv: command not recognised" ;;

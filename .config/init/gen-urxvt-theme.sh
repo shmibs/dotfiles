@@ -42,8 +42,9 @@ URxvt*color15: $light_white
 
 # Select the fonts to be used. This is a comma separated list of font names that are checked in order when trying to find glyphs for characters. The first font
 echo -n "URxvt*font: "
-echo -n "xft:${ttfont}:size=${ttfont_size}, "
-echo    "xft:${jfont}:size=${jfont_size}"
+echo -n "xft:${mfont}:size=${mfont_size}, "
+echo -n "xft:${jfont}:size=${jfont_size}, "
+echo    "xft:${bkfont}:size=${bkfont_size}"
 
 } > /tmp/urxvt-theme
 

@@ -25,15 +25,15 @@ echo "\
 .tabbrowser-tab {
     background: ${bg_normal} !important;
     color: ${fg_normal} !important;
-	font-family: \"${ttfont}\" !important;
-	font-size: ${ttfont_size}pt !important;
+	font-family: \"${mfont}\" !important;
+	font-size: ${mfont_size}pt !important;
 }
 
 .tabbrowser-tab[selected] {
     background: ${bg_focus} !important;
     color: ${fg_focus} !important;
-	font-family: \"${ttfont}\" !important;
-	font-size: ${ttfont_size}pt !important;
+	font-family: \"${mfont}\" !important;
+	font-size: ${mfont_size}pt !important;
 }
 " > /tmp/userChrome.css
 

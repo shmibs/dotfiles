@@ -11,32 +11,6 @@ alias vumount='udevil umount'
 
 ################## FUNCTIONS ##################
 
-# power off after finishing mpd playlist
-mpd-sleep() {
-	mpc play
-	while true; do
-		mpc status
-		mpc idle player
-		if [[ -z "$(mpc status | grep playing)" ]]; then
-			poweroff
-		fi
-	done
-}
-
-# make small cover versions for mpc-notify.sh
-# leaks memory for some reason, so don't run on a clean library
-# or it'll crash everything
-mpd-cover-convert() {
-	local d
-	find ~/music -type f -regextype posix-extended -regex ".*cover\.(png|jpg)"\
-		| while read file; do
-		d=$(dirname "$file")
-		if [[ ! -f "$d/cover-small.png" ]]; then
-			convert "$file" -resize 250x "$d/cover-small.png"
-		fi
-	done
-}
-
 # list stats about mpd library file types, to motivate me
 # to do better!
 mpd-filetypes() {
@@ -149,28 +123,6 @@ scap() {
 		-c:v libvpx -b:v 4M -threads 4 /tmp/out.webm > /dev/null 2>&1
 }
 
-# quickly send a file to hosted tmp dir
-send() {
-	local name
-	local basename
-	if [[ "$1" ]]; then
-		scp $@ shmibbles.me:http/tmp/
-		if [[ $? -eq 0 ]]; then
-			for name in "$@"
-			do
-				basename=$(basename $name)
-				ssh shmibbles.me "cd http/tmp; chmod o+r '$basename'"
-				name=$(echo "https://shmibbles.me/tmp/$basename"\
-				| sed -e 's/ /%20/g' -e 's/?/%3f/g')
-				echo $name | tr -d '\n' | xclip -i -selection clipboard
-				echo $name | tr -d '\n' | xclip -i -selection primary
-			done
-		fi
-	else
-		echo "specify at least one file to send"
-	fi
-}
-
 # take a screenshot, upload to /img/scrot, and update current symlink
 ssh-scrot() {
 	archey3
@@ -218,8 +170,7 @@ ssh-scrot() {
 
 }
 
-# export a section of a video to gif
-make-gif() {
+make-gif-old() {
 
 	if [[ -z "$1" ]]; then
 		break
@@ -290,6 +241,143 @@ make-gif() {
 
 	rm -f make-gif-palette.png
 	rm -f make-gif-in
+}
+
+# export a section of a video to gif
+make-gif() {
+
+	local i
+
+	local infile=""
+	local outfile="out.gif"
+	local start="00:00:00"
+	local t=""
+	local length=""
+	local fps="10"
+	typeset -i fps
+	local width="480"
+	typeset -i width
+	local subs="n"
+
+	# parse args
+	local assign=false
+	local assignopt=""
+	local interact=true
+	for i in "$@"; do
+		if [[ $assign ]]; then
+			assign=false
+			case $assignopt in
+				# output
+				-o)	outfile="$i" ;;
+				# start
+				-s)	start="$i" ;;
+				# length
+				-l)	t="-t"; length="$i"	;;
+				# fps
+				-f) fps="$i" ;;
+				# width
+				-w) width="$i" ;;
+				# subs?
+				-t) subs="y" ;;
+				*)
+					>&2 echo "err: unrecognised option"
+					return
+					;;
+			esac
+		else
+			case $i in
+				-*)
+					assign=true
+					assignopt="$i"
+					interact=false
+					;;
+				*)
+					if [[ -z "$infile" ]]; then
+						infile="$i"
+					else
+						>&2 echo "err: multiple inputs specified"
+						return
+					fi
+					;;
+			esac
+		fi
+	done
+
+	if [[ $assign ]]; then
+		>&2 echo "err: malformed arg"
+		return
+	fi
+
+	if [[ -z "$infile" ]]; then
+		>&2 echo "err: no input specified"
+		return
+	fi
+	
+	# interactive prompting
+	if [[ $interact ]]; then
+		read "i?start [00:00:00]: "
+		if [[ "$i" ]]; then
+			start="$i"
+		fi
+		
+		read "i?length [full]: "
+		if [[ "$i" ]]; then
+			t="-t"
+			length="$i"
+		fi
+
+		read "i?fps [10]: "
+		if [[ "$i" ]]; then
+			fps="$i"
+		fi
+		
+		read "i?width [480]: "
+		if [[ "$i" ]]; then
+			width="$i"
+		fi
+
+		read -q "subs?use subtitles? [y/N]: "
+		>&2 echo -e "\n"
+
+		read "i?write to: "
+		if [[ "$i" ]]; then
+			outfile="$i"
+		fi
+	fi
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+	
+	ln -s "$infile" make-gif-in
+
+	>&2 echo "converting..."
+	
+	if [[ "$subs" == "y" ]]; then
+		ffmpeg -loglevel 0 -y -ss "$start" $t "$length" -i "$infile" \
+			-copyts -vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -loglevel 0 -ss "$start" $t "$length" -i "$infile" -i make-gif-palette.png \
+			-copyts -filter_complex \
+			"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			make-gif-out
+	else
+		ffmpeg -loglevel 0 -y -ss "$start" $t "$length" -i "$infile" \
+			-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" make-gif-palette.png
+		ffmpeg -loglevel 0 -ss "$start" $t "$length" -i "$infile" -i make-gif-palette.png -filter_complex \
+			"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+			make-gif-out
+	fi
+
+	>&2 echo "optimising..."
+
+	rm -f make-gif-palette.png
+	rm -f make-gif-in
+
+	gifsicle -O3 -o "$outfile" make-gif-out
+
+	rm -f make-gif-out
+
+	>&2 echo "done!"
 }
 
 # um...
