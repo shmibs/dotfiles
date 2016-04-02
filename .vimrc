@@ -24,6 +24,8 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 
+Plugin 'elixir-lang/vim-elixir'
+
 Plugin 'lilydjwg/fcitx.vim'
 
 Plugin 'airblade/vim-gitgutter'
