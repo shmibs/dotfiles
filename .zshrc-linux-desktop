@@ -386,7 +386,7 @@ fuck() {
 	while true; do
 		echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
 
-		for i in {1..4}; do
+		for i in {1..${#fuck}}; do
 			if [[ $((RANDOM%2)) -eq 1 ]]; then
 				echo -n $fuck[$i] | tr '[:lower:]' '[:upper:]'
 			else
