@@ -12,6 +12,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
@@ -23,8 +24,6 @@ Plugin 'junegunn/vim-easy-align'
 
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
-
-Plugin 'elixir-lang/vim-elixir'
 
 Plugin 'lilydjwg/fcitx.vim'
 
