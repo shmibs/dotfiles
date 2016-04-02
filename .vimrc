@@ -110,6 +110,10 @@ syntax on
 filetype plugin indent on
 set autoindent
 
+if !has('gui_running')
+  set t_Co=256
+endif
+
 colorscheme shmibs
 
 "enable status-line
