@@ -1,3 +1,7 @@
+if !has('gui_running')
+	set t_Co=256
+endif
+
 """"""""""""
 "  VUNDLE  "
 """"""""""""
@@ -25,9 +29,13 @@ Plugin 'junegunn/vim-easy-align'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
 
+Plugin 'tommcdo/vim-exchange'
+
 Plugin 'lilydjwg/fcitx.vim'
 
 Plugin 'airblade/vim-gitgutter'
+
+Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
 
@@ -109,10 +117,6 @@ call s:Lightline_palette_init()
 syntax on
 filetype plugin indent on
 set autoindent
-
-if !has('gui_running')
-	set t_Co=256
-endif
 
 colorscheme shmibs
 
@@ -225,6 +229,7 @@ autocmd FileType conf    call Settings_script()
 autocmd FileType cpp     call Settings_c()
 autocmd FileType css     call Settings_c()
 autocmd FileType d       call Settings_c()
+autocmd FileType elixir  call Settings_elixir()
 autocmd FileType tex     call Settings_tex()
 autocmd FileType haskell call Settings_haskell()
 autocmd FileType html    call Settings_html()
@@ -263,6 +268,15 @@ endfunction
 function! Settings_coffee()
 	"settings
 	setlocal foldmethod=syntax
+	setlocal shiftwidth=2
+	setlocal tabstop=2
+	setlocal softtabstop=2
+	"mappings
+	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_elixir()
+	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
 	setlocal softtabstop=2
