@@ -225,7 +225,7 @@ autocmd BufNewFile,BufRead *.tex set filetype=tex
 autocmd FileType asm     call Settings_asm()
 autocmd FileType c       call Settings_c()
 autocmd FileType coffee  call Settings_coffee()
-autocmd FileType conf    call Settings_script()
+autocmd FileType conf    call Settings_conf()
 autocmd FileType cpp     call Settings_c()
 autocmd FileType css     call Settings_c()
 autocmd FileType d       call Settings_c()
@@ -273,6 +273,11 @@ function! Settings_coffee()
 	setlocal softtabstop=2
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_conf()
+	call Settings_script()
+	setlocal expandtab
 endfunction
 
 function! Settings_elixir()
