@@ -22,8 +22,8 @@ fcitx &
 #clean up sxiv cache
 #and ensure necessary EV
 #exists
-sxiv -c
 export XDG_CACHE_HOME=/home/shmibs/.cache
+sxiv -c
 
 #clear vimtags
 #rm ~/.vimtags
