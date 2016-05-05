@@ -82,7 +82,7 @@ update_winlist() {
 		focus_id=0
 	fi
 
-	lines=$(wmctrl -l | sed 's/^0x0*//')
+	lines=$(wmctrl -l | sed -e 's/^0x0*//' -e 's/\\/\\\\/g')
 
 	# kind of messy. use hc dump's ordering but wmctrl -l for pairing
 	# ids with titles
