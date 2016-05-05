@@ -111,18 +111,6 @@ mpd-filetypes() {
 	echo "┘"
 }
 
-# capture webm
-scap() {
-	archey3
-	sleep .1
-	if [[ -f '/tmp/out.webm' ]]; then
-		rm /tmp/out.webm
-	fi
-	echo 'recording...'
-	ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
-		-c:v libvpx -b:v 4M -threads 4 /tmp/out.webm > /dev/null 2>&1
-}
-
 # take a screenshot, upload to /img/scrot, and update current symlink
 ssh-scrot() {
 	archey3
