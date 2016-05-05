@@ -73,7 +73,7 @@
 
 wallpaper='fly.png'
 
-std_black='#080808'
+std_black='#0e0e0e'
 std_red='#c95b5f'
 std_green='#78ad76'
 std_yellow='#c7a269'
