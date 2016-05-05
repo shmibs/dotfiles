@@ -2,6 +2,7 @@
 #  themes  #
 ############
 
+
 #
 # Pink
 #
@@ -33,33 +34,66 @@
 #bg_urgent="$std_red"
 #fg_urgent="$light_white"
 
+
 #
 # Undercover
 #
 
-wallpaper='undercover.jpg'
+#wallpaper='undercover.jpg'
+#
+#std_black='#26201d'
+#std_red='#ed4047'
+#std_green='#72c76f'
+#std_yellow='#d86d59'
+#std_blue='#0075a6'
+#std_magenta='#d95784'
+#std_cyan='#5afad4'
+#std_white='#e8ddc3'
+#
+#light_black='#453832'
+#light_red='#ff666c'
+#light_green='#a2f7a1'
+#light_yellow='#eb9483'
+#light_blue='#0094bf'
+#light_magenta='#e07499'
+#light_cyan='#a6f5df'
+#light_white='#ffffff'
+#
+#bg_normal="$std_black"
+#fg_normal="$std_white"
+#bg_focus="$std_yellow"
+#fg_focus="$light_white"
+#bg_urgent="$std_red"
+#fg_urgent="$light_white"
 
-std_black='#26201d'
-std_red='#ed4047'
-std_green='#72c76f'
-std_yellow='#d86d59'
-std_blue='#0075a6'
-std_magenta='#d95784'
-std_cyan='#5afad4'
-std_white='#e8ddc3'
 
-light_black='#453832'
-light_red='#ff666c'
-light_green='#a2f7a1'
-light_yellow='#eb9483'
-light_blue='#0094bf'
-light_magenta='#e07499'
-light_cyan='#a6f5df'
+#
+# Fly
+#
+
+wallpaper='fly.png'
+
+std_black='#080808'
+std_red='#c95b5f'
+std_green='#78ad76'
+std_yellow='#c7a269'
+std_blue='#538ea6'
+std_magenta='#bf77ad'
+std_cyan='#65ad9c'
+std_white='#e0e0e0'
+
+light_black='#4d4d4d'
+light_red='#f5898d'
+light_green='#91d18f'
+light_yellow='#ebd683'
+light_blue='#7ec8e6'
+light_magenta='#eba0d8'
+light_cyan='#90e0cd'
 light_white='#ffffff'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$std_yellow"
+bg_focus="$light_black"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
