@@ -12,8 +12,8 @@ hi! CursorLineNr ctermfg=white ctermbg=8 cterm=bold
 hi! Directory    ctermfg=cyan
 hi! DiffAdd      ctermfg=green ctermbg=NONE cterm=bold
 hi! DiffDelete   ctermfg=red ctermbg=NONE cterm=bold
-hi! DiffChange   ctermfg=NONE ctermbg=8
-hi! DiffText     ctermfg=black ctermbg=yellow cterm=bold
+hi! DiffChange   ctermfg=blue ctermbg=NONE cterm=bold
+hi! DiffText     ctermfg=black ctermbg=yellow cterm=NONE
 hi! Folded       ctermfg=8 ctermbg=NONE
 hi! Identifier   cterm=bold ctermfg=cyan
 hi! NonText      ctermfg=yellow ctermbg=black cterm=bold
@@ -26,6 +26,7 @@ hi! SignColumn   ctermfg=NONE ctermbg=NONE cterm=NONE
 hi! Special      ctermfg=magenta
 hi! SpecialKey   ctermfg=green
 hi! SpellBad     ctermfg=NONE ctermbg=NONE cterm=underline
+hi! SpellCap     ctermfg=NONE ctermbg=NONE cterm=NONE
 hi! SpellRare    ctermfg=NONE ctermbg=NONE
 hi! Title        ctermfg=magenta
 hi! Todo         ctermfg=black ctermbg=yellow
@@ -44,7 +45,6 @@ hi! link Number         Constant
 hi! link PreProc        Define
 hi! link SpecialChar    Special
 hi! link SpecialComment Special
-hi! link SpellCap       SpellBad
 hi! link SpellLocal     SpellBad
 hi! link String         Constant
 hi! link StorageClass   Type
