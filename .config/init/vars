@@ -73,27 +73,27 @@
 
 wallpaper='fly.png'
 
-std_black='#0e0e0e'
-std_red='#c95b5f'
-std_green='#78ad76'
-std_yellow='#c7a269'
-std_blue='#538ea6'
-std_magenta='#bf77ad'
-std_cyan='#65ad9c'
-std_white='#e0e0e0'
+std_black='#171717'
+std_red='#bc306c'
+std_green='#30845c'
+std_yellow='#d68748'
+std_blue='#2874c4'
+std_magenta='#8957eb'
+std_cyan='#18adb8'
+std_white='#f4f0e8'
 
 light_black='#4d4d4d'
-light_red='#f5898d'
-light_green='#91d18f'
-light_yellow='#ebd683'
-light_blue='#7ec8e6'
-light_magenta='#eba0d8'
-light_cyan='#90e0cd'
+light_red='#d890aa'
+light_green='#4fa87e'
+light_yellow='#dbd558'
+light_blue='#71aceb'
+light_magenta='#847eed'
+light_cyan='#84e6ed'
 light_white='#ffffff'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$light_black"
+bg_focus="$std_blue"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
