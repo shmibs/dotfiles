@@ -8,6 +8,9 @@ alias svimdiff='sudo -E vimdiff'
 alias thesaurus='aiksaurus'
 alias vmount='udevil mount'
 alias vumount='udevil umount'
+alias smounth='mkdir -p ~/shmibbles.me; sshfs shmibbles.me: ~/shmibbles.me'
+alias smountw='mkdir -p ~/shmibbles.me; sshfs shmibbles.me:/usr/local/www/apache24/data/ ~/shmibbles.me'
+alias sumount='fusermount -u ~/shmibbles.me; rmdir ~/shmibbles.me'
 
 ################## FUNCTIONS ##################
 
