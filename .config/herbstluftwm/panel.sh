@@ -110,7 +110,7 @@ update_winlist() {
 
 update_date() {
 	echo -n "${sep}%{A:date:} \uE015 "
-	date +$'%a, %b %d, %H:%M:%S' | tr -d '\n'
+	LANG=ja_JP.UTF-8 date +$'%a, %b %d, %H:%M:%S' | tr -d '\n'
 	echo " %{A}"
 }
 
@@ -312,7 +312,7 @@ event_when() {
 	while read command; do
 		case "$command" in
 			date)
-				notify-send "$(cal)"
+				notify-send "$(LANG=ja_JP.UTF-8  cal)"
 				;;
 			mpd)
 				~/.config/herbstluftwm/mpc-status.sh

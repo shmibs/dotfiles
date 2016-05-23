@@ -120,7 +120,7 @@ jfont_size='10'
 jfont_off='0'
 
 # backup font
-bkfont='Noto Sans Mono CJK JP Bold'
+bkfont='Noto Sans'
 bkfont_size='10'
 bkfont_off='0'
 
