@@ -109,7 +109,8 @@ update_winlist() {
 }
 
 update_date() {
-	echo -n "${sep}%{A:date:} \uE015 "
+	#\uE015 
+	echo -n "${sep}%{A:date:} "
 	LANG=ja_JP.UTF-8 date +$'%a, %b %d, %H:%M:%S' | tr -d '\n'
 	echo " %{A}"
 }
