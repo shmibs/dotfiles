@@ -223,11 +223,12 @@ autocmd BufNewFile,BufRead *.tex set filetype=tex
 "the FileTypes in one dict (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
 autocmd FileType asm     call Settings_asm()
+autocmd FileType bash    call Settings_script()
 autocmd FileType c       call Settings_c()
 autocmd FileType coffee  call Settings_coffee()
 autocmd FileType conf    call Settings_conf()
 autocmd FileType cpp     call Settings_c()
-autocmd FileType css     call Settings_c()
+autocmd FileType css     call Settings_css()
 autocmd FileType d       call Settings_c()
 autocmd FileType elixir  call Settings_elixir()
 autocmd FileType tex     call Settings_tex()
@@ -243,6 +244,7 @@ autocmd FileType php     call Settings_html()
 autocmd FileType python  call Settings_script()
 autocmd FileType ruby    call Settings_script()
 autocmd FileType rust    call Settings_rust()
+autocmd FileType scss    call Settings_css()
 autocmd FileType sh      call Settings_script()
 autocmd FileType text    call Settings_text()
 autocmd FileType vim     call Settings_vim()
@@ -278,6 +280,15 @@ endfunction
 function! Settings_conf()
 	call Settings_script()
 	setlocal expandtab
+endfunction
+
+function! Settings_css()
+	call Settings_c()
+	"settings
+	setlocal shiftwidth=2
+	setlocal tabstop=2
+	setlocal softtabstop=2
+	"mappings
 endfunction
 
 function! Settings_elixir()
