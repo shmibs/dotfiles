@@ -21,6 +21,7 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
+Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'cespare/vim-toml'
 
 "FUNCTIONALITY
