@@ -391,3 +391,10 @@ fuck() {
 		done
 	done
 }
+
+tmr() {
+	transmission-daemon
+	sleep 1
+	transmission-remote-cli
+	transmission-remote localhost --exit
+}
