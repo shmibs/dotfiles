@@ -1,8 +1,8 @@
 
 # video
 fs=yes
-ass-hinting=native
-vo=opengl-hq
+vo=opengl-hq:interpolation:blend-subtitles
+video-sync=display-resample
 slang=en,eng
 
 # audio
