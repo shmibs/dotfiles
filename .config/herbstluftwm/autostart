@@ -126,27 +126,27 @@ hc keybind Mod1-XF86PowerOff spawn mate-session-save --shutdown-dialog
 hc keybind Print        spawn mate-screenshot
 
 # ranger
-hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger ~
-hc keybind Mod4-Shift-Control-b      spawn urxvt -name "ranger" -e ranger ~/documents/books
-hc keybind Mod4-Shift-Control-c      spawn urxvt -name "ranger" -e ranger ~/documents/comics
-hc keybind Mod4-Shift-Control-d      spawn urxvt -name "ranger" -e ranger ~/downloads
-hc keybind Mod4-Shift-Control-g      spawn urxvt -name "ranger" -e ranger ~/games
-hc keybind Mod4-Shift-Control-i      spawn urxvt -name "ranger" -e ranger ~/images
-hc keybind Mod4-Shift-Control-m      spawn urxvt -name "ranger" -e ranger ~/music
-hc keybind Mod4-Shift-Control-n      spawn urxvt -name "ranger" -e ranger ~/documents/manga
-hc keybind Mod4-Shift-Control-p      spawn urxvt -name "ranger" -e ranger ~/projects
-hc keybind Mod4-Shift-Control-s      spawn urxvt -name "ranger" -e ranger ~/desktop
-hc keybind Mod4-Shift-Control-r      spawn urxvt -name "ranger" -e ranger ~/romz
-hc keybind Mod4-Shift-Control-t      spawn urxvt -name "ranger" -e ranger ~/thcool
-hc keybind Mod4-Shift-Control-v      spawn urxvt -name "ranger" -e ranger ~/videos
-hc keybind Mod4-Shift-Control-w      spawn urxvt -name "ranger" -e ranger ~/documents/writing
+hc keybind Mod4-Shift-Control-Return spawn urxvtc -name "ranger" -e ranger ~
+hc keybind Mod4-Shift-Control-b      spawn urxvtc -name "ranger" -e ranger ~/documents/books
+hc keybind Mod4-Shift-Control-c      spawn urxvtc -name "ranger" -e ranger ~/documents/comics
+hc keybind Mod4-Shift-Control-d      spawn urxvtc -name "ranger" -e ranger ~/downloads
+hc keybind Mod4-Shift-Control-g      spawn urxvtc -name "ranger" -e ranger ~/games
+hc keybind Mod4-Shift-Control-i      spawn urxvtc -name "ranger" -e ranger ~/images
+hc keybind Mod4-Shift-Control-m      spawn urxvtc -name "ranger" -e ranger ~/music
+hc keybind Mod4-Shift-Control-n      spawn urxvtc -name "ranger" -e ranger ~/documents/manga
+hc keybind Mod4-Shift-Control-p      spawn urxvtc -name "ranger" -e ranger ~/projects
+hc keybind Mod4-Shift-Control-s      spawn urxvtc -name "ranger" -e ranger ~/desktop
+hc keybind Mod4-Shift-Control-r      spawn urxvtc -name "ranger" -e ranger ~/romz
+hc keybind Mod4-Shift-Control-t      spawn urxvtc -name "ranger" -e ranger ~/thcool
+hc keybind Mod4-Shift-Control-v      spawn urxvtc -name "ranger" -e ranger ~/videos
+hc keybind Mod4-Shift-Control-w      spawn urxvtc -name "ranger" -e ranger ~/documents/writing
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
-hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e vim ~/notes
+hc keybind Mod4-Shift-n spawn urxvtc -name "notes" -e vim ~/notes
 
 # spawn
-hc keybind Mod4-Return  spawn urxvt
+hc keybind Mod4-Return  spawn urxvtc
 hc keybind Mod4-Shift-b spawn primusrun VBoxSDL --startvm arch
 hc keybind Mod4-Shift-c spawn cvlc v4l2://
 hc keybind Mod4-Shift-d spawn ~/games/desura/desura
@@ -155,10 +155,10 @@ hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
-hc keybind Mod4-Shift-p spawn urxvt -e pms
+hc keybind Mod4-Shift-p spawn urxvtc -e pms
 hc keybind Mod4-Shift-t spawn transmission-gtk
-hc keybind Mod4-Shift-v spawn urxvt -name "vim" -e vim
-hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
+hc keybind Mod4-Shift-v spawn urxvtc -name "vim" -e vim
+hc keybind Mod4-Shift-w spawn urxvtc -name "weechat" -e weechat
 
 # dmenu
 hc keybind Mod4-0 spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
