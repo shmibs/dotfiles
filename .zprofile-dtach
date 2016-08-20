@@ -33,10 +33,8 @@ if [[ -z "${DTACH_SUB}" ]]; then
 							;;
 
 						*)
-							if [[ "${args[1]}" != "q" ]]; then
-								DTACH_SUB=true dtach -A "/tmp/dtach-${args[1]}" -z zsh
-								clear
-							fi
+							DTACH_SUB=true dtach -A "/tmp/dtach-${args[1]}" -z zsh
+							clear
 							;;
 					esac
 
