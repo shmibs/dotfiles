@@ -24,6 +24,10 @@ if [[ -z "${DTACH_SUB}" ]]; then
 					echo -n "> "
 					read -A args
 					case "${args[1]}" in
+						"")
+							break;
+							;;
+
 						q)
 							break;
 							;;
