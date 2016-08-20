@@ -7,96 +7,96 @@
 # Pink
 #
 
-#wallpaper='kuvshinov-ilya.png'
+# wallpaper='kuvshinov-ilya.png'
 #
-#std_black='#262626'
-#std_red='#ed4047'
-#std_green='#72c76f'
-#std_yellow='#f0b73d'
-#std_blue='#0075a6'
-#std_magenta='#d95784'
-#std_cyan='#5afad4'
-#std_white='#e5e8ca'
+# std_black='#262626'
+# std_red='#ed4047'
+# std_green='#72c76f'
+# std_yellow='#f0b73d'
+# std_blue='#0075a6'
+# std_magenta='#d95784'
+# std_cyan='#5afad4'
+# std_white='#e5e8ca'
 #
-#light_black='#566a72'
-#light_red='#ff666c'
-#light_green='#a2f7a1'
-#light_yellow='#ffcf69'
-#light_blue='#0094bf'
-#light_magenta='#e07499'
-#light_cyan='#a6f5df'
-#light_white='#ffffff'
+# light_black='#566a72'
+# light_red='#ff666c'
+# light_green='#a2f7a1'
+# light_yellow='#ffcf69'
+# light_blue='#0094bf'
+# light_magenta='#e07499'
+# light_cyan='#a6f5df'
+# light_white='#ffffff'
 #
-#bg_normal="$std_black"
-#fg_normal="$std_white"
-#bg_focus="$std_magenta"
-#fg_focus="$light_white"
-#bg_urgent="$std_red"
-#fg_urgent="$light_white"
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$std_magenta"
+# fg_focus="$light_white"
+# bg_urgent="$std_red"
+# fg_urgent="$light_white"
 
 
 #
 # Undercover
 #
 
-#wallpaper='undercover.jpg'
+# wallpaper='undercover.jpg'
 #
-#std_black='#26201d'
-#std_red='#ed4047'
-#std_green='#72c76f'
-#std_yellow='#d86d59'
-#std_blue='#0075a6'
-#std_magenta='#d95784'
-#std_cyan='#5afad4'
-#std_white='#e8ddc3'
+# std_black='#26201d'
+# std_red='#ed4047'
+# std_green='#72c76f'
+# std_yellow='#d86d59'
+# std_blue='#0075a6'
+# std_magenta='#d95784'
+# std_cyan='#5afad4'
+# std_white='#e8ddc3'
 #
-#light_black='#453832'
-#light_red='#ff666c'
-#light_green='#a2f7a1'
-#light_yellow='#eb9483'
-#light_blue='#0094bf'
-#light_magenta='#e07499'
-#light_cyan='#a6f5df'
-#light_white='#ffffff'
+# light_black='#453832'
+# light_red='#ff666c'
+# light_green='#a2f7a1'
+# light_yellow='#eb9483'
+# light_blue='#0094bf'
+# light_magenta='#e07499'
+# light_cyan='#a6f5df'
+# light_white='#ffffff'
 #
-#bg_normal="$std_black"
-#fg_normal="$std_white"
-#bg_focus="$std_yellow"
-#fg_focus="$light_white"
-#bg_urgent="$std_red"
-#fg_urgent="$light_white"
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$std_yellow"
+# fg_focus="$light_white"
+# bg_urgent="$std_red"
+# fg_urgent="$light_white"
 
 
 #
 # Fly
 #
 
-#wallpaper='fly.png'
+# wallpaper='fly.png'
 #
-#std_black='#171717'
-#std_red='#bc306c'
-#std_green='#30845c'
-#std_yellow='#d68748'
-#std_blue='#2874c4'
-#std_magenta='#8957eb'
-#std_cyan='#18adb8'
-#std_white='#f4f0e8'
+# std_black='#171717'
+# std_red='#bc306c'
+# std_green='#30845c'
+# std_yellow='#d68748'
+# std_blue='#2874c4'
+# std_magenta='#8957eb'
+# std_cyan='#18adb8'
+# std_white='#f4f0e8'
 #
-#light_black='#4d4d4d'
-#light_red='#d890aa'
-#light_green='#4fa87e'
-#light_yellow='#dbd558'
-#light_blue='#71aceb'
-#light_magenta='#847eed'
-#light_cyan='#84e6ed'
-#light_white='#ffffff'
+# light_black='#4d4d4d'
+# light_red='#d890aa'
+# light_green='#4fa87e'
+# light_yellow='#dbd558'
+# light_blue='#71aceb'
+# light_magenta='#847eed'
+# light_cyan='#84e6ed'
+# light_white='#ffffff'
 #
-#bg_normal="$std_black"
-#fg_normal="$std_white"
-#bg_focus="$std_blue"
-#fg_focus="$light_white"
-#bg_urgent="$std_red"
-#fg_urgent="$light_white"
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$std_blue"
+# fg_focus="$light_white"
+# bg_urgent="$std_red"
+# fg_urgent="$light_white"
 
 #
 # Smooch
@@ -128,6 +128,37 @@ bg_focus="$light_black"
 fg_focus="$light_green"
 bg_urgent="$light_red"
 fg_urgent="$light_white"
+
+#
+# Hello, Friend
+#
+
+# wallpaper='hello, friend.png'
+#
+# std_black='#12140e'
+# std_red='#586646'
+# std_green='#353d2a'
+# std_yellow='#6a7a54'
+# std_blue="$std_green"
+# std_magenta="$std_red"
+# std_cyan="$std_green"
+# std_white='#475238'
+#
+# light_black='#23291c'
+# light_red="$std_red"
+# light_green="$std_green"
+# light_yellow="$std_yellow"
+# light_blue="$std_yellow"
+# light_magenta="$std_magenta"
+# light_cyan="$std_cyan"
+# light_white='#8da370'
+#
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$std_white"
+# fg_focus="$std_black"
+# bg_urgent="$light_black"
+# fg_urgent="$light_white"
 
 
 ###############
