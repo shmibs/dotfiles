@@ -18,6 +18,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'shmibs/mips.vim'
 Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
@@ -219,6 +220,9 @@ autocmd BufNewFile,BufRead *.rs set filetype=rust
 
 "always use LaTeX
 autocmd BufNewFile,BufRead *.tex set filetype=tex
+
+"recognise .mips
+autocmd BufNewFile,BufRead *.mips set filetype=mips
 
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one dict (mostly because i have no idea what i'm
