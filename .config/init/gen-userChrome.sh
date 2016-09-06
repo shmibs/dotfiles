@@ -3,11 +3,6 @@ echo "\
 
 @-moz-document url-prefix(about:blank) {*{background-color:${bg_normal};}}
 
-.tabbrowser-tabs:not([drag=detach]) > .tabbrowser-tab:not([pinned])[fadein] {
-	min-width: 10px !important;
-	max-width: 100% !important;
-}
-
 #TabsToolbar:not(:-moz-lwtheme)::after {display: none;}
 /* Remove the following line if you want the text color of unselected tabs to be black (Firefox default) */
 #TabsToolbar .tabbrowser-tab:not([selected]) {color: rgba(255,255,255,0.9);}
@@ -21,7 +16,6 @@ echo "\
 	min-height: ${bheight}px !important;
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
-	text-align: center !important;
 	margin-left: -15px !important;
 	margin-right: -15px !important;
 }
