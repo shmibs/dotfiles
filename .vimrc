@@ -242,6 +242,7 @@ autocmd FileType html    call Settings_html()
 autocmd FileType xhtml   call Settings_html()
 autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
+autocmd FileType mips    call Settings_mips()
 autocmd FileType mkd     call Settings_text()
 autocmd FileType nim     call Settings_nim()
 autocmd FileType perl    call Settings_script()
@@ -327,8 +328,20 @@ endfunction
 
 function! Settings_matlab()
 	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O%<Space>
+endfunction
+
+function! Settings_mips()
+	"settings
+	setlocal shiftwidth=5
+	setlocal tabstop=5
+	setlocal softtabstop=5
+	"mappings
+	nnoremap <buffer> -- O#<Space>
 endfunction
 
 function! Settings_nim()
@@ -344,13 +357,6 @@ function! Settings_nim()
 	nnoremap <buffer> <M-g> :call JumpToDef()<cr>
 	inoremap <buffer> <M-g> <esc>:call JumpToDef()<cr>i
 	nnoremap <buffer> -_ O##<Space>
-endfunction
-
-function! Settings_python()
-	call Settings_script()
-	"settings
-	setlocal expandtab
-	"mappings
 endfunction
 
 function! Settings_script()
