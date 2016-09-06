@@ -189,6 +189,7 @@ bkfont_off='0'
 # main font
 mfont='Droid Sans Mono'
 mfont_size='10'
+
 dmenu_args=( -fn "${bfont}:size=${bfont_size}" -h "$bheight"
              -nb "$bg_normal" -nf "$fg_normal" -sb "$bg_focus"
 			 -sf "$fg_focus" )
