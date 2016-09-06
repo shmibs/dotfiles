@@ -55,12 +55,6 @@ echo "\
 	background-clip: padding-box !important;
 }
  
-#TabsToolbar .tabs-newtab-button:hover,
-#TabsToolbar .tabbrowser-tab:hover:not([selected]) {
-	background-color: ${bg_focus} !important;
-	color: ${fg_focus} !important;
-}
- 
 #TabsToolbar .tab-background {
 	margin: 0 !important;
 	background: transparent !important;
