@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # make small cover versions for mpc-notify.sh
 # leaks memory for some reason, so don't run on a clean library
 # or it'll crash everything

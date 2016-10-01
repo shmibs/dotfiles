@@ -1,46 +1,47 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 # quickly send a file to hosted /tmp/ dir
+# attempt to copy its location to the x clipboard
 
 local name
 local basename
 local escapes
 typeset -A escapes
 escapes=(' ' '%20' '"' '%22' '#' '%23' '$' '%24'
-		 '%' '%25' '&' '%26' "'" '%27' '+' '%2b'
-		 ',' '%2c' '/' '%2f' ':' '%3a' ';' '%3b'
-		 '<' '%3c' '=' '%3d' '>' '%3e' '?' '%3f'
-		 '@' '%40' '[' '%5b' '\' '%5c' ']' '%5d'
-		 '^' '%5e' '`' '%60' '{' '%7b' '|' '%7c'
-		 '}' '%7d' '~' '%7e')
+         '%' '%25' '&' '%26' "'" '%27' '+' '%2b'
+         ',' '%2c' '/' '%2f' ':' '%3a' ';' '%3b'
+         '<' '%3c' '=' '%3d' '>' '%3e' '?' '%3f'
+         '@' '%40' '[' '%5b' '\' '%5c' ']' '%5d'
+         '^' '%5e' '`' '%60' '{' '%7b' '|' '%7c'
+         '}' '%7d' '~' '%7e')
 
 [[ "$1" ]] \
-	|| { echo "please specify at least one file to send"; return 1 }
+    || { echo "please specify at least one file to send"; return 1 }
 
 for i in "$@"; do
-	[[ -f "$i" ]] \
-		|| { echo "file '$i' not found"; return 1 }
+    [[ -f "$i" ]] \
+        || { echo "file '$i' not found"; return 1 }
 done
 
 scp "$@" shmibbles.me:http/tmp/ 2>/dev/null \
-	|| { echo "sending files failed"; return 1 }
+    || { echo "sending files failed"; return 1 }
 
 for name in "$@"
 do
-	basename=${name:t}
+    basename=${name:t}
 
-	ssh shmibbles.me "cd http/tmp; chmod o+r \"${basename//\"/\\\"}\"" \
-		|| { echo "making '$name' readable failed"; return 1 }
+    ssh shmibbles.me "cd http/tmp; chmod o+r \"${basename//\"/\\\"}\"" \
+        || { echo "making '$name' readable failed"; return 1 }
 
-	{
-		printf "%s" 'https://shmibbles.me/tmp/'
-		for c in "${(s::)basename}"; do 
-			if [[ "${escapes[$c]}" == "" ]]; then
-				printf "%s" "$c"
-			else
-				printf "%s" "${escapes[$c]}"
-			fi
-		done
-	} | tee \
-		>(xclip -i -selection clipboard) \
-		>(xclip -i -selection primary) >/dev/null
+    {
+        printf "%s" 'https://shmibbles.me/tmp/'
+        for c in "${(s::)basename}"; do 
+            if [[ "${escapes[$c]}" == "" ]]; then
+                printf "%s" "$c"
+            else
+                printf "%s" "${escapes[$c]}"
+            fi
+        done
+    } | tee \
+        >(xclip -i -selection clipboard) \
+        >(xclip -i -selection primary) >/dev/null
 done

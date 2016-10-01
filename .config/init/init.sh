@@ -1,7 +1,7 @@
-#!/bin/bash
-source ~/.config/init/vars
+#!/bin/zsh
 
-source ~/.config/init/gen-zathurarc.sh
-source ~/.config/init/gen-urxvt-theme.sh
-source ~/.config/init/gen-userChrome.sh
-source ~/.config/init/gen-bg-saved.sh
+source $HOME/.config/init/vars
+
+for f in $HOME/.config/init/gen/*; do
+	source "$f"
+done

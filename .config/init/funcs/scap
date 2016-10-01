@@ -1,18 +1,18 @@
-#!/bin/zsh
-
+#!/usr/bin/env zsh
 # capture webm
-scap() {
-	archey3
-	sleep .2
 
-	if [[ -f '/tmp/cap.mp4' ]]; then
-		rm '/tmp/cap.mp4'
-	fi
+xset q
+[[ $? -ne 0 ]] && return 1
 
-	echo 'recording...'
+archey3
+sleep .2
 
-	ffmpeg -v panic -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
-		-f pulse -ac 2 -i default -af aresample=async=1 \
-		-c:v libx264 -q 0 -preset fast '/tmp/cap.mp4'
-}
+if [[ -f '/tmp/cap.mp4' ]]; then
+    rm '/tmp/cap.mp4'
+fi
 
+echo 'recording...'
+
+ffmpeg -v panic -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 \
+    -f pulse -ac 2 -i default -af aresample=async=1 \
+    -c:v libx264 -q 0 -preset ultrafast '/tmp/cap.mp4'
