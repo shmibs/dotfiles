@@ -8,10 +8,15 @@
 
 [.config/init/](.config/init) contains [vars](.config/init/vars), a file
 defining shared variables for the desktop which are sourced and used elsewhere,
-and a series of "gen-*.sh" files, which create configuration files in /tmp/ so
+and a series of "gen/*.sh" files, which create configuration files in /tmp/ so
 programs not configurable via shell scripting will automatically match the
 current settings as well. i stick symlinks to the /tmp/ version where they
-would normally be.
+would normally be. also included are folders "funcs" and "funcreqs", which,
+respectively, contain executable scripts and their prerequisite commands and
+arbitrary check commands. the latter prerequisites are tested from .zprofile at
+login and, if passed, the functions are symlinked into /tmp/funcs, which is
+included in $PATH. thus, this system allows for configs which automatically
+adapt to the host environment, enabling only what functionality is compatible.
 
 ##Current Utilities
 
