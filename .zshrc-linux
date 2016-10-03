@@ -29,21 +29,6 @@ b2h() {
 	echo "${val}${suffixes[$sindex]}"
 }
 
-if [[ $(whence fzf) ]]; then
-	f() {
-		local file
-		fzf --color=16 --black \
-			--bind=ctrl-b:page-up,ctrl-f:page-down \
-			| read file
-
-		[[ -z "$file" ]] && return
-
-		[[ $(xclip -o 2>/dev/null) ]] || { echo "${file:a}"; return }
-
-		echo "${file:a}" | xclip -i -selection clipboard
-	}
-fi
-
 # ignore non-tracked files
 git() {
 	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then

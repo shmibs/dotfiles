@@ -1,0 +1,13 @@
+#!/usr/bin/env zsh
+# fuzzy find with fzf
+
+local file
+fzf --color=16 --black \
+	--bind=ctrl-b:page-up,ctrl-f:page-down \
+	| read file
+
+[[ -z "$file" ]] && return
+
+[[ $(xclip -o 2>/dev/null) ]] || { echo "${file:a}"; return }
+
+echo "${file:a}" | xclip -i -selection clipboard

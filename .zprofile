@@ -28,7 +28,7 @@ func_init_checkreq() {
 }
 
 if [[ -d ~/.config/init/funcs/ && -d ~/.config/init/funcreqs ]]; then
-	rm -r /tmp/funcs
+	rm -rf /tmp/funcs
 	mkdir -p /tmp/funcs
 	PATH=$PATH:/tmp/funcs
 	for f in $HOME/.config/init/funcreqs/*; do
