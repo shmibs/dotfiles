@@ -102,32 +102,32 @@
 # Smooch
 #
 
-wallpaper='smooch.png'
-
-std_black='#0d0206'
-std_red='#660000'
-std_green='#1a800d'
-std_yellow='#666200'
-std_blue='#4c4cbd'
-std_magenta='#690da6'
-std_cyan='#04a477'
-std_white='#c9aab3'
-
-light_black='#420d23'
-light_red='#9e0000'
-light_green='#56e168'
-light_yellow='#d1cd5c'
-light_blue='#8383eb'
-light_magenta='#9836d9'
-light_cyan='#44dbb1'
-light_white='#ffffff'
-
-bg_normal="$std_black"
-fg_normal="$std_white"
-bg_focus="$light_black"
-fg_focus="$light_green"
-bg_urgent="$light_red"
-fg_urgent="$light_white"
+#wallpaper='smooch.png'
+#
+#std_black='#0d0206'
+#std_red='#660000'
+#std_green='#1a800d'
+#std_yellow='#666200'
+#std_blue='#4c4cbd'
+#std_magenta='#690da6'
+#std_cyan='#04a477'
+#std_white='#c9aab3'
+#
+#light_black='#420d23'
+#light_red='#9e0000'
+#light_green='#56e168'
+#light_yellow='#d1cd5c'
+#light_blue='#8383eb'
+#light_magenta='#9836d9'
+#light_cyan='#44dbb1'
+#light_white='#ffffff'
+#
+#bg_normal="$std_black"
+#fg_normal="$std_white"
+#bg_focus="$light_black"
+#fg_focus="$light_green"
+#bg_urgent="$light_red"
+#fg_urgent="$light_white"
 
 #
 # Hello, Friend
@@ -159,6 +159,37 @@ fg_urgent="$light_white"
 # fg_focus="$std_black"
 # bg_urgent="$light_black"
 # fg_urgent="$light_white"
+
+#
+# No Matter Where
+#
+
+wallpaper='no matter where.png'
+
+std_black='#000000'
+std_red='#c32752'
+std_green='#7c8f5d'
+std_yellow='#ffbe66'
+std_blue='#644cbd'
+std_magenta='#d8679f'
+std_cyan='#67a477'
+std_white='#f4c6bc'
+
+light_black='#2e1817'
+light_red='#d86785'
+light_green='#c4d197'
+light_yellow='#f6d09d'
+light_blue='#a085e6'
+light_magenta='#f783c7'
+light_cyan='#b7c9b3'
+light_white='#fff7f5'
+
+bg_normal="$std_black"
+fg_normal="$std_white"
+bg_focus="$light_red"
+fg_focus="$light_white"
+bg_urgent="$std_red"
+fg_urgent="$light_white"
 
 
 ###############
