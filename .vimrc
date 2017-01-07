@@ -16,6 +16,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'luisjure/csound'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
@@ -40,6 +41,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
+
+Plugin 'dermusikman/sonicpi.vim'
 
 Plugin 'tomtom/tcomment_vim'
 
@@ -248,7 +251,7 @@ autocmd FileType nim     call Settings_nim()
 autocmd FileType perl    call Settings_script()
 autocmd FileType php     call Settings_html()
 autocmd FileType python  call Settings_script()
-autocmd FileType ruby    call Settings_script()
+autocmd FileType ruby    call Settings_ruby()
 autocmd FileType rust    call Settings_rust()
 autocmd FileType scss    call Settings_css()
 autocmd FileType sh      call Settings_script()
@@ -366,6 +369,12 @@ function! Settings_script()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_ruby()
+	call Settings_script()
+	nnoremap <leader>r :execute "silent w !sonic_pi"<CR>
+	nnoremap <leader>s :execute "silent !sonic_pi stop"<CR><C-l>
 endfunction
 
 function! Settings_rust()
