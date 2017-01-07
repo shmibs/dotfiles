@@ -1,7 +1,9 @@
 
 # video
 fs=yes
-vo=opengl-hq:interpolation:blend-subtitles
+profile=opengl-hq
+interpolation=yes
+blend-subtitles=yes
 video-sync=display-resample
 slang=en,eng
 
