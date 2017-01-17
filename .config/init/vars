@@ -200,22 +200,22 @@ bheight=20
 
 # icon font
 ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
-ifont_off='-4'
+ifont_off='-3'
 
 # bar font
 bfont='Droid Sans Mono'
-bfont_size='10'
+bfont_size='9'
 bfont_off='-2'
 
 # jp font
 jfont='Noto Sans Mono CJK JP Regular'
-jfont_size='10'
-jfont_off='0'
+jfont_size='9'
+jfont_off='-1'
 
 # backup font
 bkfont='Dejavu Sans Mono'
-bkfont_size='10'
-bkfont_off='0'
+bkfont_size='9'
+bkfont_off='-2'
 
 # main font
 mfont='Droid Sans Mono'
