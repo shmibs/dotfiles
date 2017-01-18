@@ -22,7 +22,8 @@ adapt to the host environment, enabling only what functionality is compatible.
 
 ###MATE
 
-i'm using mate as a backend to handle dconf garbage / themes / etc.
+i'm using mate as a backend to handle dconf garbage / themes / etc for the few
+things that expect them.
 
 ###herbstluftwm
 
@@ -51,6 +52,9 @@ sxiv, because squinting at filenames is just bleh.
 keyboard-driven browsing ^_^. try
 [setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
 
+kind of scared if it disappearing forever, though, which will probably happen
+after this firefox version is dropped from lts... X_X
+
 ###dunst/dmenu/compton/lemonbar/nitrogen
 
 useful things all around. i forked dunst to make SIGUSR1 clear all
@@ -61,10 +65,3 @@ default behaviour (pause / unpause notification display) was supposed to be
 used for ┐(¯-¯)┌.
 
 oh, also, using xft-compatible patches now.
-
-###infinality
-
-makes things look all purty n stuff. getting used to vector fonts, and they can
-be pretty clean and readable with the right settings / colours, even with
-non-ridiculous DPI screens.
-[this font's nice](https://sourcefoundry.org/hack/).
