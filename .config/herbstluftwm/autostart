@@ -214,5 +214,6 @@ pkill dunst
 dunst -lb $bg_normal -nb $bg_normal -cb $bg_focus \
 	-lf $fg_normal -nf $fg_normal -cf $fg_focus \
 	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))" \
-	-fn "$mfont $mfont_size,$jfont $jfont_size, $bkfont $bkfont_size"
+	-fn "$mfont $mfont_size,$jfont $jfont_size, $bkfont $bkfont_size" \
+	-max_icon_size 0
 
