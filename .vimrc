@@ -401,6 +401,7 @@ function! Settings_text()
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
+	setlocal nojoinspaces "single-space sentences
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	setlocal spell
