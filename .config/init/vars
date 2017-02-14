@@ -164,32 +164,32 @@
 # No Matter Where
 #
 
-#wallpaper='no matter where.png'
-#
-#std_black='#000000'
-#std_red='#c32752'
-#std_green='#7c8f5d'
-#std_yellow='#ffbe66'
-#std_blue='#644cbd'
-#std_magenta='#d8679f'
-#std_cyan='#67a477'
-#std_white='#f4c6bc'
-#
-#light_black='#2e1817'
-#light_red='#d86785'
-#light_green='#c4d197'
-#light_yellow='#f6d09d'
-#light_blue='#a085e6'
-#light_magenta='#f783c7'
-#light_cyan='#b7c9b3'
-#light_white='#fff7f5'
-#
-#bg_normal="$std_black"
-#fg_normal="$std_white"
-#bg_focus="$light_red"
-#fg_focus="$light_white"
-#bg_urgent="$std_red"
-#fg_urgent="$light_white"
+# wallpaper='no matter where.png'
+# 
+# std_black='#000000'
+# std_red='#c32752'
+# std_green='#7c8f5d'
+# std_yellow='#ffbe66'
+# std_blue='#644cbd'
+# std_magenta='#d8679f'
+# std_cyan='#67a477'
+# std_white='#f4c6bc'
+# 
+# light_black='#2e1817'
+# light_red='#d86785'
+# light_green='#c4d197'
+# light_yellow='#f6d09d'
+# light_blue='#a085e6'
+# light_magenta='#f783c7'
+# light_cyan='#b7c9b3'
+# light_white='#fff7f5'
+# 
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$light_red"
+# fg_focus="$light_white"
+# bg_urgent="$std_red"
+# fg_urgent="$light_white"
 
 #
 # 花嫁

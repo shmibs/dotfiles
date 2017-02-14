@@ -19,16 +19,14 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 fcitx &
 
-#clean up sxiv cache
-#and ensure necessary EV
-#exists
+#store sxiv cache in ram
 export XDG_CACHE_HOME=/home/shmibs/.cache
-mkdir -p /tmp/sxiv
-ln -sf /tmp/sxiv /home/shmibs/.cache/sxiv
-sxiv -c
-
-#clear vimtags
-#rm ~/.vimtags
+if [ -d /tmp/ ]; then
+    mkdir -p /tmp/sxiv
+    cd /home/shmibs/.cache/
+    ln -sf /tmp/sxiv .
+    cd
+fi
 
 #load more fonts
 xset +fp /usr/share/fonts/local

@@ -2,6 +2,10 @@ emulate sh -c 'source /etc/profile'
 
 export QT_STYLE_OVERRIDE=gtk
 
+############# STORE VIMTAGS IN RAM ############
+[[ -d /tmp/ ]] && \
+	touch /tmp/.vimtags && ln -sf /tmp/.vimtags .
+
 ######### MAKE CABAL BUILDS AVAILABLE #########
 [[ -d ~/.cabal/bin ]] && \
 	PATH=$PATH:~/.cabal/bin
