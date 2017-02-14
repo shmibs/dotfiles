@@ -5,7 +5,7 @@ hi! clear
 
 let g:colors_name="shmibs"
 
-hi! Comment      ctermfg=lightblue
+hi! Comment      ctermfg=cyan
 hi! Constant     ctermfg=red
 hi! CursorLine   ctermfg=NONE ctermbg=8 cterm=NONE
 hi! CursorLineNr ctermfg=white ctermbg=8 cterm=bold
