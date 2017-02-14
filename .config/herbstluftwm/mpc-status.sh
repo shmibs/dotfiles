@@ -26,8 +26,9 @@ fi
 
 cd ~/music/
 dir=$(dirname "$(mpc current -f %file%)")
-# copying is necessary because notify-send can't into icon paths containing commas
-cp "$dir/cover-small.png" /tmp/mpd-icon.png
+# linking is necessary because notify-send can't into icon paths containing commas
+cd /tmp/
+ln -sf "$HOME/music/$dir/cover-small.png" mpd-icon.png
 
 message="$(mpc current -f '##%track% %title% (%date%)\n%artist% - %album%')
 
