@@ -23,6 +23,8 @@ fcitx &
 #and ensure necessary EV
 #exists
 export XDG_CACHE_HOME=/home/shmibs/.cache
+mkdir -p /tmp/sxiv
+ln -sf /tmp/sxiv /home/shmibs/.cache/sxiv
 sxiv -c
 
 #clear vimtags
