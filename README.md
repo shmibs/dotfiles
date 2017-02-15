@@ -2,7 +2,7 @@
 
 
 ##Screenshots
-[![clean](https://shmibbles.me/img/scrot/current/clean_small.png)](https://shmibbles.me/img/scrot/current/clean.png)[![dirty](https://shmibbles.me/img/scrot/current/dirty_small.png)](https://shmibbles.me/img/scrot/current/dirty.png)
+[![clean](https://shmibbles.me/img/scrot/current/clean_small.png)](https://shmibbles.me/img/scrot/current/clean.png) [![dirty](https://shmibbles.me/img/scrot/current/dirty_small.png)](https://shmibbles.me/img/scrot/current/dirty.png)
 
 ##Structure
 
