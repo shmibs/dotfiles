@@ -23,7 +23,7 @@ unsetopt beep
 ##################### MISC ####################
 
 # dynamic title
-if [[ "$TERM" == "rxvt-256color" ]]; then
+if [[ "$TERM" == "rxvt-unicode-256color" ]]; then
 
 	precmd() {
 		print -Pn "\e]0;zsh: %(1j,%j job%(2j|s|); ,)%~\a"
