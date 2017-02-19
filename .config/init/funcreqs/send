@@ -1,2 +1,2 @@
-func_init_prereqs=(scrot xclip scp ssh)
+func_init_prereqs=(scrot scp ssh)
 func_init_checks=()
