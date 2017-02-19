@@ -143,7 +143,7 @@ hc keybind Mod4-Shift-Control-w      spawn urxvtc -name "ranger" -e ranger ~/doc
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
-hc keybind Mod4-Shift-n spawn urxvtc -name "notes" -e vim ~/notes
+hc keybind Mod4-Shift-n spawn urxvtc -name "notes" -e $EDITOR ~/notes
 
 # spawn
 hc keybind Mod4-Return  spawn urxvtc
@@ -157,7 +157,7 @@ hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-p spawn urxvtc -e pms
 hc keybind Mod4-Shift-t spawn transmission-gtk
-hc keybind Mod4-Shift-v spawn urxvtc -name "vim" -e vim
+hc keybind Mod4-Shift-v spawn urxvtc -name "$EDITOR" -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvtc -name "weechat" -e weechat
 
 # dmenu

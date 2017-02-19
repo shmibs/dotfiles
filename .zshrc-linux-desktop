@@ -1,17 +1,13 @@
 ################### ALIASES ##################
-alias def='sdcv'
-alias dvd='mpv --deinterlace=yes dvd://'
-alias hc='herbstclient'
+
 alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
-alias svim='sudo -E vim'
-alias svimdiff='sudo -E vimdiff'
 alias sx='startx'
-alias thesaurus='aiksaurus'
-alias vmount='udevil mount'
-alias vumount='udevil umount'
-alias smounth='mkdir -p ~/shmibbles.me; sshfs shmibbles.me: ~/shmibbles.me'
-alias smountw='mkdir -p ~/shmibbles.me; sshfs shmibbles.me:/usr/local/www/apache24/data/ ~/shmibbles.me'
-alias sumount='fusermount -u ~/shmibbles.me; rmdir ~/shmibbles.me'
+
+if [[ "$(whence sshfs)" != "" ]] then
+	alias smounth='mkdir -p ~/shmibbles.me; sshfs shmibbles.me: ~/shmibbles.me'
+	alias smountw='mkdir -p ~/shmibbles.me; sshfs shmibbles.me:/usr/local/www/apache24/data/ ~/shmibbles.me'
+	alias sumount='fusermount -u ~/shmibbles.me; rmdir ~/shmibbles.me'
+fi
 
 ################## FUNCTIONS ##################
 

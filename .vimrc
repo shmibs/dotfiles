@@ -46,9 +46,6 @@ Plugin 'dermusikman/sonicpi.vim'
 
 Plugin 'tomtom/tcomment_vim'
 
-Plugin 'SirVer/ultisnips'
-Plugin 'kiith-sa/DSnips'
-
 call vundle#end()
 
 
@@ -64,12 +61,6 @@ nmap ga <Plug>(EasyAlign)
 
 "timeout on keycodes to prevent fcitx-switcher from lagging
 set ttimeoutlen=100
-
-"vertical split ultisnips edit
-let g:UltiSnipsEditSplit="vertical"
-
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
 "lightline colours. modded from 16color
 function! s:Lightline_palette_init()

@@ -111,7 +111,37 @@ bindkey '^U' backward-kill-line
 bindkey '^P' up-history
 bindkey '^N' down-history
 
+################### ALIASES ##################
+
+alias :q='exit'
+
+if [[ "$(whence vim)" != "" ]] then
+	export EDITOR='vim'
+	alias svim='sudo -E vim'
+	alias svimdiff='sudo -E vim -d'
+fi
+
+if [[ "$(whence nvim)" != "" ]] then
+	alias svim='sudo -E nvim'
+	alias svimdiff='sudo -E nvim -d'
+	alias vim='nvim'
+	export EDITOR='nvim'
+fi
+
+[[ "$(whence sdcv)" != "" ]] && alias def='sdcv'
+[[ "$(whence mpv)" != "" ]] && alias dvd='mpv --deinterlace=yes dvd://'
+[[ "$(whence herbstclient)" != "" ]] && alias hc='herbstclient'
+[[ "$(whence aiksaurus)" != "" ]] && alias thesaurus='aiksaurus'
+[[ "$(whence ag)" != "" ]] && alias ag='ag --color-match "1;34"'
+[[ "$(whence latex)" != "" ]] && alias latex='latex -output-format=pdf'
+
+if [[ "$(whence udevil)" != "" ]] then
+	alias vmount='udevil mount'
+	alias vumount='udevil umount'
+fi
+
 ################# OS SPECIFIC #################
+
 case $(uname) in 
 	FreeBSD)
 		source ~/.zshrc-freebsd

@@ -4,12 +4,7 @@ alias ll='ls -lGh'
 alias grep='grep --color=auto'
 alias diff='colordiff'
 alias less='less -R'
-alias ag='ag --color-match "1;34"'
-alias svim='sudo -E vim'
 
-alias :q='exit'
-
-export EDITOR="vim"
 export PAGER="less -R"
 
 ################## FUNCTIONS ##################
