@@ -22,8 +22,9 @@ adapt to the host environment, enabling only what functionality is compatible.
 
 ###MATE
 
-i'm using mate as a backend to handle dconf garbage / themes / etc for the few
-things that expect them.
+i'm using mate-session as a backend to handle dconf garbage / themes / etc for
+the few things that expect them. all higher-level mate utilities (wm, file
+manager, panel, whatever else) are not installed.
 
 ###herbstluftwm
 
@@ -45,14 +46,14 @@ check out
 
 both are fantastic for keyboard-driven file management, but still've got to
 figure out how to write a ranger extension that can receive selections from
-sxiv, because squinting at filenames is just bleh.
+sxiv, because squinting at filenames is just bleh. python is my bane, though...
 
 ###pentadactyl
 
 keyboard-driven browsing ^_^. try
 [setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
 
-kind of scared if it disappearing forever, though, which will probably happen
+kind of scared of it disappearing forever, though, which will probably happen
 after this firefox version is dropped from lts... X_X
 
 ###dunst/dmenu/compton/lemonbar/nitrogen
@@ -64,4 +65,4 @@ and probably any other similar things i add in the future. not sure what the
 default behaviour (pause / unpause notification display) was supposed to be
 used for ┐(¯-¯)┌.
 
-oh, also, using xft-compatible patches now.
+oh, also, vector fonts now ^_^.
