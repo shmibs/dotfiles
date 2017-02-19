@@ -142,6 +142,10 @@ call matchadd('Column80', '\%81v', 100)
 highlight SpaceBeforeTab ctermbg=black
 call matchadd('SpaceBeforeTab', '^\ \+\t')
 
+"get rid of that annoying yellow explosion everywhere
+"that neovim sets as default
+set nohlsearch
+
 
 """""""""""""
 "  ALIASES  "
