@@ -1,0 +1,97 @@
+#!/usr/bin/env zsh
+# export a clip from a video as a gif
+
+local callstr="$0"
+
+usage() {
+	[[ "$1" != "" ]] && echo -e "\e[1;31merror:\e[0m $1\n"
+	echo "Usage: $callstr [OPTIONS...] <infile> <outfile>"
+	echo ""
+	echo "description       option     default val"
+	echo "start time        -s <time>  00:00:00"
+	echo "length in seconds -t <int>   full length"
+	echo "gif fps           -f <int>   10"
+	echo "gif pixel width   -w <int>   480"
+	echo "use subtitles     -b"
+	echo "print this help   -h"
+	exit 1
+}
+
+local start="00:00:00"
+local length=""
+local fps=10
+local width=480
+local subs=""
+
+local timepat='^(([0-9][0-9]:){1,2}[0-9][0-9]|[0-9]+)$'
+local intpat='^[0-9][0-9]*$'
+
+local t=""
+
+while getopts s:t:f:w:bh opt; do
+	case "$opt" in
+		s) 
+			[[ ! $(echo $OPTARG | grep -oE "$timepat") ]] \
+				&& usage "malformed start timestamp"
+			start="$OPTARG"
+			;;
+		t)
+			[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
+				&& usage "length must be an integer"
+			length=$OPTARG
+			t="-t"
+			;;
+		f)
+			[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
+				&& usage "start time must be an integer"
+			fps=$OPTARG
+			;;
+		w)
+			[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
+				&& usage "fps must be an integer"
+			width=$OPTARG
+			;;
+		b) subs=true ;;
+		h) usage ;;
+		[?]) usage ;;
+	esac
+done
+shift $OPTIND-1
+
+[[ ${#@} -gt 2 ]] && usage "trailing arguments detected"
+
+[[ ${#@} -lt 2 ]] && usage "no output file specified"
+
+[[ "${2:e}" != "gif" ]] && usage "output file must have a .gif file extension"
+
+[[ ! -f "$1" ]] && usage "input file not found"
+
+
+rm -f make-gif-palette.png
+rm -f make-gif-in
+
+ln -s "$1" make-gif-in
+
+if [[ $subs ]]; then
+	echo "pass 1..."
+	ffmpeg -loglevel 16 -y -ss $start $t $length -i "$1" -copyts \
+		-vf "subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" \
+		make-gif-palette.png
+	[[ $? -eq 0 ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
+		-ss $start $t $length -i "$1" -i make-gif-palette.png \
+		-copyts -filter_complex \
+		"subtitles=make-gif-in,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+		out.gif
+else
+	echo "pass 1..."
+	ffmpeg -loglevel 16 -y -ss "$start" $t $length -i "$1" \
+		-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" \
+		make-gif-palette.png
+	[[ $? -eq 0 ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
+		-ss $start $t $length -i "$1" -i make-gif-palette.png -filter_complex \
+		"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+		out.gif
+fi
+
+rm -f make-gif-palette.png
+rm -f make-gif-in

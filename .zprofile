@@ -38,8 +38,10 @@ if [[ -d ~/.config/init/funcs/ && -d ~/.config/init/funcreqs ]]; then
 	for f in $HOME/.config/init/funcreqs/*; do
 		source "$f"
 		func_init_checkreq $func_init_prereqs , $func_init_checks
-		[[ $? -eq 0 ]] && \
+		if [[ $? -eq 0 ]] then
+			chmod +x $HOME/.config/init/funcs/${f:t}
 			ln -s $HOME/.config/init/funcs/${f:t} /tmp/funcs/${f:t}
+		fi
 	done
 fi
 

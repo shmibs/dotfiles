@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+# convert bits to human-readable value
+
+local suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
+local sindex=1
+local val=$1
+[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+
+while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
+	val=$(echo "scale=2; $val / 1024" | bc)
+	let sindex=sindex+1
+done
+
+echo "${val}${suffixes[$sindex]}"

@@ -26,7 +26,7 @@ unsetopt beep
 if [[ "$TERM" == "rxvt-unicode-256color" ]]; then
 
 	precmd() {
-		print -Pn "\e]0;zsh: %(1j,%j job%(2j|s|); ,)%~\a"
+		print -Pn "\e]0;zsh:%(1j,%j job%(2j|s|); ,)%~\a"
 	}
 
 	preexec() {
@@ -134,10 +134,25 @@ fi
 [[ "$(whence aiksaurus)" != "" ]] && alias thesaurus='aiksaurus'
 [[ "$(whence ag)" != "" ]] && alias ag='ag --color-match "1;34"'
 [[ "$(whence latex)" != "" ]] && alias latex='latex -output-format=pdf'
+[[ "$(whence startx)" != "" ]] && alias sx='startx'
 
 if [[ "$(whence udevil)" != "" ]] then
 	alias vmount='udevil mount'
 	alias vumount='udevil umount'
+fi
+
+################## FUNCTIONS ##################
+
+# ignore non-tracked files
+if [[ "$(whence git)" != "" ]] then
+git() {
+	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
+		shift
+		$(whence -p git) status -uno "$@"
+	else
+		$(whence -p git) "$@"
+	fi
+}
 fi
 
 ################# OS SPECIFIC #################

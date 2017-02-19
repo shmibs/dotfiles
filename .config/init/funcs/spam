@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+# um...
+
+if [[ $# -eq 0 ]]; then
+	local spam="┐(笑)＿(笑)┌"
+else
+	local spam="$@"
+fi
+
+
+while true; do
+	echo -en "\e[$((RANDOM%2));$((RANDOM%8+30))m"
+
+	for i in {1..${#spam}}; do
+		if [[ $((RANDOM%2)) -eq 1 ]]; then
+			echo -n $spam[$i] | tr '[:lower:]' '[:upper:]'
+		else
+			echo -n $spam[$i]
+		fi
+	done
+
+	for i in {1..$((RANDOM%20))}; do
+		echo -n " "
+	done
+done

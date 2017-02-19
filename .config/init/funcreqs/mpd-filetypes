@@ -1,0 +1,2 @@
+func_init_prereqs=(mpd)
+func_init_checks=("stat $HOME/music")
