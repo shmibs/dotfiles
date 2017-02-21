@@ -1,14 +1,32 @@
 #!/usr/bin/env zsh
-# convert bits to human-readable value
+# convert sizes in bits/bytes/kbytes/etc to human-readable strings
 
-local suffixes=( 'B' 'K' 'M' 'G' 'T' 'P' 'E' 'Z' 'Y' )
-local sindex=1
-local val=$1
-[[ -z $(echo $1 | grep "^[0-9]*$") ]] && read val
+typeset -i sindex
 
-while [[ $(echo $val / 1024 | bc) -ne 0 ]]; do
-	val=$(echo "scale=2; $val / 1024" | bc)
+suffices=( 'b' 'kb' 'mb' 'gb' 'tb' 'pb' 'eb' 'zb' 'yb' )
+
+[[ -z $(echo $1 | grep --extended-regexp '^[0-9]*([kmgtpezy]{0,1}b){0,1}$') ]] && return 1
+
+val=$(echo $1 | grep -o '^[0-9]*');
+suf=$(echo $1 | grep -o --extended-regexp '([kmgtpezy]{0,1}b){0,1}$');
+
+if [[ "$suf" == "" ]]; then
+	if [[ $(echo $val / 8 | bc) -ne 0 ]]; then
+		val=$(echo "scale=2; $val / 8" | bc)
+	else
+		echo $val
+		return 0;
+	fi
+fi
+
+sindex=1
+for ((i=1; i <= ${#suffices}; i++)) do
+	[[ "$suf" == "${suffices[$i]}" ]] && let sindex=i
+done
+
+while [[ $(echo $val / 1000 | bc) -ne 0 ]]; do
+	val=$(echo "scale=2; $val / 1000" | bc)
 	let sindex=sindex+1
 done
 
-echo "${val}${suffixes[$sindex]}"
+echo "${val}${suffices[$sindex]}"
