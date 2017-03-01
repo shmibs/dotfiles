@@ -10,9 +10,9 @@ usage() {
 	echo ""
 	echo "           description  option     default val"
 	echo "            start time  -s <time>  00:00:00"
-	echo "     length in seconds  -t <int>   full length"
-	echo "               gif fps  -f <int>   10"
-	echo "       gif pixel width  -w <int>   480"
+	echo "     length in seconds  -t <num>   full length"
+	echo "               gif fps  -f <num>   10"
+	echo "       gif pixel width  -w <num>   480"
 	echo "         use subtitles  -b"
 	echo "    use subtitle track  -n <int>   0"
 	[[ $hasgsic ]] && echo "optimise with gifsicle  -g"
@@ -28,8 +28,10 @@ local subs=""
 local strack=0
 local gsic=""
 
-local timepat='^(([0-9][0-9]:){1,2}[0-9][0-9]|[0-9]+)$'
-local intpat='^[0-9]+$'
+local timepat='^(([0-9][0-9]:){1,2}[0-9][0-9]|[0-9]+)(\.[0-9]+){0,1}$'
+local numpat='^[1-9][0-9]*(\.[0-9]+){0,1}$'
+local intpat='^[1-9][0-9]*$'
+local zintpat='^[0-9]+$'
 
 # tmp var used to old '-t' if length is used
 local t=""
@@ -44,25 +46,25 @@ if [[ $hasgsic ]]; then
 				start="$OPTARG"
 				;;
 			t)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "length must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$numpat") ]] \
+					&& usage "length must be a positive rational number"
 				length=$OPTARG
 				t="-t"
 				;;
 			f)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "start time must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$numpat") ]] \
+					&& usage "fps must be a positive rational number"
 				fps=$OPTARG
 				;;
 			w)
 				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "fps must be an integer"
+					&& usage "width must be a positive integer"
 				width=$OPTARG
 				;;
 			b) subs=true ;;
 			n)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "sub track specifier must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$zintpat") ]] \
+					&& usage "sub track index must be a non-negative integer"
 				strack=$OPTARG
 				;;
 			g) gsic=true ;;
@@ -79,25 +81,25 @@ else
 				start="$OPTARG"
 				;;
 			t)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "length must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$numpat") ]] \
+					&& usage "length must be a positive rational number"
 				length=$OPTARG
 				t="-t"
 				;;
 			f)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "start time must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$numpat") ]] \
+					&& usage "fps must be a positive rational number"
 				fps=$OPTARG
 				;;
 			w)
 				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "fps must be an integer"
+					&& usage "width must be a positive integer"
 				width=$OPTARG
 				;;
 			b) subs=true ;;
 			n)
-				[[ ! $(echo $OPTARG | grep -oE "$intpat") ]] \
-					&& usage "sub track specifier must be an integer"
+				[[ ! $(echo $OPTARG | grep -oE "$zintpat") ]] \
+					&& usage "sub track index must be a non-negative integer"
 				strack=$OPTARG
 				;;
 			h) usage ;;

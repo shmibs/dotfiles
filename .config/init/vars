@@ -243,6 +243,16 @@ jfont='Noto Sans Mono CJK JP Regular'
 jfont_size='9'
 jfont_off='-1'
 
+# c font
+cfont='Noto Sans Mono CJK SC Regular'
+cfont_size='9'
+cfont_off='-1'
+
+# emoji font
+efont='Noto Emoji'
+efont_size='9'
+efont_off='-1'
+
 # backup font
 bkfont='Dejavu Sans Mono'
 bkfont_size='9'

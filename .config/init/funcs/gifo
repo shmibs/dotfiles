@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+# optimise gifs with gifsicle
+
+local before
+local after
+local ofile
+
+for i in $@; do
+	if [[ -f "$i" ]]; then
+		ofile="$i.out"
+		while [[ -f "$ofile" ]]; do
+			ofile="$ofile.out"
+		done
+		du -h "$i" | cut -f 1 | read before
+		echo "$i..."
+		gifsicle --no-ignore-errors -w -O3 "$i" -o "$i.out"
+		[[ -f "$ofile" ]] && rm "$i" && mv "$ofile" "$i" && \
+		du -h "$i" | cut -f 1 | read after && \
+		echo "   $before -> $after" || echo "  failed"
+	fi
+done

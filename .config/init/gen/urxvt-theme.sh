@@ -44,9 +44,9 @@ URxvt*color15: $light_white
 echo -n "URxvt*font: "
 echo -n "xft:${mfont}:size=${mfont_size}, "
 echo -n "xft:${jfont}:size=${jfont_size}, "
+echo -n "xft:${cfont}:size=${cfont_size}, "
+echo -n "xft:${efont}:size=${efont_size}, "
 echo    "xft:${bkfont}:size=${bkfont_size}"
 
 } > /tmp/urxvt-theme
-
-xrdb -merge /tmp/urxvt-theme
 

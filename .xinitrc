@@ -4,7 +4,13 @@
 #merge Xresources
 if [ -s ~/.Xresources ]
 then
-	xrdb -merge ~/.Xresources
+	xrdb -override ~/.Xresources
+fi
+
+#merge Xresources
+if [ -s /tmp/urxvt-theme ]
+then
+	xrdb -override /tmp/urxvt-theme
 fi
 
 #add compose key
@@ -42,7 +48,6 @@ xset -dpms
 xset s off
 
 #daemons
-urxvtd &
 compton -b --backend glx --vsync opengl
 
 #QT style mimic gtk
