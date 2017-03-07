@@ -48,5 +48,7 @@ echo -n "xft:${cfont}:size=${cfont_size}, "
 echo -n "xft:${efont}:size=${efont_size}, "
 echo    "xft:${bkfont}:size=${bkfont_size}"
 
+[[ -n $urxvt_bg ]] && echo "URxvt*backgroundPixmap: $HOME/backdrops/urxvt/$urxvt_bg"
+
 } > /tmp/urxvt-theme
 

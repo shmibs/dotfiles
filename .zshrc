@@ -20,6 +20,15 @@ bindkey -e
 setopt notify
 unsetopt beep
 
+if [[ "$TERM" == "rxvt-unicode-256color" ]]; then
+	if [[ -f "$HOME/.config/init/vars" ]]; then
+		source "$HOME/.config/init/vars"
+	else
+		[[ -f "/home/shmibs/.config/init/vars" ]] &&
+			source "/home/shmibs/.config/init/vars"
+	fi
+fi
+
 ##################### MISC ####################
 
 # dynamic title
@@ -36,6 +45,21 @@ if [[ "$TERM" == "rxvt-unicode-256color" ]]; then
 fi
 
 #################### PROMPT ###################
+if [[ -n $light_colours ]]; then
+PROMPT="%{$fg[black]%}┌["
+# if non-zero, previous return val
+PROMPT+="%(0?..$fg[red]%?$fg[black]:)"
+# if any, number of jobs
+PROMPT+="%(1j.$fg[green]%j$fg[black]:.)"
+# name and host (red for root)
+PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+# current location, with one level of parent context
+PROMPT+="%{$fg[blue]%}%2c"
+# newline
+PROMPT+="%{$fg[black]%}]%{%b$reset_color%}
+"
+PROMPT+="%{$fg[black]%}└: %{%b$reset_color%}"
+else
 PROMPT="%{%B$fg[white]%}┌["
 # if non-zero, previous return val
 PROMPT+="%(0?..$fg[red]%?$fg[white]:)"
@@ -49,6 +73,7 @@ PROMPT+="%{$fg[blue]%}%2c"
 PROMPT+="%{$fg[white]%}]%{%b$reset_color%}
 "
 PROMPT+="%{%B$fg[white]%}└: %{%b$reset_color%}"
+fi
 
 
 ################# HIGHLIGHTING ################

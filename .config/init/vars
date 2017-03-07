@@ -34,6 +34,8 @@
 # bg_urgent="$std_red"
 # fg_urgent="$light_white"
 
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
 
 #
 # Undercover
@@ -66,6 +68,8 @@
 # bg_urgent="$std_red"
 # fg_urgent="$light_white"
 
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
 
 #
 # Fly
@@ -98,6 +102,9 @@
 # bg_urgent="$std_red"
 # fg_urgent="$light_white"
 
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
+
 #
 # Smooch
 #
@@ -128,6 +135,9 @@
 # fg_focus="$light_green"
 # bg_urgent="$light_red"
 # fg_urgent="$light_white"
+
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
 
 #
 # Hello, Friend
@@ -160,6 +170,9 @@
 # bg_urgent="$light_black"
 # fg_urgent="$light_white"
 
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
+
 #
 # No Matter Where
 #
@@ -191,6 +204,9 @@
 # bg_urgent="$std_red"
 # fg_urgent="$light_white"
 
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
+
 #
 # 花嫁
 #
@@ -221,6 +237,47 @@ bg_focus="$std_blue"
 fg_focus="$light_white"
 bg_urgent="$std_red"
 fg_urgent="$light_white"
+
+bar_bg="$bg_normal"
+bar_fg="$fg_normal"
+
+#
+# わがまま
+#
+
+# wallpaper='わがまま.png'
+#
+# std_black='#331a24'
+# std_red='#692c2d'
+# std_green='#326e45'
+# std_yellow='#995d37'
+# std_blue='#444c80'
+# std_magenta='#9f3e81'
+# std_cyan='#2b586b'
+# std_white='#eae4d7'
+#
+# light_black='#4d2836'
+# light_red='#8f5253'
+# light_green='#4e9464'
+# light_yellow='#d69973'
+# light_blue='#5d67a6'
+# light_magenta='#c983b4'
+# light_cyan='#38687d'
+# light_white='#eae4d7'
+#
+# bg_normal="$std_white"
+# fg_normal="$std_black"
+# bg_focus="$std_red"
+# fg_focus="$light_white"
+# bg_urgent="$std_blue"
+# fg_urgent="$light_white"
+#
+# bar_bg="$std_black"
+# bar_fg="$std_white"
+#
+# light_colours=true
+#
+# urxvt_bg='わがまま.png;style=tiled'
 
 
 ###############
@@ -267,9 +324,9 @@ dmenu_args=( -fn "${bfont}:size=${bfont_size}" -h "$bheight"
 			 -sf "$fg_focus" )
 
 
-###############
-#  functions  #
-###############
+##########################
+#  convenience function  #
+##########################
 hc() {
 	herbstclient "$@"
 }

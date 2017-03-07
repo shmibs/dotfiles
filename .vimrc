@@ -268,7 +268,9 @@ function! Settings_c()
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
+	"note: these mappings are in weird reverse order to avoid opening folds
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
+	inoremap {<CR> }<Esc>i{<CR><Esc>O
 endfunction
 
 function! Settings_coffee()

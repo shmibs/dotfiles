@@ -38,7 +38,7 @@ local t=""
 
 # really annoying, but no other good way to do this
 if [[ $hasgsic ]]; then
-	while getopts s:t:f:w:bhn:g opt; do
+	while getopts :s:t:f:w:bhn:g opt; do
 		case "$opt" in
 			s) 
 				[[ ! $(echo $OPTARG | grep -oE "$timepat") ]] \
@@ -69,11 +69,11 @@ if [[ $hasgsic ]]; then
 				;;
 			g) gsic=true ;;
 			h) usage ;;
-			[?]) usage ;;
+			[?]) usage "unrecognised option" ;;
 		esac
 	done
 else
-	while getopts s:t:f:w:bhn: opt; do
+	while getopts :s:t:f:w:bhn: opt; do
 		case "$opt" in
 			s) 
 				[[ ! $(echo $OPTARG | grep -oE "$timepat") ]] \
@@ -103,7 +103,7 @@ else
 				strack=$OPTARG
 				;;
 			h) usage ;;
-			[?]) usage ;;
+			[?]) usage "unrecognised option" ;;
 		esac
 	done
 fi

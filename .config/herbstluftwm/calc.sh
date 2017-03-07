@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 source ~/.config/init/vars
 
@@ -26,10 +26,10 @@ command_check() {
 	esac
 }
 
-while [ "$in" != "" ]; do
+while [[ "$in" != "" ]]; do
 	in=$(dmenu -noinput -fn "${bfont}:size=${bfont_size}" -q -h "$bheight" \
-		-nb "$bg_normal" -nf "$fg_normal" \
-		-sb "$bg_focus" -sf "$fg_focus" -p "$prompt" | \
+		-nb "$bar_bg" -nf "$fg_normal" \
+		-sb "$bar_fg" -sf "$fg_focus" -p "$prompt" | \
 		sed -e "s/ans/$acc/g")
 	if [[ $(command_check "$in" "$acc") -eq 1 ]]; then
 		break
@@ -37,11 +37,11 @@ while [ "$in" != "" ]; do
 
 	out=$(echo "pi=$pi; e=$e; $acc $in" | calc -p 2>&1)
 	
-	if [ "${?#0}" != "" ]; then
+	if [[ "${?#0}" != "" ]]; then
 		out=$(echo "$out" | tr -d "\n")
-		if [ "$out" = "Missing operator" ]; then
+		if [[ "$out" = "Missing operator" ]]; then
 			out=$(echo "pi=$pi; e=$e; $in" | calc -p 2>&1)
-			if [ "${?#0}" != "" ]; then
+			if [[ "${?#0}" != "" ]]; then
 				out=$(echo "$out" | tr -d "\n")
 				prompt="calc: ($acc) err: $out"
 			else
@@ -57,4 +57,3 @@ while [ "$in" != "" ]; do
 		prompt="calc: ($acc)"
 	fi
 done
-
