@@ -146,7 +146,7 @@ while [[ -f "${tmp_pref}-palette.png" ]] || [[ -f "${tmp_pref}-in" ]]; do
 	tmp_pref="${tmp_pref}-1"
 done
 
-ln -s "$1" "${tmp_pref}-in" \
+ln -s "${1:a}" "${tmp_pref}-in" \
 	|| abort "could not write to output dir" 
 
 # get output height using aspect ratio
@@ -162,24 +162,26 @@ ffprobe -loglevel -8 -print_format json -show_streams "${tmp_pref}-in" \
 # convert
 if [[ $subs ]]; then
 	echo "pass 1..."
-	ffmpeg -loglevel 16 -y -ss $start $t $length -i "$1" -copyts \
+	ffmpeg -loglevel 16 -y -ss $start $t $length -i "${tmp_pref}-in" -copyts \
 		-vf "subtitles=${tmp_pref}-in:si=$strack,setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos,palettegen" \
 		${tmp_pref}-palette.png
 	[[ $? -ne 0 ]] && fferr=true
 	[[ ! $fferr ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
-		-ss $start $t $length -i "$1" -i ${tmp_pref}-palette.png \
+		-ss $start $t $length \
+		-i "${tmp_pref}-in" -i ${tmp_pref}-palette.png \
 		-copyts -filter_complex \
 		"subtitles=${tmp_pref}-in:si=$strack,setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos[x];[x][1:v]paletteuse" \
 		"$2" || abort
 	[[ $? -ne 0 ]] && fferr=true
 else
 	echo "pass 1..."
-	ffmpeg -loglevel 16 -y -ss "$start" $t $length -i "$1" \
+	ffmpeg -loglevel 16 -y -ss "$start" $t $length -i "${tmp_pref}-in" \
 		-vf "setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos,palettegen" \
 		${tmp_pref}-palette.png
 	[[ $? -ne 0 ]] && fferr=true
 	[[ ! $fferr ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
-		-ss $start $t $length -i "$1" -i ${tmp_pref}-palette.png -filter_complex \
+		-ss $start $t $length \
+		-i "${tmp_pref}-in" -i ${tmp_pref}-palette.png -filter_complex \
 		"setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos[x];[x][1:v]paletteuse" \
 		"$2"
 	[[ $? -ne 0 ]] && fferr=true
