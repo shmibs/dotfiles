@@ -4,8 +4,12 @@
 local callstr="$0"
 local hasgsic=$(whence gifsicle)
 
+print_error() {
+	echo -e "\e[1;31merror:\e[0m $1\n"
+}
+
 usage() {
-	[[ "$1" != "" ]] && echo -e "\e[1;31merror:\e[0m $1\n"
+	[[ "$1" != "" ]] && print_error $1
 	echo "Usage: $callstr [OPTIONS...] <infile> <outfile>"
 	echo ""
 	echo "           description  option     default val"
@@ -17,6 +21,20 @@ usage() {
 	echo "    use subtitle track  -n <int>   0"
 	[[ $hasgsic ]] && echo "optimise with gifsicle  -g"
 	echo "       print this help  -h"
+	exit 1
+}
+
+# preface used to ensure unique inputs, just in case links exist. see below
+local tmp_pref
+
+rm_tmps() {
+	rm -f ${tmp_pref}-palette.png
+	rm -f ${tmp_pref}-in
+}
+
+abort() {
+	[[ "$1" != "" ]] && print_error $1
+	rm_tmps
 	exit 1
 }
 
@@ -33,10 +51,10 @@ local numpat='^[1-9][0-9]*(\.[0-9]+){0,1}$'
 local intpat='^[1-9][0-9]*$'
 local zintpat='^[0-9]+$'
 
-# tmp var used to old '-t' if length is used
+# tmp var used to hold '-t' if length is used
 local t=""
 
-# really annoying, but no other good way to do this
+# really annoying, but no other good way to do optional args 
 if [[ $hasgsic ]]; then
 	while getopts :s:t:f:w:bhn:g opt; do
 		case "$opt" in
@@ -109,57 +127,74 @@ else
 fi
 shift $OPTIND-1
 
+# check some error conditions
 [[ ${#@} -gt 2 ]] && usage "trailing arguments detected"
 
 [[ ${#@} -lt 2 ]] && usage "no output file specified"
 
 [[ "${2:e}" != "gif" ]] && usage "output file must have a .gif file extension"
 
-[[ ! -f "$1" ]] && usage "input file not found"
+[[ "$1" != "%d.png" ]] && [[ ! -f "$1" ]] && usage "input file not found"
 
-local paltmp="make-gif"
-while [[ -f "${paltmp}-palette.png" ]] || [[ -f "${paltmp}-in" ]]; do
-	paltmp="${paltmp}-1"
+# make links
+tmp_pref="make-gif"
+tmp_pref="${2:h}/$tmp_pref"
+
+echo $tmp_pref
+
+while [[ -f "${tmp_pref}-palette.png" ]] || [[ -f "${tmp_pref}-in" ]]; do
+	tmp_pref="${tmp_pref}-1"
 done
 
-ln -s "$1" "${paltmp}-in"
+ln -s "$1" "${tmp_pref}-in" \
+	|| abort "could not write to output dir" 
 
-local fferr
+# get output height using aspect ratio
+local height
+local as
 
+height=-1
+ffprobe -loglevel -8 -print_format json -show_streams "${tmp_pref}-in" \
+	| grep -m 1 display_aspect_ratio | grep -Eo '[0-9]+:[0-9]+' \
+	| IFS=':' read -A as
+[[ "$as" != "" ]] && let "height = ${width} * ${as[2]} / ${as[1]}"
+
+# convert
 if [[ $subs ]]; then
 	echo "pass 1..."
 	ffmpeg -loglevel 16 -y -ss $start $t $length -i "$1" -copyts \
-		-vf "subtitles=${paltmp}-in:si=$strack,fps=$fps,scale=$width:-1:flags=lanczos,palettegen" \
-		${paltmp}-palette.png
+		-vf "subtitles=${tmp_pref}-in:si=$strack,setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos,palettegen" \
+		${tmp_pref}-palette.png
 	[[ $? -ne 0 ]] && fferr=true
 	[[ ! $fferr ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
-		-ss $start $t $length -i "$1" -i ${paltmp}-palette.png \
+		-ss $start $t $length -i "$1" -i ${tmp_pref}-palette.png \
 		-copyts -filter_complex \
-		"subtitles=${paltmp}-in:si=$strack,fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
-		"$2"
+		"subtitles=${tmp_pref}-in:si=$strack,setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos[x];[x][1:v]paletteuse" \
+		"$2" || abort
+	[[ $? -ne 0 ]] && fferr=true
 else
 	echo "pass 1..."
 	ffmpeg -loglevel 16 -y -ss "$start" $t $length -i "$1" \
-		-vf "fps=$fps,scale=$width:-1:flags=lanczos,palettegen" \
-		${paltmp}-palette.png
+		-vf "setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos,palettegen" \
+		${tmp_pref}-palette.png
 	[[ $? -ne 0 ]] && fferr=true
 	[[ ! $fferr ]] && echo "pass 2..." && ffmpeg -loglevel 24 \
-		-ss $start $t $length -i "$1" -i ${paltmp}-palette.png -filter_complex \
-		"fps=$fps,scale=$width:-1:flags=lanczos[x];[x][1:v]paletteuse" \
+		-ss $start $t $length -i "$1" -i ${tmp_pref}-palette.png -filter_complex \
+		"setsar=1/1,fps=$fps,scale=${width}:${height}:flags=lanczos[x];[x][1:v]paletteuse" \
 		"$2"
+	[[ $? -ne 0 ]] && fferr=true
 fi
 
-rm -f ${paltmp}-palette.png
-rm -f ${paltmp}-in
+[[ $fferr ]] && abort
+rm_tmps
 
-if [[ -f "$2" ]] && [[ ! $fferr ]]; then
-	if [[ $gsic ]]; then
-		local gsictmp="$2.out"
-		while [[ -f "$gsictmp" ]]; do
-			gsictmp="$gsictmp.out"
-		done
-		echo "optimising..."
-		gifsicle -O3 -i "$2" -o "$gsictmp"
-		[[ $? -eq 0 ]] && rm -f "$2" && mv "$gsictmp" "$2"
-	fi
+# gifsicle
+if [[ -f "$2" && $gsic ]]; then
+	local gsictmp="$2.out"
+	while [[ -f "$gsictmp" ]]; do
+		gsictmp="$gsictmp.out"
+	done
+	echo "optimising..."
+	gifsicle -O3 -i "$2" -o "$gsictmp"
+	[[ $? -eq 0 ]] && rm -f "$2" && mv "$gsictmp" "$2"
 fi
