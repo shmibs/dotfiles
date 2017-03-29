@@ -1,0 +1,3 @@
+[submodule ".config/init/submodules/make-gif"]
+	path = .config/init/submodules/make-gif
+	url = https://github.com/shmibs/make-gif
