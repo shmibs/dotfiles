@@ -20,7 +20,6 @@ Plugin 'luisjure/csound'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
-Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -226,7 +225,7 @@ autocmd BufNewFile,BufRead *.mips set filetype=mips
 "the FileTypes in one dict (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
 autocmd FileType asm     call Settings_asm()
-autocmd FileType bash    call Settings_script()
+autocmd FileType bash    call Settings_shell()
 autocmd FileType c       call Settings_c()
 autocmd FileType coffee  call Settings_coffee()
 autocmd FileType conf    call Settings_conf()
@@ -242,7 +241,6 @@ autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
 autocmd FileType mips    call Settings_mips()
 autocmd FileType mkd     call Settings_text()
-autocmd FileType nim     call Settings_nim()
 autocmd FileType perl    call Settings_script()
 autocmd FileType php     call Settings_html()
 autocmd FileType python  call Settings_script()
@@ -252,7 +250,7 @@ autocmd FileType scss    call Settings_css()
 autocmd FileType sh      call Settings_script()
 autocmd FileType text    call Settings_text()
 autocmd FileType vim     call Settings_vim()
-autocmd FileType zsh     call Settings_script()
+autocmd FileType zsh     call Settings_shell()
 
 function! Settings_asm()
 	"settings
@@ -270,7 +268,7 @@ function! Settings_c()
 	"mappings
 	"note: these mappings are in weird reverse order to avoid opening folds
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
-	inoremap {<CR> }<Esc>i{<CR><Esc>O
+	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfunction
 
 function! Settings_coffee()
@@ -344,21 +342,6 @@ function! Settings_mips()
 	nnoremap <buffer> -- O#<Space>
 endfunction
 
-function! Settings_nim()
-	call Settings_script()
-	function! JumpToDef()
-		if exists("*GotoDefinition_" . &filetype)
-			call GotoDefinition_{&filetype}()
-		else
-			execute "norm! <C-]>"
-		endif
-	endfunction
-	"mappings
-	nnoremap <buffer> <M-g> :call JumpToDef()<cr>
-	inoremap <buffer> <M-g> <esc>:call JumpToDef()<cr>i
-	nnoremap <buffer> -_ O##<Space>
-endfunction
-
 function! Settings_script()
 	"settings
 	setlocal shiftwidth=4
@@ -370,13 +353,18 @@ endfunction
 
 function! Settings_ruby()
 	call Settings_script()
-	nnoremap <leader>r :execute "silent w !sonic_pi"<CR>
-	nnoremap <leader>s :execute "silent !sonic_pi stop"<CR><C-l>
+	nnoremap <buffer> <leader>r :execute "silent w !sonic_pi"<CR>
+	nnoremap <buffer> <leader>s :execute "silent !sonic_pi stop"<CR><C-l>
 endfunction
 
 function! Settings_rust()
 	call Settings_c()
 	nnoremap <buffer> -_ O///<Space>
+endfunction
+
+function! Settings_shell()
+	call Settings_script()
+	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfunction
 
 function! Settings_tex()
