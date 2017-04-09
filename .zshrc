@@ -140,28 +140,28 @@ bindkey '^N' down-history
 
 alias :q='exit'
 
-if [[ "$(whence vim)" != "" ]] then
+if [[ ! -z $(whence vim) ]] then
 	export EDITOR='vim'
 	alias svim='sudo -E vim'
 	alias svimdiff='sudo -E vim -d'
 fi
 
-if [[ "$(whence nvim)" != "" ]] then
+if [[ ! -z $(whence nvim) ]] then
 	alias svim='sudo -E nvim'
 	alias svimdiff='sudo -E nvim -d'
 	alias vim='nvim'
 	export EDITOR='nvim'
 fi
 
-[[ "$(whence sdcv)" != "" ]] && alias def='sdcv'
-[[ "$(whence mpv)" != "" ]] && alias dvd='mpv --deinterlace=yes dvd://'
-[[ "$(whence herbstclient)" != "" ]] && alias hc='herbstclient'
-[[ "$(whence aiksaurus)" != "" ]] && alias thesaurus='aiksaurus'
-[[ "$(whence ag)" != "" ]] && alias ag='ag --color-match "1;34"'
-[[ "$(whence latex)" != "" ]] && alias latex='latex -output-format=pdf'
-[[ "$(whence startx)" != "" ]] && alias sx='startx'
+[[ ! -z $(whence sdcv) ]] && alias def='sdcv'
+[[ ! -z $(whence mpv) ]] && alias dvd='mpv --deinterlace=yes dvd://'
+[[ ! -z $(whence herbstclient) ]] && alias hc='herbstclient'
+[[ ! -z $(whence aiksaurus) ]] && alias thesaurus='aiksaurus'
+[[ ! -z $(whence ag) ]] && alias ag='ag --color-match "1;34"'
+[[ ! -z $(whence latex) ]] && alias latex='latex -output-format=pdf'
+[[ ! -z $(whence startx) ]] && alias sx='startx'
 
-if [[ "$(whence udevil)" != "" ]] then
+if [[ ! -z $(whence udevil) ]] then
 	alias vmount='udevil mount'
 	alias vumount='udevil umount'
 fi
@@ -169,14 +169,13 @@ fi
 ################## FUNCTIONS ##################
 
 # ignore non-tracked files
-if [[ "$(whence git)" != "" ]] then
+if [[ ! -z $(whence git) ]] then
 git() {
-	if [[ $# -gt 0 ]] && [[ "$1" == "status" ]]; then
-		shift
-		$(whence -p git) status -uno "$@"
-	else
-		$(whence -p git) "$@"
-	fi
+	case $1 in
+		status) shift; $(whence -p git) status -uno "$@" ;;
+		pull) shift; $(whence -p git) pull --recurse-submodules "$@" ;;
+		*) $(whence -p git) "$@" ;;
+	esac
 }
 fi
 
@@ -193,5 +192,5 @@ case $(uname) in
 		fi
 		;;
 	*)
-		echo -e '[-- OS UNRECOGNISED --]'
+		echo -e '[-- OS UNRECOGNISED (T_T) --]'
 esac

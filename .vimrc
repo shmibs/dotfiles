@@ -129,10 +129,6 @@ set title
 "spelling
 set spelllang=en_gb
 
-"gvim-specific settings
-set guifont=Tamsyn\ 11
-set guioptions=aegimt
-
 "visual marker for overflowing the 80th column
 highlight Column80 ctermbg=black
 call matchadd('Column80', '\%81v', 100)
