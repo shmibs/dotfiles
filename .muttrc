@@ -1,0 +1,38 @@
+# settings
+set sort=threads
+set strict_threads=yes
+
+set realname=katherine
+
+source ~/.mail_aliases
+
+# mappings
+bind index \Cu half-up
+bind index \Cd half-down
+
+bind index \Cb previous-page
+bind index \Cf next-page
+
+bind index D delete-thread
+bind index U undelete-thread
+
+bind index g first-entry
+bind index G last-entry
+
+bind index \cg group-reply
+
+# colours
+color attachment brightmagenta default
+color error      brightred     default
+color hdrdefault red           default
+color indicator  white         brightblack
+color markers    brightcyan    default
+color message    brightcyan    default
+color normal     default       default
+color quoted     brightblue    default
+color search     default       green
+color signature  red           default
+color status     white         brightblack
+color tilde      magenta       default
+color tree       blue          default
+
