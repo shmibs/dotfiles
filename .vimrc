@@ -237,7 +237,7 @@ autocmd FileType make    call Settings_script()
 autocmd FileType matlab  call Settings_matlab()
 autocmd FileType mips    call Settings_mips()
 autocmd FileType mkd     call Settings_text()
-autocmd FileType perl    call Settings_script()
+autocmd FileType perl    call Settings_perl()
 autocmd FileType php     call Settings_html()
 autocmd FileType python  call Settings_script()
 autocmd FileType ruby    call Settings_ruby()
@@ -345,6 +345,11 @@ function! Settings_script()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_perl()
+	call Settings_script()
+	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfunction
 
 function! Settings_ruby()
