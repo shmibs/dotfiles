@@ -115,6 +115,9 @@ set autoindent
 
 colorscheme shmibs
 
+"revert annoying neovim cursor
+set guicursor=i-ci-ve-r-cr-o-n-v-c-sm:block-blinkon200
+
 "enable status-line
 set laststatus=2
 
