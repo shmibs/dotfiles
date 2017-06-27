@@ -102,7 +102,7 @@ update_winlist() {
 			else
 				echo -n "${line[@]:3}"
 			fi
-		} | sed -r 's/(.{40})...*/\1\.\.\./'
+		} | sed -r 's/(.{37})...*/\1\.\.\./'
 		echo -n " "
 	done
 	echo -n "%{B${bg_normal} F${fg_normal}}"
