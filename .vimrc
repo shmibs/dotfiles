@@ -383,6 +383,8 @@ function! Settings_tex()
 	nnoremap <buffer> -- O%<Space>
 	nnoremap <buffer> <Leader>c :!latex -output-format=pdf "%"<CR><CR>
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
+	nnoremap <buffer> <Leader>x :!xelatex -output-format=pdf "%"<CR><CR>
+	nnoremap <buffer> <Leader>X :!xelatex -output-format=pdf "%"<CR>
 endfunction
 
 function! Settings_text()
