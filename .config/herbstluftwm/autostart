@@ -156,6 +156,7 @@ hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-p spawn urxvt -e pms
+hc keybind Mod4-Shift-s spawn scrot
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name "$EDITOR" -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
