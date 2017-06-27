@@ -291,7 +291,7 @@ ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
 ifont_off='-3'
 
 # bar font
-bfont='Droid Sans Mono'
+bfont='Droid Sans Mono Dotted'
 bfont_size='9'
 bfont_off='-2'
 
@@ -311,12 +311,12 @@ efont_size='9'
 efont_off='-1'
 
 # backup font
-bkfont='Dejavu Sans Mono'
+bkfont='Fira Mono'
 bkfont_size='9'
 bkfont_off='-2'
 
 # main font
-mfont='Droid Sans Mono'
+mfont='Droid Sans Mono Dotted'
 mfont_size='10'
 
 dmenu_args=( -fn "${bfont}:size=${bfont_size}" -h "$bheight"
