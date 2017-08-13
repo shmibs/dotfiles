@@ -143,7 +143,9 @@ hc keybind Mod4-Shift-Control-w      spawn urxvt -name "ranger" -e ranger ~/docu
 
 # grab colour to clipboard
 hc keybind Mod4-c spawn ~/.config/herbstluftwm/colourgrab.sh
-hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
+
+# click
+hc keybind Mod4-w spawn xdotool click 1
 
 # spawn
 hc keybind Mod4-Return  spawn urxvt
@@ -154,6 +156,7 @@ hc keybind Mod4-Shift-f spawn firejail --netfilter=/etc/firejail/nolocal.net fir
 hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn mathematica
+hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-p spawn urxvt -e pms
 hc keybind Mod4-Shift-s spawn scrot
@@ -162,21 +165,18 @@ hc keybind Mod4-Shift-v spawn urxvt -name "$EDITOR" -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
 
 # dmenu
-hc keybind Mod4-0 spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
+hc keybind Mod4-r spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
 	-p "Run:" -h "$bheight" \
 	-nb "$bar_bg" -nf "$bar_fg" \
 	-sb "$bg_focus"  -sf "$fg_focus"
-hc keybind Mod4-9 spawn ~/.config/herbstluftwm/switcher.sh
-hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
+hc keybind Mod4-g spawn ~/.config/herbstluftwm/switcher.sh
+# hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
 # tunes
 hc keybind Mod4-Up spawn ~/.config/herbstluftwm/mpc-status.sh
 hc keybind Mod4-Down spawn mpc toggle
 hc keybind Mod4-Right spawn ~/.config/herbstluftwm/mpc-status.sh next
 hc keybind Mod4-Left spawn ~/.config/herbstluftwm/mpc-status.sh prev
-
-#click
-hc keybind Mod4-w spawn xdotool click 1
 
 ## end launchers
 
@@ -192,7 +192,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
 hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL)' pseudotile=on focus=on
-hc rule class~'(Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine)' pseudotile=on focus=on
+hc rule class~'(Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine|explorer.exe)' pseudotile=on focus=on
 hc rule class~'(mednafen)' pseudotile=on focus=on
 
 # unlock, just to be sure
