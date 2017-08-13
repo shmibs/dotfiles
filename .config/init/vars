@@ -210,32 +210,66 @@
 #
 # 花嫁
 #
+#
+#wallpaper='花嫁.png'
+#
+#std_black='#101014'
+#std_red='#85595a'
+#std_green='#72a68f'
+#std_yellow='#93896e'
+#std_blue='#3d4361'
+#std_magenta='#b0546c'
+#std_cyan='#4c6a70'
+#std_white='#b8bbd6'
+#
+#light_black='#22222c'
+#light_red='#a66f70'
+#light_green='#abe0c9'
+#light_yellow='#c3e0ab'
+#light_blue='#676fa6'
+#light_magenta='#d86785'
+#light_cyan='#638a91'
+#light_white='#cdd1ec'
+#
+#bg_normal="$std_black"
+#fg_normal="$std_white"
+#bg_focus="$std_blue"
+#fg_focus="$light_white"
+#bg_urgent="$std_red"
+#fg_urgent="$light_white"
+#
+#bar_bg="$bg_normal"
+#bar_fg="$fg_normal"
 
-wallpaper='花嫁.png'
+#
+# lily
+#
 
-std_black='#101014'
-std_red='#85595a'
-std_green='#72a68f'
-std_yellow='#93896e'
-std_blue='#3d4361'
-std_magenta='#b0546c'
-std_cyan='#4c6a70'
-std_white='#b8bbd6'
+wallpaper='lily.png'
 
-light_black='#22222c'
-light_red='#a66f70'
-light_green='#abe0c9'
-light_yellow='#c3e0ab'
-light_blue='#676fa6'
-light_magenta='#d86785'
-light_cyan='#638a91'
-light_white='#cdd1ec'
+std_black='#0f0f0e'
+std_red='#8e4b40'
+std_green='#c7d276'
+std_yellow='#f5b45c'
+std_blue='#52818c'
+std_magenta='#e0736d'
+std_cyan='#60b3cf'
+std_white='#faf1df'
+
+light_black='#27251f'
+light_red='#c25948'
+light_green='#8ceba4'
+light_yellow='#ffab84'
+light_blue='#7fbcc7'
+light_magenta='#e09fc4'
+light_cyan='#7fc7c7'
+light_white='#faf5eb'
 
 bg_normal="$std_black"
 fg_normal="$std_white"
-bg_focus="$std_blue"
+bg_focus="$std_red"
 fg_focus="$light_white"
-bg_urgent="$std_red"
+bg_urgent="$std_magenta"
 fg_urgent="$light_white"
 
 bar_bg="$bg_normal"
@@ -288,32 +322,32 @@ bheight=20
 
 # icon font
 ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
-ifont_off='-3'
+ifont_off='-4'
 
 # bar font
 bfont='Droid Sans Mono Dotted'
 bfont_size='9'
-bfont_off='-2'
+bfont_off='-3'
 
 # jp font
 jfont='Noto Sans Mono CJK JP Regular'
-jfont_size='9'
+jfont_size='10'
 jfont_off='-1'
 
 # c font
 cfont='Noto Sans Mono CJK SC Regular'
-cfont_size='9'
+cfont_size='10'
 cfont_off='-1'
 
 # emoji font
 efont='Noto Emoji'
-efont_size='9'
+efont_size='10'
 efont_off='-1'
 
 # backup font
 bkfont='Fira Mono'
-bkfont_size='9'
-bkfont_off='-2'
+bkfont_size='10'
+bkfont_off='-3'
 
 # main font
 mfont='Droid Sans Mono Dotted'
