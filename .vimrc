@@ -16,7 +16,6 @@ Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'luisjure/csound'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
