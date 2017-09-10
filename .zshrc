@@ -77,11 +77,14 @@ fi
 
 
 ################# HIGHLIGHTING ################
-if [[ -f '/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]]; then
-	source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-	source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+local HIGHLIGHT_DIR='~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+[[ -f '/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] && \
+	HIGHLIGHT_DIR='/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+[[ -f '/usr/local/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] && \
+	HIGHLIGHT_DIR='/usr/local/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+
+source $HIGHLIGHT_DIR
+
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
 #ZSH_HIGHLIGHT_STYLES[alias]="fg=yellow"
