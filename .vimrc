@@ -40,8 +40,6 @@ Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
 
-Plugin 'dermusikman/sonicpi.vim'
-
 Plugin 'tomtom/tcomment_vim'
 
 call vundle#end()
