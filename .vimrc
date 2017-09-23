@@ -223,33 +223,34 @@ autocmd BufNewFile,BufRead *.mips set filetype=mips
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one dict (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
-autocmd FileType asm     call Settings_asm()
-autocmd FileType bash    call Settings_shell()
-autocmd FileType c       call Settings_c()
-autocmd FileType coffee  call Settings_coffee()
-autocmd FileType conf    call Settings_conf()
-autocmd FileType cpp     call Settings_c()
-autocmd FileType css     call Settings_css()
-autocmd FileType d       call Settings_c()
-autocmd FileType elixir  call Settings_elixir()
-autocmd FileType tex     call Settings_tex()
-autocmd FileType haskell call Settings_haskell()
-autocmd FileType html    call Settings_html()
-autocmd FileType xhtml   call Settings_html()
-autocmd FileType make    call Settings_script()
-autocmd FileType matlab  call Settings_matlab()
-autocmd FileType mips    call Settings_mips()
-autocmd FileType mkd     call Settings_text()
-autocmd FileType perl    call Settings_perl()
-autocmd FileType php     call Settings_html()
-autocmd FileType python  call Settings_script()
-autocmd FileType ruby    call Settings_ruby()
-autocmd FileType rust    call Settings_rust()
-autocmd FileType scss    call Settings_css()
-autocmd FileType sh      call Settings_script()
-autocmd FileType text    call Settings_text()
-autocmd FileType vim     call Settings_vim()
-autocmd FileType zsh     call Settings_shell()
+autocmd FileType asm      call Settings_asm()
+autocmd FileType bash     call Settings_shell()
+autocmd FileType c        call Settings_c()
+autocmd FileType coffee   call Settings_coffee()
+autocmd FileType conf     call Settings_conf()
+autocmd FileType cpp      call Settings_c()
+autocmd FileType css      call Settings_css()
+autocmd FileType d        call Settings_c()
+autocmd FileType elixir   call Settings_elixir()
+autocmd FileType tex      call Settings_tex()
+autocmd FileType haskell  call Settings_haskell()
+autocmd FileType html     call Settings_html()
+autocmd FileType xhtml    call Settings_html()
+autocmd FileType make     call Settings_script()
+autocmd FileType markdown call Settings_markdown()
+autocmd FileType matlab   call Settings_matlab()
+autocmd FileType mips     call Settings_mips()
+autocmd FileType mkd      call Settings_text()
+autocmd FileType perl     call Settings_perl()
+autocmd FileType php      call Settings_html()
+autocmd FileType python   call Settings_script()
+autocmd FileType ruby     call Settings_script()
+autocmd FileType rust     call Settings_rust()
+autocmd FileType scss     call Settings_css()
+autocmd FileType sh       call Settings_script()
+autocmd FileType text     call Settings_text()
+autocmd FileType vim      call Settings_vim()
+autocmd FileType zsh      call Settings_shell()
 
 function! Settings_asm()
 	"settings
@@ -320,7 +321,18 @@ function! Settings_html()
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
-	nnoremap <buffer> -- O<Space>--><Esc>hhhi<!--<Space>
+	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
+endfunction
+
+function! Settings_markdown()
+	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	setlocal softtabstop=4
+	setlocal nojoinspaces "single-space sentences
+	setlocal spell
+	"mappings
+	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
 endfunction
 
 function! Settings_matlab()
@@ -353,12 +365,6 @@ endfunction
 function! Settings_perl()
 	call Settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
-endfunction
-
-function! Settings_ruby()
-	call Settings_script()
-	nnoremap <buffer> <leader>r :execute "silent w !sonic_pi"<CR>
-	nnoremap <buffer> <leader>s :execute "silent !sonic_pi stop"<CR><C-l>
 endfunction
 
 function! Settings_rust()
