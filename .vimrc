@@ -58,6 +58,9 @@ nmap ga <Plug>(EasyAlign)
 "timeout on keycodes to prevent fcitx-switcher from lagging
 set ttimeoutlen=100
 
+"toggle gundo pane
+nnoremap <Leader>u :GundoToggle<CR>
+
 "lightline colours. modded from 16color
 function! s:Lightline_palette_init()
 	let l:black = [ '#000000', 0 ]
