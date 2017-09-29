@@ -252,6 +252,16 @@ autocmd FileType text     call Settings_text()
 autocmd FileType vim      call Settings_vim()
 autocmd FileType zsh      call Settings_shell()
 
+function! Settings_sub_wmodetoggle()
+	if &fo =~ 'a'
+		setlocal formatoptions-=a
+		echo 'wmode off'
+	else
+		setlocal formatoptions+=a
+		echo 'wmode on'
+	end
+endfunction
+
 function! Settings_asm()
 	"settings
 	setlocal foldmethod=syntax
@@ -329,10 +339,11 @@ function! Settings_markdown()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
-	setlocal nojoinspaces "single-space sentences
+	setlocal nojoinspaces
 	setlocal spell
 	"mappings
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_matlab()
@@ -382,6 +393,7 @@ function! Settings_tex()
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
+	setlocal nojoinspaces
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
@@ -391,17 +403,21 @@ function! Settings_tex()
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
 	nnoremap <buffer> <Leader>x :!xelatex -output-format=pdf "%"<CR><CR>
 	nnoremap <buffer> <Leader>X :!xelatex -output-format=pdf "%"<CR>
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_text()
-	setlocal formatoptions+=ta
+	"settings
+	setlocal formatoptions+=a
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
-	setlocal nojoinspaces "single-space sentences
+	setlocal nojoinspaces
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	setlocal spell
+	"mappings
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_vim()
