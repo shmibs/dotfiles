@@ -10,6 +10,10 @@ export QT_STYLE_OVERRIDE=gtk
 [[ -d ~/.cabal/bin ]] && \
 	PATH=$PATH:~/.cabal/bin
 
+############# INITIALISE CONFIGS ##############
+[[ -f ~/.config/init/init.sh ]] && \
+	~/.config/init/init.sh
+
 ########## MAKE USER FUNCS AVAILABLE ##########
 func_init_checkreq() {
 	local func_init_state=0

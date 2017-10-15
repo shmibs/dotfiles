@@ -324,34 +324,61 @@ bheight=20
 ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
 ifont_off='-4'
 
-# bar font
-bfont='Droid Sans Mono Dotted'
-bfont_size='9'
-bfont_off='-3'
-
 # jp font
 jfont='Noto Sans Mono CJK JP Regular'
 jfont_size='10'
-jfont_off='-1'
 
 # c font
 cfont='Noto Sans Mono CJK SC Regular'
 cfont_size='10'
-cfont_off='-1'
 
 # emoji font
 efont='Noto Emoji'
 efont_size='10'
-efont_off='-1'
 
 # backup font
 bkfont='Fira Mono'
-bkfont_size='10'
+bkfont_size='9.5'
 bkfont_off='-3'
 
 # main font
 mfont='Droid Sans Mono Dotted'
-mfont_size='10'
+mfont_size='9.5'
+
+# bar font
+bfont="$mfont"
+bfont_size='8.5'
+bfont_off='-3'
+
+# bar jp font
+bjfont="$jfont"
+bjfont_size='9.5'
+bjfont_off='-1'
+
+# bar c font
+bcfont="$cfont"
+bcfont_size='9.5'
+bcfont_off='-1'
+
+# bar emoji font
+befont="$efont"
+befont_size='9.5'
+befont_off='-1'
+
+# monitor dpi can be on-the-fly overridden by using "startx" instead of alias sx
+dpi=92
+
+kbrate=25
+kbdelay=300
+
+# use overrides, if any
+if [ -f ~/.config/init/voverride ]; then
+    source ~/.config/init/voverride
+else
+    if [ -f /home/shmibs/.config/init/voverride ]; then
+        source /home/shmibs/.config/init/voverride
+    fi
+fi
 
 dmenu_args=( -fn "${bfont}:size=${bfont_size}" -h "$bheight"
              -nb "$bg_normal" -nf "$fg_normal" -sb "$bg_focus"

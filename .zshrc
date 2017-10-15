@@ -124,16 +124,17 @@ key[Down]='^[[B'
 key[Right]='^[[C'
 
 bindkey ${key[Backspace]} backward-delete-char
-bindkey ${key[Insert]}    overwrite-mode
-bindkey ${key[Home]}      beginning-of-line
-bindkey ${key[Delete]}    delete-char
-bindkey ${key[End]}       end-of-line
-bindkey ${key[Up]}        up-line-or-search
-bindkey ${key[Left]}      backward-char
-bindkey ${key[Down]}      down-line-or-search
-bindkey ${key[Right]}     forward-char
-bindkey ${key[PageUp]}    history-beginning-search-backward
-bindkey ${key[PageDown]}  history-beginning-search-forward
+bindkey    ${key[Insert]} overwrite-mode
+bindkey      ${key[Home]} beginning-of-line
+bindkey    ${key[Delete]} delete-char
+bindkey       ${key[End]} end-of-line
+bindkey        ${key[Up]} up-line-or-search
+bindkey      ${key[Left]} backward-char
+bindkey      ${key[Down]} down-line-or-search
+bindkey     ${key[Right]} forward-char
+bindkey    ${key[PageUp]} history-beginning-search-backward
+bindkey  ${key[PageDown]} history-beginning-search-forward
+
 bindkey '^W' backward-kill-word
 bindkey '^U' backward-kill-line
 bindkey '^P' up-history
@@ -162,7 +163,7 @@ fi
 [[ ! -z $(whence aiksaurus) ]] && alias thesaurus='aiksaurus'
 [[ ! -z $(whence ag) ]] && alias ag='ag --color-match "1;34"'
 [[ ! -z $(whence latex) ]] && alias latex='latex -output-format=pdf'
-[[ ! -z $(whence startx) ]] && alias sx='startx'
+[[ ! -z $(whence startx) ]] && alias sx="startx -dpi $dpi"
 
 if [[ ! -z $(whence udevil) ]] then
 	alias vmount='udevil mount'

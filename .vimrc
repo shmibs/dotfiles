@@ -397,12 +397,13 @@ function! Settings_tex()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
+	setlocal spell
 	"mappings
 	nnoremap <buffer> -- O%<Space>
 	nnoremap <buffer> <Leader>c :!latex -output-format=pdf "%"<CR><CR>
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
-	nnoremap <buffer> <Leader>x :!xelatex -output-format=pdf "%"<CR><CR>
-	nnoremap <buffer> <Leader>X :!xelatex -output-format=pdf "%"<CR>
+	nnoremap <buffer> <Leader>x :!xelatex "%"<CR><CR>
+	nnoremap <buffer> <Leader>X :!xelatex "%"<CR>
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 

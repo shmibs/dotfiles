@@ -172,6 +172,11 @@ hc keybind Mod4-r spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
 hc keybind Mod4-g spawn ~/.config/herbstluftwm/switcher.sh
 # hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
+hc keybind XF86AudioLowerVolume spawn ~/.config/herbstluftwm/pvol.sh down
+hc keybind XF86AudioRaiseVolume spawn ~/.config/herbstluftwm/pvol.sh up
+hc keybind XF86AudioMute spawn ~/.config/herbstluftwm/pvol.sh mute
+hc keybind XF86AudioMicMute spawn ~/.config/herbstluftwm/pvol.sh
+
 # tunes
 hc keybind Mod4-Up spawn ~/.config/herbstluftwm/mpc-status.sh
 hc keybind Mod4-Down spawn mpc toggle
