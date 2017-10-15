@@ -67,4 +67,4 @@ command -v optirun && $(echo "" | optirun lemonbar)
 xsetroot -cursor_name left_ptr
 nitrogen --restore
 
-exec mate-session
+exec herbstluftwm
