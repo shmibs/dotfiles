@@ -9,7 +9,7 @@ endif
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
+execute 'set rtp+=' . split(&rtp, ',')[0] . '/bundle/Vundle.vim'
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -252,6 +252,28 @@ autocmd FileType text     call Settings_text()
 autocmd FileType vim      call Settings_vim()
 autocmd FileType zsh      call Settings_shell()
 
+"command for reading filetype skeletons
+function! Settings_skel_read()
+	if line('$') != 1 || col('$') != 1
+		" echoh ErrorMsg
+		" echo "err: cannot load skeleton: buffer is not empty"
+		" echoh None
+		return 1
+	end
+	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
+		" echoh ErrorMsg
+		" echo "err: cannot load skeleton: no skeleton found for filetype '" . &ft . "'"
+		" echoh None
+		return 1
+	end
+	let l:fname = split(&rtp, ',')[0] . "/skel/" . &ft
+	execute 'r ' . l:fname
+	execute "normal ggJ/%START%\<CR>cc"
+	redraw!
+endfunction
+autocmd FileType * call Settings_skel_read()
+
+""write mode" for markup-type formats
 function! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
 		setlocal formatoptions-=a

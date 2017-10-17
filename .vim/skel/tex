@@ -1,0 +1,17 @@
+\documentclass[letter,12pt]{article}
+\usepackage[margin=1in]{geometry}
+
+\usepackage{xeCJK}
+\setCJKmainfont[Scale=.8]{IPAMincho}
+
+\title{}
+\author{}
+
+\begin{document}
+
+\frenchspacing
+\maketitle
+
+%START%
+
+\end{document}
