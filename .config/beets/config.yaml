@@ -45,7 +45,7 @@ absubmit:
 
 zero:
         auto: yes
-        fields: comment description
+        fields: comments
                 
 fuzzy:
         prefix: '@'
