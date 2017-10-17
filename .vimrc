@@ -254,21 +254,17 @@ autocmd FileType zsh      call Settings_shell()
 
 "command for reading filetype skeletons
 function! Settings_skel_read()
+	"is the buffer not empty?
 	if line('$') != 1 || col('$') != 1
-		" echoh ErrorMsg
-		" echo "err: cannot load skeleton: buffer is not empty"
-		" echoh None
 		return 1
 	end
+	"is there no template?
 	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
-		" echoh ErrorMsg
-		" echo "err: cannot load skeleton: no skeleton found for filetype '" . &ft . "'"
-		" echoh None
 		return 1
 	end
-	let l:fname = split(&rtp, ',')[0] . "/skel/" . &ft
-	execute 'r ' . l:fname
-	execute "normal ggJ/%START%\<CR>cc"
+	execute 'r ' . split(&rtp, ',')[0] . "/skel/" . &ft
+	"move cursor to START
+	execute "normal ggJ/%START%\<CR>:%s/%START%//g\<CR>"
 	redraw!
 endfunction
 autocmd FileType * call Settings_skel_read()
