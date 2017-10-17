@@ -7,18 +7,30 @@
 ## Structure
 
 [.config/init/](.config/init) contains [vars](.config/init/vars), a file
-defining shared variables for the desktop which are sourced and used elsewhere,
-and a series of "gen/*.sh" files, which create configuration files in /tmp/ so
-programs not configurable via shell scripting will automatically match the
-current settings as well. i stick symlinks to the /tmp/ version where they
-would normally be. also included are folders "funcs" and "funcreqs", which,
-respectively, contain executable scripts and their prerequisite commands and
-arbitrary check commands. the latter prerequisites are tested from .zprofile at
-login and, if passed, the functions are symlinked into /tmp/funcs, which is
-included in $PATH. thus, this system allows for configs which automatically
-adapt to the host environment, enabling only what functionality is compatible.
+defining shared variables for the desktop which are sourced and used elsewhere.
+these settings can be overridden by creating a "voverride" file in the same
+directory. `.config/init` also contains a series of "gen/*.sh" files, which
+create configuration files in /tmp/ so programs not configurable via shell
+scripting will automatically match the current settings as well. i stick
+symlinks to the /tmp/ version where they would normally be. also included are
+folders "funcs" and "funcreqs", which, respectively, contain executable scripts
+and their prerequisite commands and arbitrary check commands. the latter
+prerequisites are tested from .zprofile at login and, if passed, the functions
+are symlinked into /tmp/funcs, which is included in $PATH. thus, this system
+allows for configs which automatically adapt to the host environment, enabling
+only what functionality is compatible. so far i've been the only user on
+systems using this config, but will probably make the dir these are written
+into configurable as well if that ever happens.
 
 ## Current Utilities
+
+### nvim/vim
+
+using nvim, but no big incompatibilities with base vim yet with the way i use
+it, so falling back works fine. have a few fun things, including auto-loaded,
+filetype-specific settings and basic [templates](.vim/skel), a few fancy
+mappings, and a simple 16-colour [colourscheme](.vim/colors/shmibs.vim). take a
+look at muh [.vimrc](.vimrc) for details and things.
 
 ### herbstluftwm
 
