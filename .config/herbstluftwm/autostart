@@ -120,10 +120,18 @@ hc keybind Mod4-i jumpto urgent
 
 # tegaki
 hc keybind Mod4-r spawn tegaki-recognize
-# mate
-hc keybind XF86PowerOff spawn mate-session-save --shutdown-dialog
-hc keybind Mod1-XF86PowerOff spawn mate-session-save --shutdown-dialog
-hc keybind Print        spawn mate-screenshot
+
+#pass
+hc keybind Mod4-x spawn ~/.config/herbstluftwm/pass.sh
+hc keybind Mod4-Shift-x spawn ~/.config/herbstluftwm/pass.sh -f
+
+#scrot-ing
+hc keybind Print               spawn ~/.config/herbstluftwm/maim.sh
+hc keybind Shift-Print         spawn ~/.config/herbstluftwm/maim.sh -s
+hc keybind Control-Print       spawn ~/.config/herbstluftwm/maim.sh -m clipboard
+hc keybind Shift-Control-Print spawn ~/.config/herbstluftwm/maim.sh -s -m clipboard
+hc keybind Mod4-Print          spawn ~/.config/herbstluftwm/maim.sh -m send
+hc keybind Mod4-Shift-Print    spawn ~/.config/herbstluftwm/maim.sh -s -m send
 
 # ranger
 hc keybind Mod4-Shift-Control-Return spawn urxvt -name "ranger" -e ranger ~
@@ -150,7 +158,6 @@ hc keybind Mod4-w spawn xdotool click 1
 # spawn
 hc keybind Mod4-Return  spawn urxvt
 hc keybind Mod4-Shift-b spawn primusrun VBoxSDL --startvm arch
-hc keybind Mod4-Shift-c spawn cvlc v4l2://
 hc keybind Mod4-Shift-d spawn ~/games/desura/desura
 hc keybind Mod4-Shift-f spawn firejail --netfilter=/etc/firejail/nolocal.net firefox
 hc keybind Mod4-Shift-g spawn gwaei
@@ -159,7 +166,6 @@ hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-p spawn urxvt -e pms
-hc keybind Mod4-Shift-s spawn scrot
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name "$EDITOR" -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
@@ -196,7 +202,7 @@ hc rule focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
-hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL)' pseudotile=on focus=on
+hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL|pinentry)' pseudotile=on focus=on
 hc rule class~'(Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine|explorer.exe)' pseudotile=on focus=on
 hc rule class~'(mednafen)' pseudotile=on focus=on
 

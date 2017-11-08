@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/usr/bin/env zsh
 
 source ~/.config/init/vars
 
@@ -16,6 +16,6 @@ done < <(wmctrl -l)
 
 echo -e "$lines" | nl -w 2 -s ") " | dmenu -fn "${bfont}:size=${bfont_size}" -i -h "$bheight" \
 		-nb "$bar_bg" -nf "$bar_fg" -sb "$bg_focus" -sf "$fg_focus" \
-		-p "Select:" -l 40 | cut -d ')' -f 1 | {read choice}
+		-p "Select:" -l 40 | cut -d ')' -f 1 | read choice
 
 herbstclient jumpto "${nums[$choice]}"
