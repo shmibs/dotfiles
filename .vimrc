@@ -19,6 +19,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
+Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -133,12 +134,12 @@ set title
 set spelllang=en_gb
 
 "visual marker for overflowing the 80th column
-highlight Column80 ctermbg=black
-call matchadd('Column80', '\%81v', 100)
+highlight Column81 ctermbg=8
+call matchadd('Column81', '\%81v', 100)
 
 "highlight space before tab
-highlight SpaceBeforeTab ctermbg=black
-call matchadd('SpaceBeforeTab', '^\ \+\t')
+highlight SpaceBeforeTab ctermbg=red
+call matchadd('SpaceBeforeTab', '\ \t')
 
 "get rid of that annoying yellow explosion everywhere
 "that neovim sets as default
@@ -240,6 +241,7 @@ autocmd FileType make     call Settings_script()
 autocmd FileType markdown call Settings_markdown()
 autocmd FileType matlab   call Settings_matlab()
 autocmd FileType mips     call Settings_mips()
+autocmd FileType nim      call Settings_nim()
 autocmd FileType mkd      call Settings_text()
 autocmd FileType perl     call Settings_perl()
 autocmd FileType php      call Settings_html()
@@ -380,6 +382,11 @@ function! Settings_mips()
 	setlocal softtabstop=5
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+endfunction
+
+function! Settings_nim()
+	call Settings_script()
+	nnoremap <buffer> -- O<Space>]#<Esc>hhi#[<Space>
 endfunction
 
 function! Settings_script()
