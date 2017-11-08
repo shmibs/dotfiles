@@ -16,10 +16,6 @@ then
 fi
 
 #add compose key
-# if [ -s ~/.Xmodmap ]
-# then
-# 	xmodmap ~/.Xmodmap
-# fi
 setxkbmap -option compose:caps
 
 #input!
