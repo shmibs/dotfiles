@@ -54,6 +54,13 @@ both are fantastic for keyboard-driven file management, but still've got to
 figure out how to write a ranger extension that can receive selections from
 sxiv, because squinting at filenames is just bleh. python is my bane, though...
 
+### pass
+
+a nice password manager-a-ma-bob, gpg locked and with easy to sync with git.
+there's a firefox addon, but it doesn't really work, and there's an existing
+dmenu frontend, but it's not very featureful, so [i wrote my
+own](.config/herbstluftwm/pass.sh).
+
 ### dunst/dmenu/compton/lemonbar/nitrogen
 
 useful things all around. i forked dunst to make SIGUSR1 clear all
