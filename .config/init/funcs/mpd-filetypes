@@ -5,7 +5,6 @@
 local pattern
 
 # if args exist, read them as file extensions in a pattern
-if 
 if [[ ! -z "$@" ]]; then
 	pattern=$(echo "$@" | sed -e 's/\s/|/g' -e 's/\(.*\)/(\1)/')
 else

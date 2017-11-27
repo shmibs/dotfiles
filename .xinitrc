@@ -1,5 +1,8 @@
 #initialise configs to auto-match theme
-~/.config/init/init.sh
+# ~/.config/init/init.sh
+
+#pull inna vars
+source ~/.config/init/vars
 
 #merge Xresources
 if [ -s ~/.Xresources ]
@@ -7,23 +10,22 @@ then
 	xrdb -override ~/.Xresources
 fi
 
-#merge Xresources
 if [ -s /tmp/urxvt-theme ]
 then
 	xrdb -override /tmp/urxvt-theme
 fi
 
 #add compose key
-if [ -s ~/.Xmodmap ]
-then
-	xmodmap ~/.Xmodmap
-fi
+setxkbmap -option compose:caps
 
 #input!
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS="@im=fcitx"
 fcitx &
+
+#keyrate
+xset r rate $kbdelay $kbrate
 
 #store sxiv cache in ram
 export XDG_CACHE_HOME=/home/shmibs/.cache
@@ -61,4 +63,4 @@ command -v optirun && $(echo "" | optirun lemonbar)
 xsetroot -cursor_name left_ptr
 nitrogen --restore
 
-exec mate-session
+exec herbstluftwm

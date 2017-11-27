@@ -300,7 +300,7 @@ event_when() {
 	# pass the events into bar
 } 2> /dev/null | lemonbar -f "$ifont" -o "$ifont_off" \
 	-f "${bfont}:size=${bfont_size}" -o "$bfont_off" \
-	-f "${jfont}:size=${jfont_size}" -o "$jfont_off" \
+	-f "${bjfont}:size=${bjfont_size}" -o "$bjfont_off" \
 	-g${width}x${bheight}+${xpos}+${ypos} \
 	-B ${bg_normal} -F ${fg_normal} | \
 {

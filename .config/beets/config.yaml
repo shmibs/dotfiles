@@ -22,19 +22,30 @@ match:
 #  PLUGINS  #
 #############
 
-plugins: convert chroma discogs fetchart fuzzy info mpdupdate scrub
+plugins: acousticbrainz absubmit convert chroma discogs fetchart fuzzy info mpdupdate scrub edit zero
 
 convert:
         auto: no
         copy_album_art: no
         embed: no
-        never_convert_lossy_files: yes
+        never_convert_lossy_files: no
+        format: opus
 
 chroma:
         auto: yes
         
 fetchart:
         auto: yes
+
+acousticbrainz:
+        auto: yes
+
+absubmit:
+        auto: yes
+
+zero:
+        auto: yes
+        fields: comments
                 
 fuzzy:
         prefix: '@'

@@ -7,24 +7,30 @@
 ## Structure
 
 [.config/init/](.config/init) contains [vars](.config/init/vars), a file
-defining shared variables for the desktop which are sourced and used elsewhere,
-and a series of "gen/*.sh" files, which create configuration files in /tmp/ so
-programs not configurable via shell scripting will automatically match the
-current settings as well. i stick symlinks to the /tmp/ version where they
-would normally be. also included are folders "funcs" and "funcreqs", which,
-respectively, contain executable scripts and their prerequisite commands and
-arbitrary check commands. the latter prerequisites are tested from .zprofile at
-login and, if passed, the functions are symlinked into /tmp/funcs, which is
-included in $PATH. thus, this system allows for configs which automatically
-adapt to the host environment, enabling only what functionality is compatible.
+defining shared variables for the desktop which are sourced and used elsewhere.
+these settings can be overridden by creating a "voverride" file in the same
+directory. `.config/init` also contains a series of "gen/*.sh" files, which
+create configuration files in /tmp/ so programs not configurable via shell
+scripting will automatically match the current settings as well. i stick
+symlinks to the /tmp/ version where they would normally be. also included are
+folders "funcs" and "funcreqs", which, respectively, contain executable scripts
+and their prerequisite commands and arbitrary check commands. the latter
+prerequisites are tested from .zprofile at login and, if passed, the functions
+are symlinked into /tmp/funcs, which is included in $PATH. thus, this system
+allows for configs which automatically adapt to the host environment, enabling
+only what functionality is compatible. so far i've been the only user on
+systems using this config, but will probably make the dir these are written
+into configurable as well if that ever happens.
 
 ## Current Utilities
 
-### MATE
+### nvim/vim
 
-i'm using mate-session as a backend to handle dconf garbage / themes / etc for
-the few things that expect them. all higher-level mate utilities (wm, file
-manager, panel, whatever else) are not installed.
+using nvim, but no big incompatibilities with base vim yet with the way i use
+it, so falling back works fine. have a few fun things, including auto-loaded,
+filetype-specific settings and basic [templates](.vim/skel), a few fancy
+mappings, and a simple 16-colour [colourscheme](.vim/colors/shmibs.vim). take a
+look at muh [.vimrc](.vimrc) for details and things.
 
 ### herbstluftwm
 
@@ -39,8 +45,8 @@ with lots of slightly annoying things to get rid of.
 
 ### urxvt
 
-check out
-[urxvt-perls](https://github.com/muennich/urxvt-perls).
+has some quirks, but still nothing else out there with the same functionality.
+check out [urxvt-perls](https://github.com/muennich/urxvt-perls).
 
 ### ranger/sxiv
 
@@ -48,22 +54,21 @@ both are fantastic for keyboard-driven file management, but still've got to
 figure out how to write a ranger extension that can receive selections from
 sxiv, because squinting at filenames is just bleh. python is my bane, though...
 
-### pentadactyl
+### pass
 
-keyboard-driven browsing ^_^. try
-[setting your hint keys](http://5digits.org/pentadactyl/faq#faq-hintkeys).
-
-kind of scared of it disappearing forever, though, which will probably happen
-after this firefox version is dropped from lts... X_X
-
-EDIT: well, it finally happened. currently trying to get vimperator to work and
-not be ugly...
+a nice password manager-a-ma-bob, gpg locked and easy to sync with git. there's
+a firefox addon, but it doesn't really work, and there's an existing dmenu
+frontend, but it's not very featureful, so [i wrote my
+own](.config/herbstluftwm/pass.sh).
 
 ### dunst/dmenu/compton/lemonbar/nitrogen
 
 useful things all around. i forked dunst to make SIGUSR1 clear all
 notifications, which is used by
-[mpc-status.sh](.config/herbstluftwm/mpc-status.sh)
-and probably any other similar things i add in the future. not sure what the
-default behaviour (pause / unpause notification display) was supposed to be
-used for ┐(¯-¯)┌.
+[mpc-status.sh](.config/herbstluftwm/mpc-status.sh) and
+[pvol.sh](.config/herbstluftwm/pvol.sh).
+
+### fcitx
+
+input is messy, but fcitx seems like the most functional out there at the
+moment. fcitx-mozc a nice.

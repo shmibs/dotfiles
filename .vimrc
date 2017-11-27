@@ -9,7 +9,7 @@ endif
 set nocompatible
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
+execute 'set rtp+=' . split(&rtp, ',')[0] . '/bundle/Vundle.vim'
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -19,6 +19,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
+Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -40,8 +41,6 @@ Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
 
-Plugin 'dermusikman/sonicpi.vim'
-
 Plugin 'tomtom/tcomment_vim'
 
 call vundle#end()
@@ -59,6 +58,9 @@ nmap ga <Plug>(EasyAlign)
 
 "timeout on keycodes to prevent fcitx-switcher from lagging
 set ttimeoutlen=100
+
+"toggle gundo pane
+nnoremap <Leader>u :GundoToggle<CR>
 
 "lightline colours. modded from 16color
 function! s:Lightline_palette_init()
@@ -132,12 +134,12 @@ set title
 set spelllang=en_gb
 
 "visual marker for overflowing the 80th column
-highlight Column80 ctermbg=black
-call matchadd('Column80', '\%81v', 100)
+highlight Column81 ctermbg=8
+call matchadd('Column81', '\%81v', 100)
 
 "highlight space before tab
-highlight SpaceBeforeTab ctermbg=black
-call matchadd('SpaceBeforeTab', '^\ \+\t')
+highlight SpaceBeforeTab ctermbg=red
+call matchadd('SpaceBeforeTab', '\ \t')
 
 "get rid of that annoying yellow explosion everywhere
 "that neovim sets as default
@@ -222,33 +224,63 @@ autocmd BufNewFile,BufRead *.mips set filetype=mips
 "other filetype-specific settings. i can't figure out how to stick all
 "the FileTypes in one dict (mostly because i have no idea what i'm
 "doing with viml), so separate lines it is.
-autocmd FileType asm     call Settings_asm()
-autocmd FileType bash    call Settings_shell()
-autocmd FileType c       call Settings_c()
-autocmd FileType coffee  call Settings_coffee()
-autocmd FileType conf    call Settings_conf()
-autocmd FileType cpp     call Settings_c()
-autocmd FileType css     call Settings_css()
-autocmd FileType d       call Settings_c()
-autocmd FileType elixir  call Settings_elixir()
-autocmd FileType tex     call Settings_tex()
-autocmd FileType haskell call Settings_haskell()
-autocmd FileType html    call Settings_html()
-autocmd FileType xhtml   call Settings_html()
-autocmd FileType make    call Settings_script()
-autocmd FileType matlab  call Settings_matlab()
-autocmd FileType mips    call Settings_mips()
-autocmd FileType mkd     call Settings_text()
-autocmd FileType perl    call Settings_perl()
-autocmd FileType php     call Settings_html()
-autocmd FileType python  call Settings_script()
-autocmd FileType ruby    call Settings_ruby()
-autocmd FileType rust    call Settings_rust()
-autocmd FileType scss    call Settings_css()
-autocmd FileType sh      call Settings_script()
-autocmd FileType text    call Settings_text()
-autocmd FileType vim     call Settings_vim()
-autocmd FileType zsh     call Settings_shell()
+autocmd FileType asm      call Settings_asm()
+autocmd FileType bash     call Settings_shell()
+autocmd FileType c        call Settings_c()
+autocmd FileType coffee   call Settings_coffee()
+autocmd FileType conf     call Settings_conf()
+autocmd FileType cpp      call Settings_c()
+autocmd FileType css      call Settings_css()
+autocmd FileType d        call Settings_c()
+autocmd FileType elixir   call Settings_elixir()
+autocmd FileType tex      call Settings_tex()
+autocmd FileType haskell  call Settings_haskell()
+autocmd FileType html     call Settings_html()
+autocmd FileType xhtml    call Settings_html()
+autocmd FileType make     call Settings_script()
+autocmd FileType markdown call Settings_markdown()
+autocmd FileType matlab   call Settings_matlab()
+autocmd FileType mips     call Settings_mips()
+autocmd FileType nim      call Settings_nim()
+autocmd FileType mkd      call Settings_text()
+autocmd FileType perl     call Settings_perl()
+autocmd FileType php      call Settings_html()
+autocmd FileType python   call Settings_script()
+autocmd FileType ruby     call Settings_script()
+autocmd FileType rust     call Settings_rust()
+autocmd FileType scss     call Settings_css()
+autocmd FileType sh       call Settings_script()
+autocmd FileType text     call Settings_text()
+autocmd FileType vim      call Settings_vim()
+autocmd FileType zsh      call Settings_shell()
+
+"command for reading filetype skeletons
+function! Settings_skel_read()
+	"is the buffer not empty?
+	if line('$') != 1 || col('$') != 1
+		return 1
+	end
+	"is there no template?
+	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
+		return 1
+	end
+	execute 'r ' . split(&rtp, ',')[0] . "/skel/" . &ft
+	"move cursor to START
+	execute "normal ggJ/%START%\<CR>:%s/%START%//g\<CR>"
+	redraw!
+endfunction
+autocmd FileType * call Settings_skel_read()
+
+""write mode" for markup-type formats
+function! Settings_sub_wmodetoggle()
+	if &fo =~ 'a'
+		setlocal formatoptions-=a
+		echo 'wmode off'
+	else
+		setlocal formatoptions+=a
+		echo 'wmode on'
+	end
+endfunction
 
 function! Settings_asm()
 	"settings
@@ -319,7 +351,19 @@ function! Settings_html()
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
-	nnoremap <buffer> -- O<Space>--><Esc>hhhi<!--<Space>
+	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
+endfunction
+
+function! Settings_markdown()
+	"settings
+	setlocal shiftwidth=4
+	setlocal tabstop=4
+	setlocal softtabstop=4
+	setlocal nojoinspaces
+	setlocal spell
+	"mappings
+	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_matlab()
@@ -340,6 +384,11 @@ function! Settings_mips()
 	nnoremap <buffer> -- O#<Space>
 endfunction
 
+function! Settings_nim()
+	call Settings_script()
+	nnoremap <buffer> -- O<Space>]#<Esc>hhi#[<Space>
+endfunction
+
 function! Settings_script()
 	"settings
 	setlocal shiftwidth=4
@@ -352,12 +401,6 @@ endfunction
 function! Settings_perl()
 	call Settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
-endfunction
-
-function! Settings_ruby()
-	call Settings_script()
-	nnoremap <buffer> <leader>r :execute "silent w !sonic_pi"<CR>
-	nnoremap <buffer> <leader>s :execute "silent !sonic_pi stop"<CR><C-l>
 endfunction
 
 function! Settings_rust()
@@ -375,26 +418,32 @@ function! Settings_tex()
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
+	setlocal nojoinspaces
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
+	setlocal spell
 	"mappings
 	nnoremap <buffer> -- O%<Space>
 	nnoremap <buffer> <Leader>c :!latex -output-format=pdf "%"<CR><CR>
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
-	nnoremap <buffer> <Leader>x :!xelatex -output-format=pdf "%"<CR><CR>
-	nnoremap <buffer> <Leader>X :!xelatex -output-format=pdf "%"<CR>
+	nnoremap <buffer> <Leader>x :!xelatex "%"<CR><CR>
+	nnoremap <buffer> <Leader>X :!xelatex "%"<CR>
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_text()
-	setlocal formatoptions+=ta
+	"settings
+	setlocal formatoptions+=a
 	setlocal noautoindent
 	setlocal nocindent
 	setlocal nosmartindent
-	setlocal nojoinspaces "single-space sentences
+	setlocal nojoinspaces
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	setlocal spell
+	"mappings
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
 function! Settings_vim()
