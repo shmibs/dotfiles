@@ -1,6 +1,3 @@
-#initialise configs to auto-match theme
-# ~/.config/init/init.sh
-
 #pull inna vars
 source ~/.config/init/vars
 
@@ -39,11 +36,8 @@ fi
 #load more fonts
 xset +fp /usr/share/fonts/local
 xset +fp /usr/share/fonts/misc
+xset +fp ~/.fonts
 xset fp rehash
-
-#infinality settings
-export INFINALITY_FT_BRIGHTNESS="-10"
-export INFINALITY_FT_FILTER_PARAMS="16 20 28 20 16"
 
 #disable power saving, so screen doesn't power off
 xset -dpms
@@ -52,9 +46,6 @@ xset s off
 #daemons
 compton -b --backend glx --vsync opengl
 
-#QT style mimic gtk
-#export QT_STYLE_OVERRIDE=gtk
-
 #this is an ugly hack which runs a dummy program
 #through bumblebee to get the fans on discrete
 #nvidia graphics cards to shut up
@@ -62,5 +53,6 @@ command -v optirun && $(echo "" | optirun lemonbar)
 
 xsetroot -cursor_name left_ptr
 nitrogen --restore
+xbanish &
 
 exec herbstluftwm
