@@ -41,11 +41,10 @@ if [[ $mode == clipboard ]]; then
 	exit
 fi
 
-maim -u${selection} $fname
+maim -u${selection} $fname && optipng $fname
 
 if [[ $mode == send ]]; then
 	[[ -f $fname ]] \
-		&& optipng $fname \
 		&& send $fname \
 		&& notify-send "maim: sent ${fname:t} to /tmp/" \
 		|| notify-send "maim: send to /tmp/ failed"
