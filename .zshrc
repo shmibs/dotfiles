@@ -77,7 +77,7 @@ fi
 
 
 ################# HIGHLIGHTING ################
-local HIGHLIGHT_DIR='~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+local HIGHLIGHT_DIR="$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 [[ -f '/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] && \
 	HIGHLIGHT_DIR='/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 [[ -f '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] && \
@@ -163,7 +163,7 @@ fi
 [[ ! -z $(whence aiksaurus) ]] && alias thesaurus='aiksaurus'
 [[ ! -z $(whence ag) ]] && alias ag='ag --color-match "1;34"'
 [[ ! -z $(whence latex) ]] && alias latex='latex -output-format=pdf'
-[[ ! -z $(whence startx) ]] && alias sx="startx -dpi $dpi"
+[[ ! -z $(whence startx) ]] && alias sx="startx -dpi $dpi -ardelay $kbdelay -arinterval $kbrate"
 
 if [[ ! -z $(whence udevil) ]] then
 	alias vmount='udevil mount'
