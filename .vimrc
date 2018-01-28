@@ -37,6 +37,8 @@ Plugin 'lilydjwg/fcitx.vim'
 
 Plugin 'airblade/vim-gitgutter'
 
+Plugin 'junegunn/goyo.vim'
+
 Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
@@ -280,9 +282,11 @@ autocmd FileType * call Settings_skel_read()
 function! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
 		setlocal formatoptions-=a
+		Goyo!
 		echo 'wmode off'
 	else
 		setlocal formatoptions+=a
+		Goyo
 		echo 'wmode on'
 	end
 endfunction
