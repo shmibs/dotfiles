@@ -337,7 +337,7 @@ efont='Noto Emoji'
 efont_size='10'
 
 # backup font
-bkfont='Fira Mono'
+bkfont='Symbola'
 bkfont_size='9.5'
 bkfont_off='-3'
 
