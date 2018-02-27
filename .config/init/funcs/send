@@ -29,7 +29,7 @@ for name in "$@"
 do
     basename=${name:t}
 
-    ssh shmibbles.me "cd http/tmp; chmod o+r \"${basename//\"/\\\"}\"" \
+    ssh shmibbles.me "cd http/tmp; chmod g+r,g-w,o-rw \"${basename//\"/\\\"}\"" \
         || { echo "making '$name' readable failed"; return 1 }
 
     {
