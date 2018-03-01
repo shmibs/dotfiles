@@ -448,6 +448,7 @@ function! Settings_text()
 	setlocal nocindent
 	setlocal nosmartindent
 	setlocal nojoinspaces
+	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	setlocal spell
