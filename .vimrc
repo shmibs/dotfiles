@@ -45,6 +45,9 @@ Plugin 'itchyny/lightline.vim'
 
 Plugin 'tomtom/tcomment_vim'
 
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 call vundle#end()
 
 
@@ -63,6 +66,11 @@ set ttimeoutlen=100
 
 "toggle gundo pane
 nnoremap <Leader>u :GundoToggle<CR>
+
+"snippet bindings
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-m>"
+let g:UltiSnipsJumpBackwardTrigger="<c-,>"
 
 "lightline colours. modded from 16color
 function! s:Lightline_palette_init()
@@ -342,6 +350,7 @@ function! Settings_elixir()
 	setlocal softtabstop=2
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+	inoremap <buffer> do<CR> end<Esc>hhido<CR><Esc>O
 endfunction
 
 function! Settings_haskell()
