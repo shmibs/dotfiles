@@ -1,4 +1,3 @@
 #!/bin/zsh
-file=$(grabc 2>/dev/null)
-echo "$file" | tr -d '\n' | xclip -selection clipboard
-echo "$file" | tr -d '\n' | xclip -selection primary
+stint 2>/dev/null | xargs -n3 printf '#%02x%02x%02x\n' | tr -d '\n'|
+	tee >(xclip -i -selection clipboard) | xclip -i -selection primary
