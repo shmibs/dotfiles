@@ -1,5 +1,8 @@
 # dotfiles
 
+desktop configurations. function over forme, though things being pretty is nice
+when making them thus doesn't interfere with productivity
+
 ## Screenshots
 
 [![clean](https://shmibbles.me/img/scrot/current/clean_small.png)](https://shmibbles.me/img/scrot/current/clean.png) [![dirty](https://shmibbles.me/img/scrot/current/dirty_small.png)](https://shmibbles.me/img/scrot/current/dirty.png)
