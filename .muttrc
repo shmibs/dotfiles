@@ -6,6 +6,9 @@ set realname=katherine
 
 source ~/.mail_aliases
 
+alternative_order text/plain text/html
+auto_view text/html
+
 # mappings
 bind index \Cu half-up
 bind index \Cd half-down
