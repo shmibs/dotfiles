@@ -1,7 +1,7 @@
 # dotfiles
 
-desktop configurations. function over forme, though things being pretty is nice
-when making them thus doesn't interfere with productivity
+desktop configurations. function over ｆｏｒｍｅ, though things being pretty is
+nice, when thus making them doesn't interfere with productivity
 
 ## Screenshots
 
