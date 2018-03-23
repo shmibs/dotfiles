@@ -1,4 +1,7 @@
-# settings
+############
+# settings #
+############
+
 set sort=threads
 set strict_threads=yes
 
@@ -9,22 +12,45 @@ source ~/.mail_aliases
 alternative_order text/plain text/html
 auto_view text/html
 
-# mappings
-bind index \Cu half-up
-bind index \Cd half-down
+set menu_scroll
+
+set send_charset="utf-8"
+set content_type="text/plain; charset=UTF-8"
+
+my_hdr X-Operating-System: `uname -sr`
+
+############
+# mappings #
+############
+
+bind attach,index,pager \Cu half-up
+bind attach,index,pager \Cd half-down
 
 bind index \Cb previous-page
 bind index \Cf next-page
 
-bind index D delete-thread
-bind index U undelete-thread
+bind index,pager D delete-thread
+bind index,pager U undelete-thread
 
-bind index g first-entry
-bind index G last-entry
+bind pager g top
+bind pager G bottom
 
-bind index \cg group-reply
+bind attach,index g first-entry
+bind attach,index G last-entry
 
-# colours
+bind index l display-message
+
+bind index H top-page
+bind index L bottom-page
+
+bind index \Cg group-reply
+bind index R list-reply
+
+
+###########
+# colours #
+###########
+
 color attachment brightmagenta default
 color error      brightred     default
 color hdrdefault red           default

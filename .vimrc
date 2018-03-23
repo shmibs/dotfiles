@@ -149,8 +149,8 @@ set title
 set spelllang=en_gb
 
 "visual marker for overflowing the 80th column
-highlight Column81 ctermbg=8
-call matchadd('Column81', '\%81v', 100)
+highlight Overwide ctermbg=8
+call matchadd('Overwide', '\%81v', 100)
 
 "highlight space before tab
 highlight SpaceBeforeTab ctermbg=red
@@ -159,6 +159,9 @@ call matchadd('SpaceBeforeTab', '\ \t')
 "get rid of that annoying yellow explosion everywhere
 "that neovim sets as default
 set nohlsearch
+
+set encoding=utf-8
+set fileencoding=utf-8
 
 
 """""""""""""
@@ -254,6 +257,7 @@ autocmd FileType haskell    call Settings_haskell()
 autocmd FileType html       call Settings_html()
 autocmd FileType xhtml      call Settings_html()
 autocmd FileType make       call Settings_script()
+autocmd FileType mail       call Settings_mail()
 autocmd FileType markdown   call Settings_markdown()
 autocmd FileType matlab     call Settings_matlab()
 autocmd FileType mips       call Settings_mips()
@@ -382,6 +386,13 @@ function! Settings_markdown()
 	setlocal spell
 	"mappings
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
+	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
+endfunction
+
+function! Settings_mail()
+	"settings
+	setlocal spell
+	"mappings
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfunction
 
