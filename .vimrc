@@ -284,14 +284,15 @@ function! Settings_skel_read()
 	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
 		return 1
 	end
-	execute 'r ' . split(&rtp, ',')[0] . "/skel/" . &ft
-	"move cursor to START
-	execute "normal ggJ/%START%\<CR>:%s/%START%//g\<CR>"
-	redraw!
+	execute 'silent! r ' . split(&rtp, ',')[0] . "/skel/" . &ft
+	"read the date into %DATE%
+	execute '%s/%DATE%/' . system("date '+%a, %B %d, %Y'|tr -d '\n'") . '/ge'
+	"move cursor to %START%
+	execute "silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>"
 endfunction
 autocmd FileType * call Settings_skel_read()
 
-""write mode" for markup-type formats
+""write mode" for prose-y formats
 function! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
 		setlocal formatoptions-=a
