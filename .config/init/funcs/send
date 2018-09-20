@@ -42,6 +42,6 @@ do
             fi
         done
     } | tee \
-        >(xclip -i -selection clipboard) \
-        >(xclip -i -selection primary) >/dev/null
+        >(xclip -i -selection primary) \
+        | xclip -i -selection clipboard
 done
