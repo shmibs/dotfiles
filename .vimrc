@@ -2,12 +2,14 @@ if !has('gui_running')
 	set t_Co=256
 endif
 
+set nocompatible
+filetype off
+
+
+
 """"""""""""
 "  VUNDLE  "
 """"""""""""
-
-set nocompatible
-filetype off
 
 execute 'set rtp+=' . split(&rtp, ',')[0] . '/bundle/Vundle.vim'
 call vundle#begin()
@@ -49,6 +51,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 call vundle#end()
+
 
 
 """""""""""""""""""""
@@ -164,6 +167,7 @@ set encoding=utf-8
 set fileencoding=utf-8
 
 
+
 """""""""""""
 "  ALIASES  "
 """""""""""""
@@ -174,6 +178,7 @@ command Wq wq
 command WQ wq
 command Q  q
 command E  e
+
 
 
 """"""""""""""
@@ -217,6 +222,7 @@ if &term != "linux" && has('clipboard')
 end
 
 
+
 """""""""""""""""""""""
 "  FILETYPE SETTINGS  "
 """""""""""""""""""""""
@@ -239,15 +245,16 @@ autocmd BufNewFile,BufRead *.tex set filetype=tex
 "recognise .mips
 autocmd BufNewFile,BufRead *.mips set filetype=mips
 
-"other filetype-specific settings. i can't figure out how to stick all
-"the FileTypes in one dict (mostly because i have no idea what i'm
-"doing with viml), so separate lines it is.
+"other filetype-specific settings. can't figure out how to stick this wall of
+"blech in a dict or something (probably because no clue what i'm doing with
+"viml), so separate lines it is.
 autocmd FileType asm        call Settings_asm()
 autocmd FileType bash       call Settings_shell()
 autocmd FileType c          call Settings_c()
 autocmd FileType coffee     call Settings_coffee()
 autocmd FileType conf       call Settings_conf()
 autocmd FileType cpp        call Settings_c()
+autocmd FileType cs         call Settings_c()
 autocmd FileType css        call Settings_css()
 autocmd FileType d          call Settings_c()
 autocmd FileType elixir     call Settings_elixir()
@@ -292,7 +299,7 @@ function! Settings_skel_read()
 endfunction
 autocmd FileType * call Settings_skel_read()
 
-""write mode" for prose-y formats
+"a 'writing mode' for prose-y formats
 function! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
 		setlocal formatoptions-=a
