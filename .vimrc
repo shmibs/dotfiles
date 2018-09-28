@@ -20,7 +20,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'shmibs/mips.vim'
 Plugin 'zah/nim.vim'
 Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
@@ -242,8 +241,8 @@ autocmd BufNewFile,BufRead *.rs set filetype=rust
 "always use LaTeX
 autocmd BufNewFile,BufRead *.tex set filetype=tex
 
-"recognise .mips
-autocmd BufNewFile,BufRead *.mips set filetype=mips
+"default asm to a64 intel syntax
+autocmd BufNewFile,BufRead *.s set filetype=ia64
 
 "other filetype-specific settings. can't figure out how to stick this wall of
 "blech in a dict or something (probably because no clue what i'm doing with
@@ -263,17 +262,17 @@ autocmd FileType tex        call Settings_tex()
 autocmd FileType haskell    call Settings_haskell()
 autocmd FileType html       call Settings_html()
 autocmd FileType xhtml      call Settings_html()
+autocmd FileType ia64       call Settings_ia64()
 autocmd FileType make       call Settings_script()
 autocmd FileType mail       call Settings_mail()
 autocmd FileType markdown   call Settings_markdown()
 autocmd FileType matlab     call Settings_matlab()
-autocmd FileType mips       call Settings_mips()
 autocmd FileType nim        call Settings_nim()
 autocmd FileType mkd        call Settings_text()
 autocmd FileType perl       call Settings_perl()
 autocmd FileType php        call Settings_html()
 autocmd FileType python     call Settings_script()
-autocmd FileType ruby       call Settings_script()
+autocmd FileType ruby       call Settings_elixir ()
 autocmd FileType rust       call Settings_rust()
 autocmd FileType scss       call Settings_css()
 autocmd FileType sh         call Settings_script()
@@ -363,6 +362,13 @@ function! Settings_elixir()
 	"mappings
 	nnoremap <buffer> -- O#<Space>
 	inoremap <buffer> do<CR> end<Esc>hhido<CR><Esc>O
+endfunction
+
+function! Settings_ia64()
+	"settings
+	setlocal foldmethod=syntax
+	"mappings
+	nnoremap <buffer> -- A<Space>*/<Esc>hhi<Tab>/*<Space>
 endfunction
 
 function! Settings_haskell()
