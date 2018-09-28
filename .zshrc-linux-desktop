@@ -1,6 +1,6 @@
 ################### ALIASES ##################
 
-alias ssh-socks='ssh -C2qTnN -D 9853 shmibbles.me'
+alias ssh-socks='ssh -C2qTnN -F /dev/null -D 9853 shmibbles.me'
 
 if [[ "$(whence sshfs)" != "" ]] then
 	alias smounth='mkdir -p ~/shmibbles.me; sshfs shmibbles.me: ~/shmibbles.me'
