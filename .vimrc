@@ -133,6 +133,10 @@ set autoindent
 
 colorscheme shmibs
 
+"close modeline security hole
+set nomodeline
+set modelines=0
+
 "revert annoying neovim cursor
 set guicursor=i-ci-ve-r-cr-o-n-v-c-sm:block-blinkon200
 
