@@ -1,0 +1,43 @@
+#!/usr/bin/env zsh
+# compile coffeescript. sorry about the mess x-x
+
+local strval
+local rval
+rval=0
+
+[[ $#@ -lt 1 ]] \
+	&& echo "\e[1;31merr:\e[0m please specify one or more files to compile" \
+	&& return 1
+
+for f in $@; do
+	echo -n "\e[1m[${f}]...\e[0m"
+
+	# check if file is readable
+	if [[ ! -r $f || ! -f $f ]] then
+		echo " \e[1;31mx\e[0m" \
+			&& >&2 echo "err: file could not be read"
+		continue
+	fi
+
+	# check if containing dir and outfile are writeable
+	if [[ ! -w ${f:h} || ! -w ${f} ]] then
+		echo " \e[1;31mx\e[0m" \
+			&& >&2 echo "err: could not write to file"
+		continue
+	fi
+
+	# try compile
+	(cat $f | coffee -sc | babel --minified --no-babelrc --no-comments \
+		| tr -d '\n' > ${f:r}.js) 2>&1 \
+		| read -r -d "\0" strval
+
+	# err check
+	[[ $strval ]] \
+		&& echo " \e[1;31mx\e[0m" \
+		&& >&2 (echo $strval | sed 's/^\[stdin\]://') \
+		&& rval=1 && rm ${f:r}.js && continue
+
+	echo " \e[1;32mo\e[0m"
+done
+
+return $rval
