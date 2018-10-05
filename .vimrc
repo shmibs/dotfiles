@@ -25,6 +25,7 @@ Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'cespare/vim-toml'
+Plugin 'rhysd/vim-crystal'
 
 "FUNCTIONALITY
 Plugin 'junegunn/vim-easy-align'
@@ -257,6 +258,7 @@ autocmd FileType c          call Settings_c()
 autocmd FileType coffee     call Settings_coffee()
 autocmd FileType conf       call Settings_conf()
 autocmd FileType cpp        call Settings_c()
+autocmd FileType crystal    call Settings_elixir()
 autocmd FileType cs         call Settings_c()
 autocmd FileType css        call Settings_css()
 autocmd FileType d          call Settings_c()
@@ -320,6 +322,7 @@ function! Settings_asm()
 	setlocal foldmethod=syntax
 	"mappings
 	nnoremap <buffer> -- A<Tab>;<Space>
+	nnoremap <buffer> -_ O;<Space>
 endfunction
 
 function! Settings_c()
@@ -342,6 +345,7 @@ function! Settings_coffee()
 	setlocal softtabstop=2
 	"mappings
 	nnoremap <buffer> -- O#<Space>
+	nnoremap <buffer> -_ O###<CR><C-u>###<Esc>O<C-u>
 endfunction
 
 function! Settings_conf()
@@ -373,6 +377,7 @@ function! Settings_ia64()
 	setlocal foldmethod=syntax
 	"mappings
 	nnoremap <buffer> -- A<Space>*/<Esc>hhi<Tab>/*<Space>
+	nnoremap <buffer> -_ O<Space>*/<Esc>hhi/*<Space>
 endfunction
 
 function! Settings_haskell()
