@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# i patched dunst to clear all on SIGUSR1
-killall -SIGUSR1 dunst
-# race condition, obvs, but this should be plenty time
-
 case "$1" in
 	next)
 		mpc next
@@ -36,4 +32,4 @@ message="$(mpc current -f '##%track% %title% (%date%)\n%artist% - %album%')
 
 $(mpc status | tail -n -2 | sed -re 's/volume.*repeat/\nrepeat/' -e 's/( ){3,4}/\n/g' -e '/volume:  /d')"
 
-notify-send --icon=/tmp/mpd-icon.png "$message"
+notify-send -t 4000 -a closeme --icon=/tmp/mpd-icon.png "$message"

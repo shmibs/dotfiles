@@ -216,10 +216,9 @@ for monitor in $(hc list_monitors | cut -d: -f1) ; do
 done
 
 # run dunst with theme colours
-# pkill dunst
-# dunst -lb $bar_bg -nb $bar_bg -cb $bg_focus \
-# 	-lf $bar_fg -nf $bar_fg -cf $fg_focus \
-# 	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))" \
-# 	-fn "$mfont $mfont_size,$jfont $jfont_size,$cfont $cfont_size,$efont $efont_size,$bkfont $bkfont_size" \
-# 	-max_icon_size 0
-#
+pkill dunst
+dunst -lb $bar_bg -nb $bar_bg -cb $bg_focus \
+	-lf $bar_fg -nf $bar_fg -cf $fg_focus \
+	-frame_color $bg_focus -geom "0x3-4+$(($bheight + 4))" \
+	-fn "$mfont $mfont_size" \
+	-max_icon_size 0

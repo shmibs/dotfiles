@@ -313,7 +313,7 @@ event_when() {
 	while read command; do
 		case "$command" in
 			date)
-				notify-send "$(LANG=ja_JP.UTF-8  cal)"
+				notify-send "$(LANG=ja_JP.UTF-8 cal)"
 				;;
 			mpd)
 				~/.config/herbstluftwm/mpc-status.sh

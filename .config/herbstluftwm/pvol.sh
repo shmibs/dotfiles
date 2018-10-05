@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# i patched dunst to clear all on SIGUSR1
-killall -SIGUSR1 dunst
-
 # race condition, obvs, but this is hopefully time enough
 case "$1" in
 	down)

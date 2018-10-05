@@ -69,10 +69,13 @@ own](.config/herbstluftwm/pass.sh).
 
 ### [dunst](https://github.com/dunst-project/dunst)/[dmenu](https://bitbucket.org/melek/dmenu2)/[compton](https://github.com/chjj/compton)/[lemonbar](https://github.com/krypt-n/bar)/[nitrogen](http://projects.l3ib.org/nitrogen/)
 
-useful things all around. i forked dunst to make SIGUSR1 clear all
-notifications, which is used by
+useful things all around. i've "patched" dunst (really just a very bad hack) to
+auto clean up on-screen messages when notifications are received from
 [mpc-status.sh](.config/herbstluftwm/mpc-status.sh) and
-[pvol.sh](.config/herbstluftwm/pvol.sh).
+[pvol.sh](.config/herbstluftwm/pvol.sh), which makes things update cleanly
+in-place if a key is repeatedly pressed. hopefully this sort of functionality
+will be added properly, but the documentation is sparse and don't have the time
+to figure out how right now x-x
 
 ### [fcitx](http://fcitx-im.org)
 
