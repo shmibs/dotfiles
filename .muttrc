@@ -17,7 +17,6 @@ set menu_scroll
 set send_charset="utf-8"
 set content_type="text/plain; charset=UTF-8"
 
-my_hdr X-Operating-System: `uname -sr`
 
 ############
 # mappings #
