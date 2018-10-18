@@ -284,6 +284,7 @@ autocmd FileType scss       call Settings_css()
 autocmd FileType sh         call Settings_script()
 autocmd FileType text       call Settings_text()
 autocmd FileType vim        call Settings_vim()
+autocmd FileType yaml       call Settings_script2()
 autocmd FileType zsh        call Settings_shell()
 
 "command for reading filetype skeletons
@@ -338,13 +339,8 @@ function! Settings_c()
 endfunction
 
 function! Settings_coffee()
-	"settings
+	call Settings_script2()
 	setlocal foldmethod=syntax
-	setlocal shiftwidth=2
-	setlocal tabstop=2
-	setlocal softtabstop=2
-	"mappings
-	nnoremap <buffer> -- O#<Space>
 	nnoremap <buffer> -_ O###<CR><C-u>###<Esc>O<C-u>
 endfunction
 
@@ -363,12 +359,7 @@ function! Settings_css()
 endfunction
 
 function! Settings_elixir()
-	"settings
-	setlocal shiftwidth=2
-	setlocal tabstop=2
-	setlocal softtabstop=2
-	"mappings
-	nnoremap <buffer> -- O#<Space>
+	call Settings_script2()
 	inoremap <buffer> do<CR> end<Esc>hhido<CR><Esc>O
 endfunction
 
@@ -451,6 +442,15 @@ function! Settings_script()
 	nnoremap <buffer> -- O#<Space>
 endfunction
 
+function! Settings_script2()
+	"settings
+	setlocal shiftwidth=2
+	setlocal tabstop=2
+	setlocal softtabstop=2
+	"mappings
+	nnoremap <buffer> -- O#<Space>
+endfunction
+
 function! Settings_perl()
 	call Settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
@@ -506,6 +506,11 @@ function! Settings_vim()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O"
+endfunction
+
+function! Settings_yaml()
+	call Settings_script2()
+	setlocal expandtab
 endfunction
 
 endif "autocmd
