@@ -6,8 +6,6 @@ alias less='less -R'
 alias ls='ls --color=auto'
 alias ll='ls -lh --color=auto'
 
-export PAGER='less -R'
-
 if [[ ! -z $(whence yay) ]] then
 	alias yay='yay --editmenu'
 fi

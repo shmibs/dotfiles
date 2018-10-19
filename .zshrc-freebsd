@@ -3,9 +3,6 @@ alias ls='ls -G'
 alias ll='ls -lGh'
 alias grep='grep --color=auto'
 alias diff='colordiff'
-alias less='less -R'
-
-export PAGER="less -R"
 
 ################## FUNCTIONS ##################
 

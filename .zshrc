@@ -143,6 +143,8 @@ bindkey '^N' down-history
 ################### ALIASES ##################
 
 alias :q='exit'
+alias less='less -R'
+export PAGER="less -R"
 
 if [[ ! -z $(whence vim) ]] then
 	export EDITOR='vim'

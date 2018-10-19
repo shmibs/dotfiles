@@ -368,6 +368,9 @@ befont_off='-1'
 # monitor dpi can be on-the-fly overridden by using "startx" instead of alias sx
 dpi=92
 
+# is this computer a tablet?
+tablet_mode=""
+
 kbrate=25
 kbdelay=300
 

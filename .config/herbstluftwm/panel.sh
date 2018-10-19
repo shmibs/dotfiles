@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 
 ###########
 #  SETUP  #
@@ -91,7 +91,7 @@ update_winlist() {
 	done | while read -ra line
 	do
 		# is it focussed?
-		if [[ $((16#${line[0]})) -eq $((16#$focus_id)) ]]; then
+		if [[ "$((16#${line[0]}))" -eq "$((16#$focus_id))" ]]; then
 			echo -n "%{B${bg_focus} F${fg_focus}} "
 		else
 			echo -n "%{B${bg_normal} F${fg_normal}} "
@@ -132,10 +132,12 @@ fields[3]="%{r}"
 fields[4]=""
 # mpd
 fields[5]=""
-# conky stats
+# battery (if tablet mode)
 fields[6]=""
+# conky stats
+fields[7]=""
 # date
-fields[7]="$(update_date)"
+fields[8]="$(update_date)"
 
 unique_line() {
 	stdbuf -i0 -o0 uniq
@@ -159,20 +161,20 @@ event_tick() {
 
 event_mpd() {
 	while true; do
-		echo -en "mpd\t"
+		echo -en 'mpd\t'
 		mpc status >/dev/null 2>&1
 		if [[ $? -ne 0 ]]; then
-			echo "disconnected"
+			echo 'disconnected'
 			sleep 5
 		else
 			if [[ -z "$(mpc status | grep '\[playing\]')" ]]; then
 				if [[ -z "$(mpc status | grep '\[paused\]')" ]]; then
-					echo "stopped"
+					echo 'stopped'
 				else
-					echo "paused"
+					echo 'paused'
 				fi
 			else
-				echo "playing"
+				echo 'playing'
 			fi
 			mpc idle player >/dev/null 2>&1
 		fi
@@ -194,6 +196,15 @@ event_when() {
 	done > >(unique_line)
 }
 
+event_battery() {
+	while true; do
+		echo -en 'battery\t'
+		acpi -b | head -1 | cut -d ' ' -f 3-4 \
+			| sed -E -e 's/(,|\%)//g' -e 's/ /\t/' \
+			| tr '[:upper:]' '[:lower:]'
+		sleep 4
+	done > >(unique_line)
+}
 
 
 #######################
@@ -205,9 +216,10 @@ event_when() {
 
 {
 	event_tick &
+	event_mpd &
 	event_stats &
 	event_when &
-	event_mpd &
+	[[ "$tablet_mode" != "" ]] && event_battery &
 	
 	hc --idle
 } 2> /dev/null | {
@@ -232,7 +244,7 @@ event_when() {
 		# accordingly
 		case "${event[0]}" in
 			tick)
-				fields[7]=$(update_date)
+				fields[8]=$(update_date)
 				;;
 				
 			mpd)
@@ -257,7 +269,7 @@ event_when() {
 			stats)
 				event[1]=$(printf "%-4s" ${event[1]})
 				event[2]=$(printf "%-4s" ${event[2]})
-				fields[6]=$(
+				fields[7]=$(
 					echo -n "${sep}%{A:stats:} "
 					echo -n "%{F${light_blue}}\uE023%{F${fg_normal}} ${event[1]} "
 					echo -n "%{F${light_cyan}}\uE020%{F${fg_normal}} ${event[2]} "
@@ -270,6 +282,29 @@ event_when() {
 						echo -n "%{F${light_red}} \uE0AE %{F${fg_normal} A}")
 				else
 					fields[4]=""
+				fi
+				;;
+
+			battery)
+				if [[ "${event[1]}" == "discharging" ]]; then
+					fields[6]=$(
+						echo -n "$sep %{F${light_red}}"
+						echo "floor(abs((${event[2]}-1)/25))+57488" \
+							| calc -p | xargs printf '\\u%X'
+						echo -n "%{F${fg_normal}} %"
+						printf '%-3d ' "${event[2]}")
+				fi
+				if [[ "${event[1]}" == "charging" ]]; then
+					fields[6]=$(
+						echo -n "$sep %{F${light_magenta}}\uE040"
+						echo -n "%{F${fg_normal}} %"
+						printf '%-3d ' "${event[2]}")
+				fi
+				if [[ "${event[1]}" == "full" ]]; then
+					fields[6]=$(
+						echo -n "$sep %{F${light_green}}\uE040"
+						echo -n "%{F${fg_normal}} %"
+						printf '%-3d ' "${event[2]}")
 				fi
 				;;
 

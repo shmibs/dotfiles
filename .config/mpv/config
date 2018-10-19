@@ -1,8 +1,9 @@
 screenshot-format=png
+no-window-dragging
 
 # video
 fs=yes
-profile=opengl-hq
+profile=opengl
 interpolation=yes
 blend-subtitles=yes
 video-sync=display-resample
