@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 source ~/.config/init/vars
 
@@ -82,16 +82,12 @@ hc keybind Mod4-Control-l       resize right +$resizestep
 
 # tags
 tag_names=( {1..5} )
-tag_keys=( {1..5} 0 )
 
-hc rename default "${tag_names[0]}" || true
-for i in ${!tag_names[@]} ; do
-    hc add "${tag_names[$i]}"
-    key="${tag_keys[$i]}"
-    if ! [ -z "$key" ] ; then
-        hc keybind "Mod4-$key" use_index "$i"
-        hc keybind "Mod4-Control-$key" move_index "$i"
-    fi
+hc rename default $tag_names[1] || true
+for ((i=1; i <= $#tag_names; i++)) do
+    hc add $tag_names[$i]
+	hc keybind "Mod4-$i" use_index $(($i-1))
+	hc keybind "Mod4-Control-$i" move_index $(($i-1))
 done
 
 # cycle through tags
@@ -161,14 +157,14 @@ hc keybind Mod4-Shift-m spawn mathematica
 hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
 hc keybind Mod4-Shift-o spawn ~/stuffs/tor/start-tor-browser
 hc keybind Mod4-Shift-t spawn transmission-gtk
-hc keybind Mod4-Shift-v spawn urxvt -name "$EDITOR" -e $EDITOR
+hc keybind Mod4-Shift-v spawn urxvt -name $EDITOR -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
 
 # dmenu
 hc keybind Mod4-r spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
-	-p "Run:" -h "$bheight" \
-	-nb "$bar_bg" -nf "$bar_fg" \
-	-sb "$bg_focus"  -sf "$fg_focus"
+	-p "Run:" -h $bheight \
+	-nb $bar_bg -nf $bar_fg \
+	-sb $bg_focus -sf $fg_focus
 hc keybind Mod4-g spawn ~/.config/herbstluftwm/switcher.sh
 # hc keybind Mod4-8 spawn ~/.config/herbstluftwm/calc.sh
 
@@ -205,7 +201,7 @@ hc rule class~'(mednafen)' pseudotile=on focus=on
 #  TABLET MODE  #
 #################
 
-if [[ $tablet_mode ]]; then
+if [[ $tablet_mode != "" ]]; then
 	hc rule class~'(onboard|Onboard)' manage=off
 	hc keybind XF86AudioLowerVolume spawn onboard -m
 
@@ -228,7 +224,7 @@ hc unlock
 # run the panel
 panel=~/.config/herbstluftwm/panel.sh
 [ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
-for monitor in $(hc list_monitors | cut -d: -f1) ; do
+for monitor in $(hc list_monitors | cut -d: -f1); do
     # start it on each monitor
     "$panel" $monitor &
 done
