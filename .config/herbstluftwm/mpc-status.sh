@@ -13,12 +13,12 @@ esac
 
 mpc status >/dev/null 2>&1
 if [[ $? -ne 0 ]]; then
-	notify-send "mpd disconnected"
+	notify-send -a closeme "mpd disconnected"
 	exit
 fi
 
 if [[ -z "$(mpc status | grep -E '\[(playing|paused)\]')" ]]; then
-	notify-send "mpd stopped"
+	notify-send -a closeme "mpd stopped"
 	exit
 fi
 
