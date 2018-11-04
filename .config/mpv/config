@@ -3,7 +3,7 @@ no-window-dragging
 
 # video
 fs=yes
-profile=opengl
+profile=opengl-hq
 interpolation=yes
 blend-subtitles=yes
 video-sync=display-resample
