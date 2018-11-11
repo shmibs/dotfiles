@@ -18,6 +18,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'rhysd/vim-crystal'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
@@ -26,13 +27,13 @@ Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'cespare/vim-toml'
-Plugin 'rhysd/vim-crystal'
+Plugin 'ziglang/zig.vim'
 
 "FUNCTIONALITY
 Plugin 'junegunn/vim-easy-align'
 
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+Plugin 'shmibs/vim-easytags'
 
 Plugin 'tommcdo/vim-exchange'
 
@@ -123,6 +124,43 @@ endfunction
 
 call s:Lightline_palette_init()
 
+"async easytags
+let g:easytags_async = 1
+let g:easytags_always_enabled = 1
+
+"opam stuff
+if executable("opam")
+	let s:opam_share_dir = system("opam config var share")
+	let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+	let s:opam_configuration = {}
+
+	function! OpamConfOcpIndent()
+		execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+	endfunction
+	let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+	function! OpamConfOcpIndex()
+		execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+	endfunction
+	let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+	function! OpamConfMerlin()
+		let l:dir = s:opam_share_dir . "/merlin/vim"
+		execute "set rtp+=" . l:dir
+	endfunction
+	let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+	let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+	let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+	let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+	for tool in s:opam_packages
+		" Respect package order (merlin should be after ocp-index)
+		if count(s:opam_available_tools, tool) > 0
+			call s:opam_configuration[tool]()
+		endif
+	endfor
+endif
 
 
 """"""""""""""""""""""
@@ -274,8 +312,9 @@ autocmd FileType make       call Settings_script()
 autocmd FileType mail       call Settings_mail()
 autocmd FileType markdown   call Settings_markdown()
 autocmd FileType matlab     call Settings_matlab()
-autocmd FileType nim        call Settings_nim()
 autocmd FileType mkd        call Settings_text()
+autocmd FileType nim        call Settings_nim()
+autocmd FileType ocaml      call Settings_ocaml()
 autocmd FileType perl       call Settings_perl()
 autocmd FileType php        call Settings_html()
 autocmd FileType python     call Settings_script()
@@ -286,6 +325,7 @@ autocmd FileType sh         call Settings_script()
 autocmd FileType text       call Settings_text()
 autocmd FileType vim        call Settings_vim()
 autocmd FileType yaml       call Settings_script2()
+autocmd FileType zig        call Settings_c()
 autocmd FileType zsh        call Settings_shell()
 
 "command for reading filetype skeletons
@@ -432,6 +472,16 @@ endfunction
 function! Settings_nim()
 	call Settings_script()
 	nnoremap <buffer> -- O<Space>]#<Esc>hhi#[<Space>
+endfunction
+
+function! Settings_ocaml()
+	"settings
+	setlocal shiftwidth=2
+	setlocal tabstop=2
+	setlocal softtabstop=2
+	"mappings
+	nnoremap <buffer> -- O<Space>*)<Esc>hhi(**<Space>
+	nnoremap <buffer> -_ A<Space>*)<Esc>hhi(*<Space>
 endfunction
 
 function! Settings_script()

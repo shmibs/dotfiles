@@ -198,3 +198,7 @@ case $(uname) in
 	*)
 		echo -e '[-- OS UNRECOGNISED (T_T) --]'
 esac
+
+#################### HOOKS ####################
+
+[[ -f ~/.zshrc-opam ]] && source ~/.zshrc-opam

@@ -1,0 +1,7 @@
+[edit]
+C-w: kill-prev-word
+C-u: kill-prev-line
+
+[read-line]
+C-p: history-prev
+C-n: history-next
