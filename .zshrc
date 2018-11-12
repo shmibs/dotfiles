@@ -201,4 +201,4 @@ esac
 
 #################### HOOKS ####################
 
-[[ -f ~/.zshrc-opam ]] && source ~/.zshrc-opam
+[[ -f ~/.zshrc-opam ]] && source ~/.zshrc-opam || true
