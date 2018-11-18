@@ -55,6 +55,6 @@ xsetroot -cursor_name left_ptr
 nitrogen --restore
 xbanish &
 
-redshift -l 34:-111 -b 0.9:0.5 -t 6400K:4300K &
+redshift -b 0.9:0.5 -t 6400K:4300K &
 
 exec herbstluftwm
