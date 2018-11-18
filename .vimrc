@@ -171,6 +171,9 @@ syntax on
 filetype plugin indent on
 set autoindent
 
+"top-level folds only
+set foldnestmax=1
+
 colorscheme shmibs
 
 "close modeline security hole
@@ -278,55 +281,55 @@ let g:c_no_if0_fold = 1
 let g:sh_fold_enabled = 1
 
 if has("autocmd")
-	
-"always use rust instead of hercules
-autocmd BufNewFile,BufRead *.rs set filetype=rust
 
-"always use LaTeX
-autocmd BufNewFile,BufRead *.tex set filetype=tex
+	"set various filetype-specific settings.
+	augroup filetypesettings
+		au FileType asm        call Settings_asm()
+		au FileType bash       call Settings_shell()
+		au FileType c          call Settings_c()
+		au FileType coffee     call Settings_coffee()
+		au FileType conf       call Settings_conf()
+		au FileType cpp        call Settings_c()
+		au FileType crystal    call Settings_script2()
+		au FileType cs         call Settings_c()
+		au FileType css        call Settings_css()
+		au FileType d          call Settings_c()
+		au FileType elixir     call Settings_elixir()
+		au FileType javascript call Settings_c()
+		au FileType tex        call Settings_tex()
+		au FileType haskell    call Settings_haskell()
+		au FileType html       call Settings_html()
+		au FileType xhtml      call Settings_html()
+		au FileType ia64       call Settings_ia64()
+		au FileType make       call Settings_script()
+		au FileType mail       call Settings_mail()
+		au FileType markdown   call Settings_markdown()
+		au FileType matlab     call Settings_matlab()
+		au FileType mips       call Settings_mips()
+		au FileType mkd        call Settings_text()
+		au FileType nim        call Settings_nim()
+		au FileType ocaml      call Settings_ocaml()
+		au FileType perl       call Settings_perl()
+		au FileType php        call Settings_html()
+		au FileType python     call Settings_script()
+		au FileType ruby       call Settings_elixir ()
+		au FileType rust       call Settings_rust()
+		au FileType scss       call Settings_css()
+		au FileType sh         call Settings_script()
+		au FileType text       call Settings_text()
+		au FileType vim        call Settings_vim()
+		au FileType yaml       call Settings_script2()
+		au FileType zig        call Settings_c()
+		au FileType zsh        call Settings_shell()
+		au FileType z80        call Settings_z80()
+	augroup END
 
-"default asm to a64 intel syntax
-autocmd BufNewFile,BufRead *.s set filetype=ia64
+	"do other stuff
+	augroup filetypemisc
+		au FileType * call Settings_skel_read()
+	augroup END
 
-"other filetype-specific settings. can't figure out how to stick this wall of
-"blech in a dict or something (probably because no clue what i'm doing with
-"viml), so separate lines it is.
-autocmd FileType asm        call Settings_asm()
-autocmd FileType bash       call Settings_shell()
-autocmd FileType c          call Settings_c()
-autocmd FileType coffee     call Settings_coffee()
-autocmd FileType conf       call Settings_conf()
-autocmd FileType cpp        call Settings_c()
-autocmd FileType crystal    call Settings_elixir()
-autocmd FileType cs         call Settings_c()
-autocmd FileType css        call Settings_css()
-autocmd FileType d          call Settings_c()
-autocmd FileType elixir     call Settings_elixir()
-autocmd FileType javascript call Settings_c()
-autocmd FileType tex        call Settings_tex()
-autocmd FileType haskell    call Settings_haskell()
-autocmd FileType html       call Settings_html()
-autocmd FileType xhtml      call Settings_html()
-autocmd FileType ia64       call Settings_ia64()
-autocmd FileType make       call Settings_script()
-autocmd FileType mail       call Settings_mail()
-autocmd FileType markdown   call Settings_markdown()
-autocmd FileType matlab     call Settings_matlab()
-autocmd FileType mkd        call Settings_text()
-autocmd FileType nim        call Settings_nim()
-autocmd FileType ocaml      call Settings_ocaml()
-autocmd FileType perl       call Settings_perl()
-autocmd FileType php        call Settings_html()
-autocmd FileType python     call Settings_script()
-autocmd FileType ruby       call Settings_elixir ()
-autocmd FileType rust       call Settings_rust()
-autocmd FileType scss       call Settings_css()
-autocmd FileType sh         call Settings_script()
-autocmd FileType text       call Settings_text()
-autocmd FileType vim        call Settings_vim()
-autocmd FileType yaml       call Settings_script2()
-autocmd FileType zig        call Settings_c()
-autocmd FileType zsh        call Settings_shell()
+endif "autocmd
 
 "command for reading filetype skeletons
 function! Settings_skel_read()
@@ -344,7 +347,6 @@ function! Settings_skel_read()
 	"move cursor to %START%
 	execute "silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>"
 endfunction
-autocmd FileType * call Settings_skel_read()
 
 "a 'writing mode' for prose-y formats
 function! Settings_sub_wmodetoggle()
@@ -462,11 +464,12 @@ endfunction
 
 function! Settings_mips()
 	"settings
-	setlocal shiftwidth=5
-	setlocal tabstop=5
-	setlocal softtabstop=5
+	setlocal shiftwidth=6
+	setlocal tabstop=6
+	setlocal softtabstop=6
 	"mappings
-	nnoremap <buffer> -- O#<Space>
+	nnoremap <buffer> -- A<Tab>#<Space>
+	nnoremap <buffer> -_ O#<Space>
 endfunction
 
 function! Settings_nim()
@@ -564,4 +567,12 @@ function! Settings_yaml()
 	setlocal expandtab
 endfunction
 
-endif "autocmd
+function! Settings_z80()
+	"settings
+	setlocal shiftwidth=6
+	setlocal tabstop=6
+	setlocal softtabstop=6
+	"mappings
+	nnoremap <buffer> -- A<Tab>;<Space>
+	nnoremap <buffer> -_ O;<Space>
+endfunction
