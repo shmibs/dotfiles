@@ -290,7 +290,7 @@ if has("autocmd")
 		au FileType coffee     call Settings_coffee()
 		au FileType conf       call Settings_conf()
 		au FileType cpp        call Settings_c()
-		au FileType crystal    call Settings_script2()
+		au FileType crystal    call Settings_crystal()
 		au FileType cs         call Settings_c()
 		au FileType css        call Settings_css()
 		au FileType d          call Settings_c()
@@ -389,6 +389,11 @@ endfunction
 
 function! Settings_conf()
 	call Settings_script()
+	setlocal expandtab
+endfunction
+
+function! Settings_crystal()
+	call Settings_script2()
 	setlocal expandtab
 endfunction
 
@@ -560,11 +565,6 @@ function! Settings_vim()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O"
-endfunction
-
-function! Settings_yaml()
-	call Settings_script2()
-	setlocal expandtab
 endfunction
 
 function! Settings_z80()
