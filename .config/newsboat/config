@@ -1,0 +1,28 @@
+bind-key j down
+bind-key k up
+
+unbind-key ^B
+unbind-key ^F
+bind-key ^U pageup
+bind-key ^D pagedown
+
+bind-key ^N next-feed
+bind-key ^P prev-feed
+bind-key J next-feed
+bind-key K prev-feed
+
+bind-key d delete-article
+bind-key D delete-all-articles
+
+
+color info              white color8
+color listnormal        white black
+color listfocus         white color8
+color listnormal_unread white black  bold
+color listfocus_unread  white color8 bold
+color article           white black
+
+
+auto-reload yes
+browser "firefox --new-tab"
+datetime-format "%Y %b %d"
