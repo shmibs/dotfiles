@@ -5,3 +5,6 @@ C-u: kill-prev-line
 [read-line]
 C-p: history-prev
 C-n: history-next
+M-n: complete-bar-next
+M-p: complete-bar-prev
+M-enter: complete-bar
