@@ -2,3 +2,6 @@
 
 #require "base";;
 #require "core";;
+
+open Base;;
+open Core;;
