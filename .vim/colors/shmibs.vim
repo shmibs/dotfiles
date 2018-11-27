@@ -1,20 +1,17 @@
-"Vim color file
-"intended for 256 colour term
+"simple 16-colour scheme
 
 hi! clear
 
 let g:colors_name="shmibs"
 
-hi! Comment      ctermfg=12
+hi! Comment      ctermfg=blue
 hi! Constant     ctermfg=red
-hi! CursorLine   ctermfg=NONE ctermbg=8 cterm=NONE
-hi! CursorLineNr ctermfg=white ctermbg=8 cterm=bold
 hi! Directory    ctermfg=cyan
 hi! DiffAdd      ctermfg=green ctermbg=NONE cterm=bold
 hi! DiffDelete   ctermfg=red ctermbg=NONE cterm=bold
 hi! DiffChange   ctermfg=blue ctermbg=NONE cterm=bold
 hi! DiffText     ctermfg=black ctermbg=yellow cterm=NONE
-hi! Folded       ctermfg=8 ctermbg=NONE
+hi! Folded       ctermfg=8 ctermbg=NONE cterm=bold
 hi! Identifier   cterm=bold ctermfg=cyan
 hi! NonText      ctermfg=yellow ctermbg=black cterm=bold
 hi! PreProc      ctermfg=magenta
@@ -49,3 +46,6 @@ hi! link SpellLocal     SpellBad
 hi! link String         Constant
 hi! link StorageClass   Type
 hi! link Tag            Special
+hi! link Search         Visual
+hi! link CursorLine     Visual
+hi! link CursorLineNr   Visual

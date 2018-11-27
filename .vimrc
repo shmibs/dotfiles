@@ -3,7 +3,6 @@ if !has('gui_running')
 endif
 
 set nocompatible
-filetype off
 
 
 
@@ -51,6 +50,8 @@ Plugin 'tomtom/tcomment_vim'
 
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
+
+Plugin 'junegunn/vader.vim'
 
 call vundle#end()
 
@@ -205,8 +206,7 @@ call matchadd('Overwide', '\%81v', 100)
 highlight SpaceBeforeTab ctermbg=red
 call matchadd('SpaceBeforeTab', '\ \t')
 
-"get rid of that annoying yellow explosion everywhere
-"that neovim sets as default
+"don't search highlighting
 set nohlsearch
 
 set encoding=utf-8
@@ -266,6 +266,10 @@ if &term != "linux" && has('clipboard')
 	xnoremap <expr> p (v:register ==# '"' ? '"+' : '') . 'p'
 	xnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
 end
+
+"use pgup/pgdwn for command history completion (matches zsh conf)
+cnoremap <PageUp> <up>
+cnoremap <PageDown> <down>
 
 
 
@@ -349,15 +353,19 @@ function! Settings_skel_read()
 endfunction
 
 "a 'writing mode' for prose-y formats
+function! s:goyo_enter()
+	setlocal formatoptions+=a
+endfunction
+
+function! s:goyo_leave()
+	setlocal formatoptions+=a
+endfunction
+
 function! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
-		setlocal formatoptions-=a
 		Goyo!
-		echo 'wmode off'
 	else
-		setlocal formatoptions+=a
 		Goyo
-		echo 'wmode on'
 	end
 endfunction
 
