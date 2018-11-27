@@ -1,6 +1,6 @@
 if !has('gui_running')
 	set t_Co=256
-endif
+end
 
 set nocompatible
 
@@ -10,7 +10,7 @@ set nocompatible
 "  VUNDLE  "
 """"""""""""
 
-execute 'set rtp+=' . split(&rtp, ',')[0] . '/bundle/Vundle.vim'
+exec 'set rtp+=' . split(&rtp, ',')[0] . '/bundle/Vundle.vim'
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
@@ -74,12 +74,12 @@ set ttimeoutlen=100
 nnoremap <Leader>u :GundoToggle<CR>
 
 "snippet bindings
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-m>"
-let g:UltiSnipsJumpBackwardTrigger="<c-,>"
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<c-m>'
+let g:UltiSnipsJumpBackwardTrigger='<c-,>'
 
 "lightline colours. modded from 16color
-function! s:Lightline_palette_init()
+fun! s:Lightline_palette_init()
 	let l:black = [ '#000000', 0 ]
 	let l:lblack = [ '#808080', 8 ]
 	let l:red = [ '#800000', 1 ]
@@ -121,7 +121,7 @@ function! s:Lightline_palette_init()
 				\	           [ 'percent' ],
 				\	           [ 'filetype' ] ]
 				\ }, 'colorscheme': 'shmibs' }
-endfunction
+endfun
 
 call s:Lightline_palette_init()
 
@@ -130,38 +130,38 @@ let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
 "opam stuff
-if executable("opam")
-	let s:opam_share_dir = system("opam config var share")
+if executable('opam')
+	let s:opam_share_dir = system('opam config var share')
 	let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
 
 	let s:opam_configuration = {}
 
-	function! OpamConfOcpIndent()
-		execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-	endfunction
+	fun! OpamConfOcpIndent()
+		exec 'set rtp^=' . s:opam_share_dir . '/ocp-indent/vim'
+	endfun
 	let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
 
-	function! OpamConfOcpIndex()
-		execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-	endfunction
+	fun! OpamConfOcpIndex()
+		exec 'set rtp+=' . s:opam_share_dir . '/ocp-index/vim'
+	endfun
 	let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
 
-	function! OpamConfMerlin()
-		let l:dir = s:opam_share_dir . "/merlin/vim"
-		execute "set rtp+=" . l:dir
-	endfunction
+	fun! OpamConfMerlin()
+		let l:dir = s:opam_share_dir . '/merlin/vim'
+		exec 'set rtp+=' . l:dir
+	endfun
 	let s:opam_configuration['merlin'] = function('OpamConfMerlin')
 
-	let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-	let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+	let s:opam_packages = ['ocp-indent', 'ocp-index', 'merlin']
+	let s:opam_check_cmdline = ['opam list --installed --short --safe --color=never'] + s:opam_packages
 	let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
 	for tool in s:opam_packages
-		" Respect package order (merlin should be after ocp-index)
+		"respect package order (merlin should be after ocp-index)
 		if count(s:opam_available_tools, tool) > 0
 			call s:opam_configuration[tool]()
-		endif
+		end
 	endfor
-endif
+end
 
 
 """"""""""""""""""""""
@@ -250,7 +250,7 @@ inoremap <expr> <C-y> pumvisible() ? "\<C-y>" : matchstr(getline(line('.')-1), '
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : matchstr(getline(line('.')+1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
 
 "use the X clipboard for things when running in a virtual terminal, because yes
-if &term != "linux" && has('clipboard')
+if &term != 'linux' && has('clipboard')
 	nnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
 	nnoremap <expr> Y (v:register ==# '"' ? '"+' : '') . 'Y'
 	xnoremap <expr> y (v:register ==# '"' ? '"+' : '') . 'y'
@@ -284,7 +284,7 @@ let g:c_no_if0_fold = 1
 
 let g:sh_fold_enabled = 1
 
-if has("autocmd")
+if has('autocmd')
 
 	"set various filetype-specific settings.
 	augroup filetypesettings
@@ -333,10 +333,14 @@ if has("autocmd")
 		au FileType * call Settings_skel_read()
 	augroup END
 
-endif "autocmd
+end "autocmd
+
+"
+" Settings Subroutines
+" 
 
 "command for reading filetype skeletons
-function! Settings_skel_read()
+fun! Settings_skel_read()
 	"is the buffer not empty?
 	if line('$') != 1 || col('$') != 1
 		return 1
@@ -345,39 +349,72 @@ function! Settings_skel_read()
 	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
 		return 1
 	end
-	execute 'silent! r ' . split(&rtp, ',')[0] . "/skel/" . &ft
+	exec 'silent! r ' . split(&rtp, ',')[0] . "/skel/" . &ft
 	"read the date into %DATE%
-	execute '%s/%DATE%/' . system("date '+%a, %B %d, %Y'|tr -d '\n'") . '/ge'
+	exec '%s/%DATE%/' . system("date '+%a, %B %d, %Y'|tr -d '\n'") . '/ge'
 	"move cursor to %START%
-	execute "silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>"
-endfunction
+	exec 'silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>'
+endfun
 
 "a 'writing mode' for prose-y formats
-function! s:goyo_enter()
+fun! s:goyo_enter()
 	setlocal formatoptions+=a
-endfunction
+endfun
 
-function! s:goyo_leave()
+fun! s:goyo_leave()
 	setlocal formatoptions+=a
-endfunction
+endfun
 
-function! Settings_sub_wmodetoggle()
+fun! Settings_sub_wmodetoggle()
 	if &fo =~ 'a'
 		Goyo!
 	else
 		Goyo
 	end
-endfunction
+endfun
 
-function! Settings_asm()
+"run vader tests on the current file
+fun! Settings_sub_test_vim()
+	"check first if curbuf is a file
+	if @% != '' && filereadable(@%)
+		let l:real = ''
+
+		"test first for file in project test dir
+		silent let l:base = systemlist('git rev-parse --show-toplevel')[0]
+		if !v:shell_error
+			let l:check = l:base . '/test/' . expand('%:t:r') . '.vader'
+			if filereadable(l:check)
+				let l:real = l:check
+			end
+		end
+
+		"or else test for one in the same dir
+		let l:check = expand('%:t:r') . '.vader'
+		if l:real == '' && filereadable(l:check)
+			let l:real = l:check
+		end
+
+		"if a vader file was found, run the test
+		if l:real != ''
+			silent source %
+			silent exec 'Vader' l:real
+		end
+	end
+endfun
+
+"
+" Settings Functions
+"
+
+fun! Settings_asm()
 	"settings
 	setlocal foldmethod=syntax
 	"mappings
 	nnoremap <buffer> -- A<Tab>;<Space>
 	nnoremap <buffer> -_ O;<Space>
-endfunction
+endfun
 
-function! Settings_c()
+fun! Settings_c()
 	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
@@ -387,47 +424,47 @@ function! Settings_c()
 	"note: these mappings are in weird reverse order to avoid opening folds
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
-endfunction
+endfun
 
-function! Settings_coffee()
+fun! Settings_coffee()
 	call Settings_script2()
 	setlocal foldmethod=syntax
 	nnoremap <buffer> -_ O###<CR><C-u>###<Esc>O<C-u>
-endfunction
+endfun
 
-function! Settings_conf()
+fun! Settings_conf()
 	call Settings_script()
 	setlocal expandtab
-endfunction
+endfun
 
-function! Settings_crystal()
+fun! Settings_crystal()
 	call Settings_script2()
 	setlocal expandtab
-endfunction
+endfun
 
-function! Settings_css()
+fun! Settings_css()
 	call Settings_c()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
 	setlocal softtabstop=2
 	"mappings
-endfunction
+endfun
 
-function! Settings_elixir()
+fun! Settings_elixir()
 	call Settings_script2()
 	inoremap <buffer> do<CR> end<Esc>hhido<CR><Esc>O
-endfunction
+endfun
 
-function! Settings_ia64()
+fun! Settings_ia64()
 	"settings
 	setlocal foldmethod=syntax
 	"mappings
 	nnoremap <buffer> -- A<Space>*/<Esc>hhi<Tab>/*<Space>
 	nnoremap <buffer> -_ O<Space>*/<Esc>hhi/*<Space>
-endfunction
+endfun
 
-function! Settings_haskell()
+fun! Settings_haskell()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -435,9 +472,9 @@ function! Settings_haskell()
 	setlocal expandtab
 	"mappings
 	nnoremap <buffer> -- O--<Space>
-endfunction
+endfun
 
-function! Settings_html()
+fun! Settings_html()
 	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
@@ -445,9 +482,9 @@ function! Settings_html()
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
-endfunction
+endfun
 
-function! Settings_markdown()
+fun! Settings_markdown()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -457,25 +494,25 @@ function! Settings_markdown()
 	"mappings
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
-endfunction
+endfun
 
-function! Settings_mail()
+fun! Settings_mail()
 	"settings
 	setlocal spell
 	"mappings
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
-endfunction
+endfun
 
-function! Settings_matlab()
+fun! Settings_matlab()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O%<Space>
-endfunction
+endfun
 
-function! Settings_mips()
+fun! Settings_mips()
 	"settings
 	setlocal shiftwidth=6
 	setlocal tabstop=6
@@ -483,14 +520,14 @@ function! Settings_mips()
 	"mappings
 	nnoremap <buffer> -- A<Tab>#<Space>
 	nnoremap <buffer> -_ O#<Space>
-endfunction
+endfun
 
-function! Settings_nim()
+fun! Settings_nim()
 	call Settings_script()
 	nnoremap <buffer> -- O<Space>]#<Esc>hhi#[<Space>
-endfunction
+endfun
 
-function! Settings_ocaml()
+fun! Settings_ocaml()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
@@ -498,42 +535,42 @@ function! Settings_ocaml()
 	"mappings
 	nnoremap <buffer> -- O<Space>*)<Esc>hhi(**<Space>
 	nnoremap <buffer> -_ A<Space>*)<Esc>hhi(*<Space>
-endfunction
+endfun
 
-function! Settings_script()
+fun! Settings_script()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O#<Space>
-endfunction
+endfun
 
-function! Settings_script2()
+fun! Settings_script2()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
 	setlocal softtabstop=2
 	"mappings
 	nnoremap <buffer> -- O#<Space>
-endfunction
+endfun
 
-function! Settings_perl()
+fun! Settings_perl()
 	call Settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
-endfunction
+endfun
 
-function! Settings_rust()
+fun! Settings_rust()
 	call Settings_c()
 	nnoremap <buffer> -_ O///<Space>
-endfunction
+endfun
 
-function! Settings_shell()
+fun! Settings_shell()
 	call Settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
-endfunction
+endfun
 
-function! Settings_tex()
+fun! Settings_tex()
 	"settings
 	setlocal noautoindent
 	setlocal nocindent
@@ -550,9 +587,9 @@ function! Settings_tex()
 	nnoremap <buffer> <Leader>x :!xelatex "%"<CR><CR>
 	nnoremap <buffer> <Leader>X :!xelatex "%"<CR>
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
-endfunction
+endfun
 
-function! Settings_text()
+fun! Settings_text()
 	"settings
 	setlocal noautoindent
 	setlocal nocindent
@@ -564,18 +601,19 @@ function! Settings_text()
 	setlocal spell
 	"mappings
 	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
-endfunction
+endfun
 
-function! Settings_vim()
+fun! Settings_vim()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O"
-endfunction
+	nnoremap <buffer> <Leader>t :call Settings_sub_test_vim()<CR>
+endfun
 
-function! Settings_z80()
+fun! Settings_z80()
 	"settings
 	setlocal shiftwidth=6
 	setlocal tabstop=6
@@ -583,4 +621,4 @@ function! Settings_z80()
 	"mappings
 	nnoremap <buffer> -- A<Tab>;<Space>
 	nnoremap <buffer> -_ O;<Space>
-endfunction
+endfun
