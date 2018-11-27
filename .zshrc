@@ -172,7 +172,7 @@ fi
 
 ################## FUNCTIONS ##################
 
-# ignore non-tracked files
+# ignore non-tracked files && keep submods current
 if [[ ! -z $(whence git) ]] then
 git() {
 	case $1 in
@@ -180,6 +180,14 @@ git() {
 		pull) shift; $(whence -p git) pull --recurse-submodules "$@" ;;
 		*) $(whence -p git) "$@" ;;
 	esac
+}
+fi
+
+# password generation
+if [[ ! -z $(whence pwgen) ]] then
+pwgen() {
+	[[ ${#@} -eq 0 ]] && $(whence -p pwgen) -snc 20 1 && return 0
+	$(whence -p pwgen) -snc $@ 1
 }
 fi
 
