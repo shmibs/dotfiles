@@ -4,7 +4,7 @@ desktop configurations. function over form, though things being pretty is nice
 
 ## Screenshots
 
-[![clean](https://shmibbles.me/img/scrot/current/clean_small.png)](https://shmibbles.me/img/scrot/current/clean.png) [![dirty](https://shmibbles.me/img/scrot/current/dirty_small.png)](https://shmibbles.me/img/scrot/current/dirty.png)
+[![clean](https://airen-no-jikken.icu/img/scrot/current/clean_small.png)](https://airen-no-jikken.icu/img/scrot/current/clean.png) [![dirty](https://airen-no-jikken.icu/img/scrot/current/dirty_small.png)](https://airen-no-jikken.icu/img/scrot/current/dirty.png)
 
 ## Structure
 

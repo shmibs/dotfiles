@@ -14,13 +14,13 @@ fi
 local date=$(date +'%Y-%m-%d')
 
 local folder="http/img/scrot"
-ssh shmibbles.me "mkdir -p $folder/$date"
+ssh airen-no-jikken.icu "mkdir -p $folder/$date"
 
 if [[ "${?#0}" != "" ]]; then
 	return 1
 fi
 
-ssh shmibbles.me "cd $folder; rm current 2>/dev/null; ln -s $date current"
+ssh airen-no-jikken.icu "cd $folder; rm current 2>/dev/null; ln -s $date current"
 
 for i in {3..1}; do
 	echo -n "$i "
@@ -33,12 +33,12 @@ sleep .1
 scrot /tmp/$name.png
 convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
 
-scp /tmp/$name.png /tmp/${name}_small.png shmibbles.me:http/img/scrot/$date
+scp /tmp/$name.png /tmp/${name}_small.png airen-no-jikken.icu:http/img/scrot/$date
 
-echo "https://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
-echo "https://shmibbles.me/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
-echo "https://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
-echo "https://shmibbles.me/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
+echo "https://airen-no-jikken.icu/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
+echo "https://airen-no-jikken.icu/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
+echo "https://airen-no-jikken.icu/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection clipboard
+echo "https://airen-no-jikken.icu/img/scrot/$date/${name}_small.png" | tr -d '\n' | xclip -i -selection primary
 
 echo 'sent!'
 

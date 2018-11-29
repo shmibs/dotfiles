@@ -22,18 +22,18 @@ for i in "$@"; do
         || { echo "file '$i' not found"; return 1 }
 done
 
-scp "$@" shmibbles.me:http/tmp/ 2>/dev/null \
+scp "$@" airen-no-jikken.icu:http/tmp/ 2>/dev/null \
     || { echo "sending files failed"; return 1 }
 
 for name in "$@"
 do
     basename=${name:t}
 
-    ssh shmibbles.me "cd http/tmp; chmod g+r,g-w,o-rw \"${basename//\"/\\\"}\"" \
+    ssh airen-no-jikken.icu "cd http/tmp; chmod g+r,g-w,o-rw \"${basename//\"/\\\"}\"" \
         || { echo "making '$name' readable failed"; return 1 }
 
     {
-        printf "%s" 'https://shmibbles.me/tmp/'
+        printf "%s" 'https://airen-no-jikken.icu/tmp/'
         for c in "${(s::)basename}"; do 
             if [[ "${escapes[$c]}" == "" ]]; then
                 printf "%s" "$c"
