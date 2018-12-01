@@ -353,7 +353,7 @@ fun! Settings_skel_read()
 	"read the date into %DATE%
 	exec '%s/%DATE%/' . system("date '+%a, %B %d, %Y'|tr -d '\n'") . '/ge'
 	"move cursor to %START%
-	exec 'silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>'
+	exec "silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>"
 endfun
 
 "a 'writing mode' for prose-y formats
