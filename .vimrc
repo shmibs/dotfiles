@@ -1,6 +1,6 @@
 if !has('gui_running')
 	set t_Co=256
-end
+endif
 
 set nocompatible
 
@@ -129,40 +129,6 @@ call s:Lightline_palette_init()
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
-"opam stuff
-if executable('opam')
-	let s:opam_share_dir = system('opam config var share')
-	let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
-
-	let s:opam_configuration = {}
-
-	fun! OpamConfOcpIndent()
-		exec 'set rtp^=' . s:opam_share_dir . '/ocp-indent/vim'
-	endfun
-	let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-	fun! OpamConfOcpIndex()
-		exec 'set rtp+=' . s:opam_share_dir . '/ocp-index/vim'
-	endfun
-	let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-	fun! OpamConfMerlin()
-		let l:dir = s:opam_share_dir . '/merlin/vim'
-		exec 'set rtp+=' . l:dir
-	endfun
-	let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-	let s:opam_packages = ['ocp-indent', 'ocp-index', 'merlin']
-	let s:opam_check_cmdline = ['opam list --installed --short --safe --color=never'] + s:opam_packages
-	let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-	for tool in s:opam_packages
-		"respect package order (merlin should be after ocp-index)
-		if count(s:opam_available_tools, tool) > 0
-			call s:opam_configuration[tool]()
-		end
-	endfor
-end
-
 
 """"""""""""""""""""""
 "  GENERAL SETTINGS  "
@@ -265,7 +231,7 @@ if &term != 'linux' && has('clipboard')
 	nnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
 	xnoremap <expr> p (v:register ==# '"' ? '"+' : '') . 'p'
 	xnoremap <expr> P (v:register ==# '"' ? '"+' : '') . 'P'
-end
+endif
 
 "use pgup/pgdwn for command history completion (matches zsh conf)
 cnoremap <PageUp> <up>
@@ -333,7 +299,7 @@ if has('autocmd')
 		au FileType * call Settings_skel_read()
 	augroup END
 
-end "autocmd
+endif "autocmd
 
 "
 " Settings Subroutines
@@ -344,11 +310,11 @@ fun! Settings_skel_read()
 	"is the buffer not empty?
 	if line('$') != 1 || col('$') != 1
 		return 1
-	end
+	endif
 	"is there no template?
 	if filereadable(split(&rtp, ',')[0] . "/skel/" . &ft) == 0
 		return 1
-	end
+	endif
 	exec 'silent! r ' . split(&rtp, ',')[0] . "/skel/" . &ft
 	"read the date into %DATE%
 	exec '%s/%DATE%/' . system("date '+%a, %B %d, %Y'|tr -d '\n'") . '/ge'
@@ -370,7 +336,7 @@ fun! Settings_sub_wmodetoggle()
 		Goyo!
 	else
 		Goyo
-	end
+	endif
 endfun
 
 "run vader tests on the current file
@@ -385,21 +351,21 @@ fun! Settings_sub_test_vim()
 			let l:check = l:base . '/test/' . expand('%:t:r') . '.vader'
 			if filereadable(l:check)
 				let l:real = l:check
-			end
-		end
+			endif
+		endif
 
 		"or else test for one in the same dir
 		let l:check = expand('%:t:r') . '.vader'
 		if l:real == '' && filereadable(l:check)
 			let l:real = l:check
-		end
+		endif
 
 		"if a vader file was found, run the test
 		if l:real != ''
 			silent source %
 			silent exec 'Vader' l:real
-		end
-	end
+		endif
+	endif
 endfun
 
 "

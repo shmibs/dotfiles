@@ -1,7 +1,6 @@
 #use "topfind";;
 
-#require "base";;
-#require "core";;
+#require "core.top";;
+#require "core.syntax";;
 
-open Base;;
 open Core;;
