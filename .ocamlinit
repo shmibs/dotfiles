@@ -19,9 +19,7 @@ let host = Unix.gethostname () in
 let formatted = LTerm_text.eval
   [B_bold true;
    B_fg (LTerm_style.white); S "┌[";
-   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "ocaml-%s" version);
-   B_fg (LTerm_style.lyellow); S "@";
-   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "%s " host);
+   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "ocaml-%s@%s " version host);
    B_fg (LTerm_style.lcyan); S (Printf.sprintf "%s" path);
    B_fg (LTerm_style.white); S "]\n└: "]
 in UTop.prompt := fst (React.S.create formatted);;
