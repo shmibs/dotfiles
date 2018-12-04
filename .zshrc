@@ -51,8 +51,12 @@ PROMPT="%{$fg[black]%}┌["
 PROMPT+="%(0?..$fg[red]%?$fg[black]:)"
 # if any, number of jobs
 PROMPT+="%(1j.$fg[green]%j$fg[black]:.)"
-# name and host (red for root)
-PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+# # name and host (red for root)
+# PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+# name (red for root)
+PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n"
+# host
+PROMPT+="%{$fg[yellow]%}@%{$fg[magenta]%}%M%E "
 # current location, with one level of parent context
 PROMPT+="%{$fg[blue]%}%2c"
 # newline
@@ -65,8 +69,10 @@ PROMPT="%{%B$fg[white]%}┌["
 PROMPT+="%(0?..$fg[red]%?$fg[white]:)"
 # if any, number of jobs
 PROMPT+="%(1j.$fg[green]%j$fg[white]:.)"
-# name and host (red for root)
-PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+# name (red for root)
+PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n"
+# host
+PROMPT+="%{$fg[yellow]%}@%{$fg[magenta]%}%M%E "
 # current location, with one level of parent context
 PROMPT+="%{$fg[blue]%}%2c"
 # newline

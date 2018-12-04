@@ -1,6 +1,28 @@
 #use "topfind";;
 
-#require "core.top";;
-#require "core.syntax";;
+#require "core";;
 
 open Core;;
+
+#require "lambda-term";;
+
+let path = Sys.getcwd () in
+let home = Sys.home_directory () in
+let path =
+  if Zed_utf8.starts_with path home then
+    Zed_utf8.replace path 0 (Zed_utf8.length home) "~"
+  else
+    path
+in 
+let version = Sys.ocaml_version in
+let host = Unix.gethostname () in
+let formatted = LTerm_text.eval
+  [B_bold true;
+   B_fg (LTerm_style.white); S "┌[";
+   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "ocaml-%s" version);
+   B_fg (LTerm_style.lyellow); S "@";
+   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "%s " host);
+   B_fg (LTerm_style.lcyan); S (Printf.sprintf "%s" path);
+   B_fg (LTerm_style.white); S "]\n└: "]
+in UTop.prompt := fst (React.S.create formatted);;
+
