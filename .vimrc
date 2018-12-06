@@ -22,7 +22,6 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'shmibs/mips.vim'
 Plugin 'zah/nim.vim'
-Plugin 'wlangstroth/vim-racket'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'cespare/vim-toml'
@@ -71,7 +70,7 @@ nmap ga <Plug>(EasyAlign)
 set ttimeoutlen=100
 
 "toggle gundo pane
-nnoremap <Leader>u :GundoToggle<CR>
+nnoremap <Leader>g :GundoToggle<CR>
 
 "snippet bindings
 let g:UltiSnipsExpandTrigger='<tab>'

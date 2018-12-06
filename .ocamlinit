@@ -14,12 +14,14 @@ let path =
   else
     path
 in 
+let user = Unix.getlogin () in
 let version = Sys.ocaml_version in
 let host = Unix.gethostname () in
 let formatted = LTerm_text.eval
   [B_bold true;
    B_fg (LTerm_style.white); S "┌[";
-   B_fg (LTerm_style.lmagenta); S (Printf.sprintf "ocaml-%s@%s " version host);
+   B_fg (LTerm_style.lyellow); S (Printf.sprintf "%s@" user);
+   S (Printf.sprintf "ocaml-%s@%s " version host);
    B_fg (LTerm_style.lcyan); S (Printf.sprintf "%s" path);
    B_fg (LTerm_style.white); S "]\n└: "]
 in UTop.prompt := fst (React.S.create formatted);;

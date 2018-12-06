@@ -52,7 +52,7 @@ PROMPT+="%(0?..$fg[red]%?$fg[black]:)"
 # if any, number of jobs
 PROMPT+="%(1j.$fg[green]%j$fg[black]:.)"
 # name and host (red for root)
-PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+PROMPT+="%{%(!.$fg[red].$fg[white])%}%n@zsh-$ZSH_VERSION@%M%E "
 # current location, with one level of parent context
 PROMPT+="%{$fg[blue]%}%2c"
 # newline
@@ -66,7 +66,7 @@ PROMPT+="%(0?..$fg[red]%?$fg[white]:)"
 # if any, number of jobs
 PROMPT+="%(1j.$fg[green]%j$fg[white]:.)"
 # name and host (red for root)
-PROMPT+="%{%(!.$fg[red].$fg[magenta])%}%n@%M%E "
+PROMPT+="%{%(!.$fg[red].$fg[white])%}%n@zsh-$ZSH_VERSION@%M%E "
 # current location, with one level of parent context
 PROMPT+="%{$fg[blue]%}%2c"
 # newline
