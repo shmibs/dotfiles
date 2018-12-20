@@ -322,14 +322,14 @@ bheight=20
 
 # icon font
 ifont='-*-stlarch-medium-r-*-*-*-*-*-*-*-*-*-*'
-ifont_off='-4'
+ifont_off='-3'
 
 # jp font
-jfont='Noto Sans Mono CJK JP Regular'
+jfont='Noto Sans Mono CJK JP'
 jfont_size='10'
 
 # c font
-cfont='Noto Sans Mono CJK SC Regular'
+cfont='Noto Sans Mono CJK SC'
 cfont_size='10'
 
 # emoji font
@@ -339,7 +339,7 @@ efont_size='10'
 # backup font
 bkfont='Symbola'
 bkfont_size='9.5'
-bkfont_off='-3'
+bkfont_off='-2'
 
 # main font
 mfont='Droid Sans Mono Dotted'
@@ -348,7 +348,7 @@ mfont_size='9.5'
 # bar font
 bfont="$mfont"
 bfont_size='8.5'
-bfont_off='-3'
+bfont_off='-2'
 
 # bar jp font
 bjfont="$jfont"
