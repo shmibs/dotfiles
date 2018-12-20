@@ -19,12 +19,13 @@ folders "[funcs](.config/init/funcs/)" and
 "[funcreqs](.config/init/funcreqs/)", which, respectively, contain executable
 scripts and their prerequisite commands and arbitrary check commands. the
 latter prerequisites are tested from [.zprofile](.zprofile) at login and, if
-passed, the functions are symlinked into /tmp/funcs, which is included in
-$PATH. thus, this system allows for configs which automatically adapt to the
+passed, the functions are symlinked into /tmp/funcs, which is appended to
+`$PATH`. thus, this system allows for configs which automatically adapt to the
 host environment, enabling only what functionality is compatible. so far i've
 been the only user on systems using this config, but will probably make the dir
-these are written into configurable as well if that ever happens (not safe at
-all to stick the things you're running in tmp on a multi-user system!).
+these are written into configurable as well if that ever changes (since
+otherwise that's a pretty big security flaw, with anyone who can write to tmp
+able to add commands to the shell).
 
 ## Current Utilities
 

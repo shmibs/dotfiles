@@ -1,0 +1,2 @@
+func_init_prereqs=(ffmpeg)
+func_init_checks=()

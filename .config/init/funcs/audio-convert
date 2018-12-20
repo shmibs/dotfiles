@@ -1,0 +1,233 @@
+#!/usr/bin/env zsh
+# concatenate multiple audio files into one
+
+source "$HOME/.config/init/helpers" || exit 1
+
+local callstr=$0
+
+usage() {
+	echo "Usage: $callstr [OPTIONS...] <infile>..."
+	echo "Convert multiple audio files to a new format"
+	echo ""
+	echo "         \e[1mdescription  opt longform   arg     default\e[0m"
+	echo "        output codec  -c  --codec    <codec> opus"
+	echo "      output bitrate  -b  --bitrate  <int>k  (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
+	echo "      output quality  -q  --quality  <int>   N/A"
+	echo "    output directory  -d  --dest     <dir>   ."
+	echo "       copy metadata  -m  --metadata <bool>  false"
+	echo " background job count -j  --jobs     <int>   4"
+	echo "     print this help  -h  --help"
+	exit 0
+}
+
+local fifoname
+local fifomade=0
+local pid
+
+trap_abort() {
+	echo ""
+	print-error "process interrupted"
+	# race condition-y, but eh
+	repeat 5; do
+		[[ -z $pid ]] && sleep 0.1 || break
+	done
+	[[ -z $pid ]] || kill -s SIGKILL $pid
+	[[ -p $fifoname ]] && [[ $fifomade -eq 1 ]] && 2>/dev/null rm $fifoname
+	exit 1
+}
+
+trap 'trap_abort' SIGABRT SIGHUP SIGINT SIGQUIT SIGTERM
+
+local codecpat='^(opus|mp3|vorbis|flac)$'
+local bitratepat='^[1-9][0-9]*k$'
+local metadatapat='^(true|false)$'
+local jobcountpat='^[1-9][0-9]*$'
+
+local qpatvorbis='^([0-9]|10)$'
+local qpatmp3='^[0-9]$'
+
+local codecstr
+local codecprintstr
+local extstr
+local bitratestr
+local bitrateset
+local metastr
+local dirstr
+local qstr
+
+local jobcount
+
+local parseerr=$(2>&1 zparseopts -D -E -M -A args \
+	c:  -codec:=c \
+	b:  -bitrate:=b \
+	q:  -quality:=q \
+	d:  -dest:=d -destination:=d \
+	j:  -jobs:=j \
+	m:: -metadata::=m \
+	h   -help=h | cut -d ' ' -f 2-)
+
+[[ -z $parseerr ]] || abort $parseerr
+
+zparseopts -D -E -M -A args \
+	c:  -codec:=c \
+	b:  -bitrate:=b \
+	q:  -quality:=q \
+	d:  -dest:=d -destination:=d \
+	j:  -jobs:=j \
+	m:: -metadata::=m \
+	h   -help=h
+
+local optarg
+local opt
+for opt in ${(@k)args}; do
+	unset optarg
+	[[ -z $args[$opt] ]] || optarg=$args[$opt]
+	case $opt in
+			-c) [[ $optarg =~ $codecpat ]] || \
+					abort "codec must be one of \`opus\`, \`mp3\`, \`flac\`, or \`vorbis\`"
+				[[ ${optarg} == 'opus' ]] \
+					&& codecprintstr=${optarg} \
+					&& codecstr='libopus' && extstr='opus' \
+					&& [[ -z $bitratestr ]] && bitratestr='35k'
+				[[ ${optarg} == 'mp3' ]] \
+					&& codecprintstr=${optarg} \
+					&& codecstr='libmp3lame' && extstr='mp3' \
+					&& [[ -z $bitratestr ]] && bitratestr='65k'
+				[[ ${optarg} == 'vorbis' ]] \
+					&& codecprintstr=${optarg} \
+					&& codecstr='libvorbis' && extstr='ogg' \
+					&& [[ -z $bitratestr ]] && bitratestr='50k'
+				[[ ${optarg} == 'flac' ]] \
+					&& codecprintstr=${optarg} \
+					&& codecstr='flac' && extstr='flac' \
+					&& [[ -z $bitratestr ]] && bitratestr=''
+				;;
+			-b) [[ $optarg =~ $bitratepat ]] || \
+					abort "bitrate must positive integer + k, for kbps"
+				bitratestr=$optarg
+				bitrateset=1
+				;;
+			-q) qstr=$optarg ;; 
+			-d) dirstr=$optarg ;;
+			-j) [[ $optarg =~ $jobcountpat ]] || \
+					abort "job count must be a non-negative integer"
+				jobcount=$optarg
+				;;
+			-m) if [[ $optarg ]]; then
+					[[ $optarg =~ $metadatapat ]] || \
+						abort "metadata must be either \`true\` or \`false\`"
+
+					[[ $optarg == "false" ]] && metastr="" \
+						|| metastr=("-map_metadata" "-1")
+				else
+					metastr=("-map_metadata" "-1")
+				fi
+				;;
+			-h) usage ;;
+	esac
+done
+
+[[ -z      $codecstr ]] && codecstr='libopus'
+[[ -z    $bitratestr ]] && bitratestr='35k'
+[[ -z $codecprintstr ]] && codecprintstr='opus'
+[[ -z        $extstr ]] && extstr='opus'
+[[ -z      $jobcount ]] && jobcount=4
+[[ -z        $dirstr ]] && dirstr='.'
+[[ -z       $metastr ]] && metastr=("-map_metadata" "-1")
+
+if [[ ! -z $qstr ]]; then
+	[[ -z $bitratset ]] || abort "-b and -q are not compatible"
+	[[ $codecstr == "libopus" ]] && abort "-q cannot be used with opus"
+	[[ $codecstr == "libflac" ]] && abort "-q cannot be used with flac"
+	[[ $codecstr == "libvorbis" ]] && [[ ! $qstr =~ $qpatvorbis ]] \
+		&& abort "for vorbis, -q must be in the range [0-10]"
+	[[ $codecstr == "libmp3lame" ]] && [[ ! $qstr =~ $qpatmp3 ]] \
+		&& abort "for mp3, -q must be in the range [0-9]"
+else
+fi
+
+[[ $codecstr == "flac" ]] && bitratestr=''
+
+[[ $#@ -eq 0 ]] && abort "no input files specified"
+
+local f
+for f in $@; do
+	[[ -f $f ]] || abort "could not read file \`$f\`"
+done
+
+2>/dev/null mkdir -p $dirstr || abort "could not write to directory \`$dirstr\`"
+
+repeat 5; do
+	fifoname="$dirstr/audio-convert-tmp-$RANDOM"
+	[[ -e $fifoname ]] && continue
+	2>/dev/null mkfifo $fifoname || return 1
+	fifomade=1
+	break
+done
+
+[[ $fifomade -eq 1 ]] || abort "could not make temporary fifo"
+
+local delprompt
+for f in $@; do
+	local dest="$dirstr/${f:t:r}.$extstr"
+
+	if [[ -e $dest ]]; then
+		printf "destination file \`$dest\` exists\ndelete it? [y/N]: "
+		read -q delprompt
+		print ""
+		[[ $delprompt = "y" ]] || return 0
+		2>/dev/null rm $dest || abort "could not delete file \`$dest\`"
+	fi
+done
+
+local totalstr="${#@} file"
+[[ $#@ -ne 1 ]] && totalstr="${totalstr}s"
+local jobstr=$jobcount
+[[ $#@ -lt $jobcount ]] && jobstr=$#@
+[[ $jobstr -gt 1 ]] && jobstr="${jobstr} jobs" || jobstr="${jobstr} job"
+
+(
+{
+	local joblist=()
+	while read -d $'\0' f; do
+		local dest="$dirstr/${f:t:r}.$extstr"
+		(
+			ffmpeg -loglevel -8 -i $f \
+				-vn -sn -c:a $codecstr \
+				${bitratestr/*k/-b:a} $bitratestr \
+				${qstr/[0-9]*/-q:a} $qstr \
+				$metastr \
+				$dest
+			echo "done"
+		) &
+		joblist+=$!
+	done
+
+	local j
+	for j in $joblist; do
+		2>/dev/null wait $j
+	done
+} < $fifoname | {
+	repeat $jobcount; do
+		if [[ $#@ -gt 0 ]]; then
+			printf "%s\0" $@[1]
+			shift
+		fi
+	done
+
+	while read line; do
+		if [[ $#@ -gt 0 ]]; then
+			printf "%s\0" $@[1]
+			shift
+		else
+			break
+		fi
+	done
+} > $fifoname
+)&
+
+pid=$!
+
+wait-anim $pid "using $jobstr to convert $totalstr to $codecprintstr"
+
+2>/dev/null rm $fifoname

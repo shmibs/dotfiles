@@ -7,8 +7,8 @@ xset q
 archey3
 sleep .2
 
-if [[ -f '/tmp/cap.mp4' ]]; then
-    rm '/tmp/cap.mp4'
+if [[ -e '/tmp/cap.mp4' ]]; then
+    rm '/tmp/cap.mp4' || return 1
 fi
 
 echo 'recording...'

@@ -1,0 +1,127 @@
+#!/usr/bin/env zsh
+# concatenate multiple audio files into one
+
+source "$HOME/.config/init/helpers" || exit 1
+
+local callstr=$0
+
+usage() {
+	echo "Usage: $callstr [OPTIONS...] <infile>..."
+	echo "Concatenate multiple audio files into one"
+	echo ""
+	echo "                 \e[1mdescription  opt longform  arg    default\e[0m"
+	echo "    specify destination file  -o  --outfile <file> out.ogg"
+	echo "      specify output bitrate  -b  --bitrate <int>k (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
+	echo "  workaround for many inputs  -m  --many"
+	echo "             print this help  -h  --help"
+	exit 0
+}
+
+trap_abort() {
+	echo ""
+	abort "process interrupted"
+}
+
+trap 'trap_abort' SIGABRT SIGHUP SIGINT SIGQUIT SIGTERM
+
+local dest='out.opus'
+
+local destpat='^.*\.(opus|mp3|ogg|flac)$'
+local bitratepat='^[1-9][0-9]*k$'
+
+local filterstr
+local codecstr
+local bitratestr
+local many
+
+local parseerr=$(2>&1 zparseopts -D -E -M -A args \
+	o: -outfile:=o \
+	b: -bitrate:=b \
+	m  -many=m \
+	h  -help=h | cut -d ' ' -f 2-)
+
+[[ -z $parseerr ]] || abort $parseerr
+
+zparseopts -D -E -M -A args \
+	o: -outfile:=o \
+	b: -bitrate:=b \
+	m  -many=m \
+	h  -help=h
+
+local optarg
+for opt in ${(@k)args}; do
+	unset optarg
+	[[ -z $args[$opt] ]] || optarg=$args[$opt]
+	case $opt in
+			-o) [[ $optarg =~ $destpat ]] || \
+				abort "destination file must be of type opus, mp3, or ogg"
+				dest=$optarg
+				[[ ${optarg:e} == 'opus' ]] && codecstr='libopus' \
+					&& [[ -z $bitratestr ]] && bitratestr='35k'
+				[[ ${optarg:e} == 'mp3' ]] && codecstr='libmp3lame' \
+					&& [[ -z $bitratestr ]] && bitratestr='65k'
+				[[ ${optarg:e} == 'ogg' ]] && codecstr='libvorbis' \
+					&& [[ -z $bitratestr ]] && bitratestr='50k'
+				[[ ${optarg:e} == 'flac' ]] && codecstr='flac' \
+					&& [[ -z $bitratestr ]] && bitratestr=''
+				;;
+			-b) [[ $optarg =~ $bitratepat ]] || \
+				abort "bitrate must positive integer + k, for kbps"
+				bitratestr=$optarg
+				;;
+			-m) many=true ;;
+			-h) usage ;;
+	esac
+done
+
+[[ -z   $codecstr ]] && codecstr='libopus'
+[[ -z $bitratestr ]] && bitratestr='35k'
+
+[[ $codecstr == "flac" ]] && bitratestr=''
+
+[[ ${#@} -eq 0 ]] && abort "no input files specified"
+
+if [[ -e $dest ]]; then
+	local delprompt
+	printf "destination file \`$dest\` exists\ndelete it? [y/N]: "
+	read -q delprompt
+	echo ""
+	[[ $delprompt = "y" ]] || return 0
+	2>/dev/null rm $dest || abort "could not delete file \`$dest\`"
+fi
+
+local pid
+
+if [[ -z $many ]]; then
+	local inputlist=()
+	local i=0
+	for f in $@; do
+		inputlist+=(-i $f)
+		filterstr="${filterstr}[${i}:a:0] "
+		i=$((i+1))
+	done
+
+	filterstr="${filterstr}concat=n=${i}:v=0:a=1 [outa]"
+
+	(
+	ffmpeg -loglevel -8 $inputlist \
+		-filter_complex $filterstr -map '[outa]' \
+		-c:a $codecstr ${bitratestr/*k/-b:a} $bitratestr \
+		-map_metadata -1 $dest
+	) &
+	pid=$!
+else
+	(
+	for f in $@; do
+		ffmpeg -loglevel -8 -i $f -f s16le -ar 44.1k -ac 2 pipe:
+	done | ffmpeg -loglevel -8 -f s16le -ar 44.1k -ac 2 -i pipe: \
+		-c:a $codecstr ${bitratestr/*k/-b:a} $bitratestr \
+		-map_metadata -1 $dest
+	) &
+	pid=$!
+fi
+
+local plural
+[[ $#@ -ne 1 ]] && plural='s'
+
+wait-anim $pid "concatenating $#@ file$plural to \`$dest\`"

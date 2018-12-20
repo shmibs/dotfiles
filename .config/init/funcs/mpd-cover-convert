@@ -3,10 +3,14 @@
 # leaks memory for some reason, so don't run on a clean library
 # or it'll crash everything
 
-local d
+source "$HOME/.config/init/helpers" || exit 1
+
+(local file
 find ~/music -type f -regextype posix-extended -regex ".*cover\.(png|jpg)"\
 	| while read file; do
 	if [[ ! -f "${file:h}/cover-small.png" ]]; then
 		convert "$file" -resize 250x "${file:h}/cover-small.png"
 	fi
-done
+done) &
+
+wait-anim $! "converting"
