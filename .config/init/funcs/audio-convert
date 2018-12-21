@@ -20,8 +20,6 @@ usage() {
 	exit 0
 }
 
-local fifoname
-local fifomade=0
 local pid
 
 trap_abort() {
@@ -32,7 +30,6 @@ trap_abort() {
 		[[ -z $pid ]] && sleep 0.1 || break
 	done
 	[[ -z $pid ]] || kill -s SIGKILL $pid
-	[[ -p $fifoname ]] && [[ $fifomade -eq 1 ]] && 2>/dev/null rm $fifoname
 	exit 1
 }
 
@@ -150,6 +147,14 @@ fi
 
 [[ $#@ -eq 0 ]] && abort "no input files specified"
 
+local roots=(${@:t:r})
+local uniqroots=(${(u)roots})
+
+[[ $#roots == $#uniqroots ]] \
+	|| abort "input contains files which share a root name (i.e. when extension is stripped)"
+
+local filecount=$#@
+
 local f
 for f in $@; do
 	[[ -f $f ]] || abort "could not read file \`$f\`"
@@ -157,17 +162,6 @@ done
 
 2>/dev/null mkdir -p $dirstr || abort "could not write to directory \`$dirstr\`"
 
-repeat 5; do
-	fifoname="$dirstr/audio-convert-tmp-$RANDOM"
-	[[ -e $fifoname ]] && continue
-	2>/dev/null mkfifo $fifoname || return 1
-	fifomade=1
-	break
-done
-
-[[ $fifomade -eq 1 ]] || abort "could not make temporary fifo"
-
-local delprompt
 for f in $@; do
 	local dest="$dirstr/${f:t:r}.$extstr"
 
@@ -186,48 +180,50 @@ local jobstr=$jobcount
 [[ $#@ -lt $jobcount ]] && jobstr=$#@
 [[ $jobstr -gt 1 ]] && jobstr="${jobstr} jobs" || jobstr="${jobstr} job"
 
-(
-{
+coproc {
 	local joblist=()
-	while read -d $'\0' f; do
+	while read -d $'\0' c; do
+		[[ $c == "done" ]] && break
+		local f=${c:s/file:/}
 		local dest="$dirstr/${f:t:r}.$extstr"
 		(
-			ffmpeg -loglevel -8 -i $f \
+			1>/dev/null 2>&1 </dev/null ffmpeg -loglevel -8 -i $f \
 				-vn -sn -c:a $codecstr \
 				${bitratestr/*k/-b:a} $bitratestr \
 				${qstr/[0-9]*/-q:a} $qstr \
 				$metastr \
 				$dest
-			echo "done"
+			echo "next"
 		) &
 		joblist+=$!
 	done
-
+	
 	local j
 	for j in $joblist; do
 		2>/dev/null wait $j
 	done
-} < $fifoname | {
-	repeat $jobcount; do
-		if [[ $#@ -gt 0 ]]; then
-			printf "%s\0" $@[1]
-			shift
-		fi
-	done
 
-	while read line; do
-		if [[ $#@ -gt 0 ]]; then
-			printf "%s\0" $@[1]
-			shift
-		else
-			break
-		fi
-	done
-} > $fifoname
-)&
+	echo "done"
+}
 
 pid=$!
 
-wait-anim $pid "using $jobstr to convert $totalstr to $codecprintstr"
+repeat $jobcount; do
+	if [[ $#@ -gt 0 ]]; then
+		1>&p printf "%s\0" $@[1]
+		shift
+	fi
+done
 
-2>/dev/null rm $fifoname
+while read -p line; do
+	[[ $line == "done" ]] && coproc exit && break
+	echo "$line"
+	if [[ $#@ -gt 0 ]]; then
+		1>&p printf "%s\0" "file:${@[1]}"
+		shift
+	else
+		1>&p printf "%s\0" "done"
+	fi
+done | progress-bar $filecount "using $jobstr to convert $totalstr to $codecprintstr"
+
+2>/dev/null wait $pid
