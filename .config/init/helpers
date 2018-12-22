@@ -160,16 +160,21 @@ wait-anim() {
 		6) frames=('O' 'o' '.' 'o') ;;
 	esac
 
-	(while 2>/dev/null kill -0 $1; do
+    local rval
+
+    {
+        wait $1
+        rval=$?
+        echo "done"
+    } | while true; do
 		[[ -z $curframe ]] && curframe=0
 		printf "\e[G\e[K|\e[1;32m${frames[$(($curframe + 1))]}\e[0m| $colour$message...\e[0m"
 		curframe=$(( ($curframe + 1) % $#frames ))
-		sleep .2
-	done) &
+		read -t 0.2 && break
+	done
 
-	wait $1
-	local r=$?
-	[[ $r ]] && printf "\e[G\e[K\e[31m$message... failed!\e[0m\n" \
-		|| printf "\e[G\e[K\e[32m$message... done!\e[0m\n"
-	return $r
+	[[ $rval -eq 0 ]] && printf "\e[G\e[K\e[32m$message... done!\e[0m\n" \
+		|| printf "\e[G\e[K\e[31m$message... failed!\e[0m\n"
+
+	return $rval
 }
