@@ -44,7 +44,7 @@ xset -dpms
 xset s off
 
 #daemons
-compton -b --backend glx --vsync opengl
+compton -b --backend glx --vsync -CG
 
 #this is an ugly hack which runs a dummy program
 #through bumblebee to get the fans on discrete
@@ -55,6 +55,6 @@ xsetroot -cursor_name left_ptr
 nitrogen --restore
 xbanish &
 
-redshift -b 0.9:0.6 -t 6400K:4400K &
+redshift -b 0.8:0.6 -t 5800K:4400K &
 
 exec herbstluftwm

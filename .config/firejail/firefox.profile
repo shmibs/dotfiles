@@ -17,8 +17,8 @@ tracelog
 whitelist ~/desktop
 whitelist ~/downloads
 whitelist ~/images
-whitelist ~/videos/web
-whitelist ${DOWNLOADS}
+whitelist ~/videos
+whitelist ~/audio/clips
 mkdir ~/.mozilla
 whitelist ~/.mozilla
 mkdir ~/.cache
@@ -26,29 +26,10 @@ mkdir ~/.cache/mozilla
 mkdir ~/.cache/mozilla/firefox
 whitelist ~/.cache/mozilla/firefox
 whitelist ~/dwhelper
-whitelist ~/.zotero
-whitelist ~/.vimperatorrc
-whitelist ~/.vimperator
-whitelist ~/.pentadactylrc
-whitelist ~/.pentadactyl
-whitelist ~/.keysnail.js
-whitelist ~/.config/gnome-mplayer
-whitelist ~/.cache/gnome-mplayer/plugin
-whitelist ~/.pki
-
-# lastpass, keepassx
-whitelist ~/.keepassx
-whitelist ~/.config/keepassx
-whitelist ~/keepassx.kdbx
-whitelist ~/.lastpass
-whitelist ~/.config/lastpass
-
-
-#silverlight
-whitelist ~/.wine-pipelight
-whitelist ~/.wine-pipelight64
-whitelist ~/.config/pipelight-widevine
-whitelist ~/.config/pipelight-silverlight5.1
+mkdir ~/.local
+mkdir ~/.local/share
+mkdir ~/.local/share/tridactyl
+whitelist ~/.local/share/tridactyl
 
 include /etc/firejail/whitelist-common.inc
 

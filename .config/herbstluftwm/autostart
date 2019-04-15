@@ -150,10 +150,10 @@ hc keybind Mod4-w spawn xdotool click 1
 
 # spawn
 hc keybind Mod4-Return  spawn urxvt
-hc keybind Mod4-Shift-f spawn firejail --netfilter=/etc/firejail/nolocal.net firefox-esr
+hc keybind Mod4-Shift-f spawn firejail --netfilter=/etc/firejail/nolocal.net firefox
 hc keybind Mod4-Shift-g spawn gwaei
 hc keybind Mod4-Shift-i spawn gimp
-hc keybind Mod4-Shift-m spawn mathematica
+hc keybind Mod4-Shift-m spawn /usr/lib/mozc/mozc_tool --mode=hand_writing
 hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
 hc keybind Mod4-Shift-o spawn ~/yolo/tor/start-tor-browser
 hc keybind Mod4-Shift-t spawn transmission-gtk
@@ -193,7 +193,7 @@ hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
 hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL|pinentry)' pseudotile=on focus=on
-hc rule class~'(Tegaki-recognize|PlayOnLinux|PCSX2|Tilem2|Wine|explorer.exe)' pseudotile=on focus=on
+hc rule class~'(mozc_tool|PlayOnLinux|PCSX2|Tilem2|Wine|explorer.exe)' pseudotile=on focus=on
 hc rule class~'(mednafen)' pseudotile=on focus=on
 
 
