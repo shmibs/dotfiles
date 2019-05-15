@@ -1,14 +1,11 @@
 emulate sh -c 'source /etc/profile'
 
+############# STORE VIMTAGS IN TMP ############
 export QT_STYLE_OVERRIDE=gtk
 
-############# STORE VIMTAGS IN RAM ############
+############# STORE VIMTAGS IN TMP ############
 [[ -d /tmp/ ]] && \
 	touch /tmp/.vimtags && ln -sf /tmp/.vimtags .
-
-######### MAKE CABAL BUILDS AVAILABLE #########
-[[ -d ~/.cabal/bin ]] && \
-	PATH=$PATH:~/.cabal/bin
 
 ############# INITIALISE CONFIGS ##############
 [[ -f ~/.config/init/init.sh ]] && \
@@ -38,7 +35,7 @@ func_init_checkreq() {
 if [[ -d ~/.config/init/funcs/ && -d ~/.config/init/funcreqs ]]; then
 	rm -rf /tmp/funcs
 	mkdir -p /tmp/funcs
-	PATH=$PATH:/tmp/funcs
+	path+=(/tmp/funcs)
 	for f in $HOME/.config/init/funcreqs/*; do
 		source "$f"
 		func_init_checkreq $func_init_prereqs , $func_init_checks
@@ -52,3 +49,5 @@ fi
 ############# CONNECTING OVER SSH #############
 [[ -f ~/.zprofile-dtach ]] && \
 	source ~/.zprofile-dtach
+
+export PATH
