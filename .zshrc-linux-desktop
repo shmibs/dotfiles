@@ -1,9 +1,13 @@
 ################### ALIASES ##################
 
-alias ssh-socks='ssh -C2qTnN -F /dev/null -D 9853 airen-no-jikken.icu'
+if [[ $(whence sshfs) != "" ]] then
+	alias smutt='ssh -t shmibs@airen-no-jikken.icu mutt'
+	alias kmutt='ssh -t k@airen-no-jikken.icu mutt'
+fi
 
-if [[ "$(whence sshfs)" != "" ]] then
-	alias smounth='mkdir -p ~/airen-no-jikken.icu; sshfs airen-no-jikken.icu: ~/airen-no-jikken.icu'
-	alias smountw='mkdir -p ~/airen-no-jikken.icu; sshfs airen-no-jikken.icu:/usr/local/www/apache24/data/ ~/airen-no-jikken.icu'
-	alias sumount='fusermount -u ~/airen-no-jikken.icu; rmdir ~/airen-no-jikken.icu'
+if [[ $(whence sshfs) != "" ]] then
+	alias smount='mkdir -p ~/mount-shmibs && sshfs shmibs@airen-no-jikken.icu: ~/mount-shmibs || rmdir ~/mount-shmibs'
+	alias kmount'mkdir -p ~/mount-k && sshfs k@airen-no-jikken.icu: ~/mount-k || rmdir ~/mount-k'
+	alias sumount='fusermount -u ~/mount-shmibs && rmdir ~/mount-shmibs'
+	alias kumount='fusermount -u ~/mount-shmibs && rmdir ~/mount-k'
 fi
