@@ -48,7 +48,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tomtom/tcomment_vim'
 
 Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
 
 Plugin 'junegunn/vader.vim'
 
@@ -236,6 +235,18 @@ endif
 cnoremap <PageUp> <up>
 cnoremap <PageDown> <down>
 
+fun! s:goyo_enter()
+	set formatoptions+=a
+endfun
+
+fun! s:goyo_leave()
+	set formatoptions-=a
+endfun
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+nnoremap <Leader>w :execute "silent Goyo"<CR><C-l>
 
 
 """""""""""""""""""""""
@@ -253,49 +264,49 @@ if has('autocmd')
 
 	"set various filetype-specific settings.
 	augroup filetypesettings
-		au FileType asm        call Settings_asm()
-		au FileType bash       call Settings_shell()
-		au FileType c          call Settings_c()
-		au FileType coffee     call Settings_coffee()
-		au FileType conf       call Settings_conf()
-		au FileType cpp        call Settings_c()
-		au FileType crystal    call Settings_crystal()
-		au FileType cs         call Settings_c()
-		au FileType css        call Settings_css()
-		au FileType d          call Settings_c()
-		au FileType elixir     call Settings_elixir()
-		au FileType javascript call Settings_c()
-		au FileType tex        call Settings_tex()
-		au FileType haskell    call Settings_haskell()
-		au FileType html       call Settings_html()
-		au FileType xhtml      call Settings_html()
-		au FileType ia64       call Settings_ia64()
-		au FileType make       call Settings_script()
-		au FileType mail       call Settings_mail()
-		au FileType markdown   call Settings_markdown()
-		au FileType matlab     call Settings_matlab()
-		au FileType mips       call Settings_mips()
-		au FileType mkd        call Settings_text()
-		au FileType nim        call Settings_nim()
-		au FileType ocaml      call Settings_ocaml()
-		au FileType perl       call Settings_perl()
-		au FileType php        call Settings_html()
-		au FileType python     call Settings_script()
-		au FileType ruby       call Settings_elixir ()
-		au FileType rust       call Settings_rust()
-		au FileType scss       call Settings_css()
-		au FileType sh         call Settings_script()
-		au FileType text       call Settings_text()
-		au FileType vim        call Settings_vim()
-		au FileType yaml       call Settings_script2()
-		au FileType zig        call Settings_c()
-		au FileType zsh        call Settings_shell()
-		au FileType z80        call Settings_z80()
+		au FileType asm        call <SID>settings_asm()
+		au FileType bash       call <SID>settings_shell()
+		au FileType c          call <SID>settings_c()
+		au FileType coffee     call <SID>settings_coffee()
+		au FileType conf       call <SID>settings_conf()
+		au FileType cpp        call <SID>settings_c()
+		au FileType crystal    call <SID>settings_crystal()
+		au FileType cs         call <SID>settings_c()
+		au FileType css        call <SID>settings_css()
+		au FileType d          call <SID>settings_c()
+		au FileType elixir     call <SID>settings_elixir()
+		au FileType javascript call <SID>settings_c()
+		au FileType tex        call <SID>settings_tex()
+		au FileType haskell    call <SID>settings_haskell()
+		au FileType html       call <SID>settings_html()
+		au FileType xhtml      call <SID>settings_html()
+		au FileType ia64       call <SID>settings_ia64()
+		au FileType make       call <SID>settings_script()
+		au FileType mail       call <SID>settings_mail()
+		au FileType markdown   call <SID>settings_markdown()
+		au FileType matlab     call <SID>settings_matlab()
+		au FileType mips       call <SID>settings_mips()
+		au FileType mkd        call <SID>settings_text()
+		au FileType nim        call <SID>settings_nim()
+		au FileType ocaml      call <SID>settings_ocaml()
+		au FileType perl       call <SID>settings_perl()
+		au FileType php        call <SID>settings_html()
+		au FileType python     call <SID>settings_script()
+		au FileType ruby       call <SID>settings_script2()
+		au FileType rust       call <SID>settings_rust()
+		au FileType scss       call <SID>settings_css()
+		au FileType sh         call <SID>settings_script()
+		au FileType text       call <SID>settings_text()
+		au FileType vim        call <SID>settings_vim()
+		au FileType yaml       call <SID>settings_script2()
+		au FileType zig        call <SID>settings_c()
+		au FileType zsh        call <SID>settings_shell()
+		au FileType z80        call <SID>settings_z80()
 	augroup END
 
 	"do other stuff
 	augroup filetypemisc
-		au FileType * call Settings_skel_read()
+		au FileType * call <SID>settings_skel_read()
 	augroup END
 
 endif "autocmd
@@ -305,7 +316,7 @@ endif "autocmd
 " 
 
 "command for reading filetype skeletons
-fun! Settings_skel_read()
+fun! s:settings_skel_read()
 	"is the buffer not empty?
 	if line('$') != 1 || col('$') != 1
 		return 1
@@ -321,25 +332,8 @@ fun! Settings_skel_read()
 	exec "silent! normal! ggJ/%START%\<CR>:s/%START%//\<CR>"
 endfun
 
-"a 'writing mode' for prose-y formats
-fun! s:goyo_enter()
-	setlocal formatoptions+=a
-endfun
-
-fun! s:goyo_leave()
-	setlocal formatoptions+=a
-endfun
-
-fun! Settings_sub_wmodetoggle()
-	if &fo =~ 'a'
-		Goyo!
-	else
-		Goyo
-	endif
-endfun
-
 "run vader tests on the current file
-fun! Settings_sub_test_vim()
+fun! s:settings_sub_test_vim()
 	"check first if curbuf is a file
 	if @% != '' && filereadable(@%)
 		let l:real = ''
@@ -371,7 +365,7 @@ endfun
 " Settings Functions
 "
 
-fun! Settings_asm()
+fun! s:settings_asm()
 	"settings
 	setlocal foldmethod=syntax
 	"mappings
@@ -379,7 +373,7 @@ fun! Settings_asm()
 	nnoremap <buffer> -_ O;<Space>
 endfun
 
-fun! Settings_c()
+fun! s:settings_c()
 	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
@@ -391,24 +385,24 @@ fun! Settings_c()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfun
 
-fun! Settings_coffee()
-	call Settings_script2()
+fun! s:settings_coffee()
+	call <SID>settings_script2()
 	setlocal foldmethod=syntax
 	nnoremap <buffer> -_ O###<CR><C-u>###<Esc>O<C-u>
 endfun
 
-fun! Settings_conf()
-	call Settings_script()
+fun! s:settings_conf()
+	call <SID>settings_script()
 	setlocal expandtab
 endfun
 
-fun! Settings_crystal()
-	call Settings_script2()
+fun! s:settings_crystal()
+	call <SID>settings_script2()
 	setlocal expandtab
 endfun
 
-fun! Settings_css()
-	call Settings_c()
+fun! s:settings_css()
+	call <SID>settings_c()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
@@ -416,12 +410,12 @@ fun! Settings_css()
 	"mappings
 endfun
 
-fun! Settings_elixir()
-	call Settings_script2()
+fun! s:settings_elixir()
+	call <SID>settings_script2()
 	inoremap <buffer> do<CR> end<Esc>hhido<CR><Esc>O
 endfun
 
-fun! Settings_ia64()
+fun! s:settings_ia64()
 	"settings
 	setlocal foldmethod=syntax
 	"mappings
@@ -429,7 +423,7 @@ fun! Settings_ia64()
 	nnoremap <buffer> -_ O<Space>*/<Esc>hhi/*<Space>
 endfun
 
-fun! Settings_haskell()
+fun! s:settings_haskell()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -439,7 +433,7 @@ fun! Settings_haskell()
 	nnoremap <buffer> -- O--<Space>
 endfun
 
-fun! Settings_html()
+fun! s:settings_html()
 	"settings
 	setlocal foldmethod=syntax
 	setlocal shiftwidth=4
@@ -449,7 +443,7 @@ fun! Settings_html()
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
 endfun
 
-fun! Settings_markdown()
+fun! s:settings_markdown()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -458,17 +452,15 @@ fun! Settings_markdown()
 	setlocal spell
 	"mappings
 	nnoremap <buffer> -- O<Space>--><Esc>3hi<!--<Space>
-	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfun
 
-fun! Settings_mail()
+fun! s:settings_mail()
 	"settings
 	setlocal spell
 	"mappings
-	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfun
 
-fun! Settings_matlab()
+fun! s:settings_matlab()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -477,7 +469,7 @@ fun! Settings_matlab()
 	nnoremap <buffer> -- O%<Space>
 endfun
 
-fun! Settings_mips()
+fun! s:settings_mips()
 	"settings
 	setlocal shiftwidth=6
 	setlocal tabstop=6
@@ -487,22 +479,23 @@ fun! Settings_mips()
 	nnoremap <buffer> -_ O#<Space>
 endfun
 
-fun! Settings_nim()
-	call Settings_script()
+fun! s:settings_nim()
+	call <SID>settings_script()
 	nnoremap <buffer> -- O<Space>]#<Esc>hhi#[<Space>
 endfun
 
-fun! Settings_ocaml()
+fun! s:settings_ocaml()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
 	setlocal softtabstop=2
 	"mappings
-	nnoremap <buffer> -- O<Space>*)<Esc>hhi(**<Space>
-	nnoremap <buffer> -_ A<Space>*)<Esc>hhi(*<Space>
+	nnoremap <buffer> -- O<Space>*)<Esc>hhi(*<Space>
+	nnoremap <buffer> -_ A<Space>*)<Esc>hhi<Space>(*<Space>
+	nnoremap <buffer> __ O<Space>*)<Esc>hhi(**<Space>
 endfun
 
-fun! Settings_script()
+fun! s:settings_script()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
@@ -511,7 +504,7 @@ fun! Settings_script()
 	nnoremap <buffer> -- O#<Space>
 endfun
 
-fun! Settings_script2()
+fun! s:settings_script2()
 	"settings
 	setlocal shiftwidth=2
 	setlocal tabstop=2
@@ -520,22 +513,22 @@ fun! Settings_script2()
 	nnoremap <buffer> -- O#<Space>
 endfun
 
-fun! Settings_perl()
-	call Settings_script()
+fun! s:settings_perl()
+	call <SID>settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfun
 
-fun! Settings_rust()
-	call Settings_c()
+fun! s:settings_rust()
+	call <SID>settings_c()
 	nnoremap <buffer> -_ O///<Space>
 endfun
 
-fun! Settings_shell()
-	call Settings_script()
+fun! s:settings_shell()
+	call <SID>settings_script()
 	inoremap <buffer> {<CR> }<Esc>i{<CR><Esc>O
 endfun
 
-fun! Settings_tex()
+fun! s:settings_tex()
 	"settings
 	setlocal noautoindent
 	setlocal nocindent
@@ -551,10 +544,9 @@ fun! Settings_tex()
 	nnoremap <buffer> <Leader>C :!latex -output-format=pdf "%"<CR>
 	nnoremap <buffer> <Leader>x :!xelatex "%"<CR><CR>
 	nnoremap <buffer> <Leader>X :!xelatex "%"<CR>
-	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfun
 
-fun! Settings_text()
+fun! s:settings_text()
 	"settings
 	setlocal noautoindent
 	setlocal nocindent
@@ -565,20 +557,19 @@ fun! Settings_text()
 	setlocal softtabstop=4
 	setlocal spell
 	"mappings
-	nnoremap <buffer> <Leader>w :call Settings_sub_wmodetoggle()<CR>
 endfun
 
-fun! Settings_vim()
+fun! s:settings_vim()
 	"settings
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
 	"mappings
 	nnoremap <buffer> -- O"
-	nnoremap <buffer> <Leader>t :call Settings_sub_test_vim()<CR>
+	nnoremap <buffer> <Leader>t :call <SID>settings_sub_test_vim()<CR>
 endfun
 
-fun! Settings_z80()
+fun! s:settings_z80()
 	"settings
 	setlocal shiftwidth=6
 	setlocal tabstop=6
