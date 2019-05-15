@@ -1,5 +1,5 @@
 #!/usr/bin/env zsh
-# concatenate multiple audio files into one
+# use parallel jobs to convert audio files from one format to another
 
 source "$HOME/.config/init/helpers" || exit 1
 
@@ -24,21 +24,13 @@ local pid
 
 trap_abort() {
 	echo ""
-	print-error "process interrupted"
-	# race condition-y, but eh
-	repeat 5; do
-		[[ -z $pid ]] && sleep 0.1 || break
-	done
-	[[ -z $pid ]] || kill -s SIGKILL $pid
-	exit 1
+	abort "process interrupted"
 }
 
 trap 'trap_abort' SIGABRT SIGHUP SIGINT SIGQUIT SIGTERM
 
 local codecpat='^(opus|mp3|vorbis|flac)$'
 local bitratepat='^[1-9][0-9]*k$'
-local metadatapat='^(true|false)$'
-local jobcountpat='^[1-9][0-9]*$'
 
 local qpatvorbis='^([0-9]|10)$'
 local qpatmp3='^[0-9]$'
@@ -54,6 +46,7 @@ local qstr
 
 local jobcount
 
+local args
 local parseerr=$(2>&1 zparseopts -D -E -M -A args \
 	c:  -codec:=c \
 	b:  -bitrate:=b \
@@ -61,6 +54,7 @@ local parseerr=$(2>&1 zparseopts -D -E -M -A args \
 	d:  -dest:=d -destination:=d \
 	j:  -jobs:=j \
 	m:: -metadata::=m \
+	f:: -force::=f \
 	h   -help=h | cut -d ' ' -f 2-)
 
 [[ -z $parseerr ]] || abort $parseerr
@@ -72,6 +66,7 @@ zparseopts -D -E -M -A args \
 	d:  -dest:=d -destination:=d \
 	j:  -jobs:=j \
 	m:: -metadata::=m \
+	f:: -force::=f \
 	h   -help=h
 
 local optarg
@@ -106,23 +101,25 @@ for opt in ${(@k)args}; do
 				;;
 			-q) qstr=$optarg ;; 
 			-d) dirstr=$optarg ;;
-			-j) [[ $optarg =~ $jobcountpat ]] || \
+			-j) [[ $optarg =~ $posunsignedpat ]] || \
 					abort "job count must be a non-negative integer"
 				jobcount=$optarg
 				;;
 			-m) if [[ $optarg ]]; then
-					[[ $optarg =~ $metadatapat ]] || \
-						abort "metadata must be either \`true\` or \`false\`"
+					[[ $optarg =~ $boolpat ]] || \
+						abort "metadata must be a boolean value (e.g. \`true\` or \`false\`)"
 
-					[[ $optarg == "false" ]] && metastr="" \
+					[[ $optarg =~ $booltpat ]] && metastr=("-map_metadata" "0") \
 						|| metastr=("-map_metadata" "-1")
 				else
-					metastr=("-map_metadata" "-1")
+					metastr=("-map_metadata" "0")
 				fi
 				;;
 			-h) usage ;;
 	esac
 done
+
+[[ $#@ -eq 0 ]] && abort "no input files specified"
 
 [[ -z      $codecstr ]] && codecstr='libopus'
 [[ -z    $bitratestr ]] && bitratestr='35k'
@@ -135,17 +132,17 @@ done
 if [[ ! -z $qstr ]]; then
 	[[ -z $bitratset ]] || abort "-b and -q are not compatible"
 	[[ $codecstr == "libopus" ]] && abort "-q cannot be used with opus"
-	[[ $codecstr == "libflac" ]] && abort "-q cannot be used with flac"
+	[[ $codecstr == "flac" ]] && abort "-q cannot be used with flac"
 	[[ $codecstr == "libvorbis" ]] && [[ ! $qstr =~ $qpatvorbis ]] \
 		&& abort "for vorbis, -q must be in the range [0-10]"
 	[[ $codecstr == "libmp3lame" ]] && [[ ! $qstr =~ $qpatmp3 ]] \
 		&& abort "for mp3, -q must be in the range [0-9]"
-else
 fi
 
-[[ $codecstr == "flac" ]] && bitratestr=''
-
-[[ $#@ -eq 0 ]] && abort "no input files specified"
+if [[ $codecstr == "flac" ]]; then
+	bitratestr=''
+	[[ -z $bitrateset ]] || abort "-b cannot be used with flac"
+fi
 
 local roots=(${@:t:r})
 local uniqroots=(${(u)roots})
@@ -182,6 +179,7 @@ local jobstr=$jobcount
 
 coproc {
 	local joblist=()
+	local c
 	while read -d $'\0' c; do
 		[[ $c == "done" ]] && break
 		local f=${c:s/file:/}
@@ -206,24 +204,20 @@ coproc {
 	echo "done"
 }
 
-pid=$!
-
 repeat $jobcount; do
 	if [[ $#@ -gt 0 ]]; then
-		1>&p printf "%s\0" $@[1]
+		1>&p printf "file:%s\0" $@[1]
 		shift
 	fi
 done
 
 while read -p line; do
 	[[ $line == "done" ]] && coproc exit && break
-	echo "$line"
+	echo $line
 	if [[ $#@ -gt 0 ]]; then
-		1>&p printf "%s\0" "file:${@[1]}"
+		1>&p printf "file:%s\0" $@[1]
 		shift
 	else
-		1>&p printf "%s\0" "done"
+		1>&p printf "done\0"
 	fi
 done | progress-bar $filecount "using $jobstr to convert $totalstr to $codecprintstr"
-
-2>/dev/null wait $pid
