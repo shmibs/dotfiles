@@ -144,15 +144,12 @@ bindkey '^N' down-history
 
 alias :q='exit'
 alias less='less -R'
-export PAGER="less -R"
 
 if [[ ! -z $(whence nvim) ]] then
 	alias svim='sudo -E nvim'
 	alias svimdiff='sudo -E nvim -d'
 	alias vim='nvim'
-	export EDITOR='nvim'
 elif [[ ! -z $(whence vim) ]] then
-	export EDITOR='vim'
 	alias svim='sudo -E vim'
 	alias svimdiff='sudo -E vim -d'
 fi
