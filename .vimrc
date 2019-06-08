@@ -20,7 +20,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'rhysd/vim-crystal'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'https://git.airen-no-jikken.icu/k/mips.vim.git'
+Plugin 'https://git.airen-no-jikken.icu/ageha/mips.vim.git'
 Plugin 'zah/nim.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -31,7 +31,7 @@ Plugin 'ziglang/zig.vim'
 Plugin 'junegunn/vim-easy-align'
 
 Plugin 'xolox/vim-misc'
-Plugin 'https://git.airen-no-jikken.icu/k/vim-easytags.git'
+Plugin 'https://git.airen-no-jikken.icu/ageha/vim-easytags.git'
 
 Plugin 'tommcdo/vim-exchange'
 
