@@ -189,7 +189,7 @@ hc keybind Mod4-Left spawn ~/.config/herbstluftwm/mpc-status.sh prev
 hc unrule -F
 hc rule focus=on 
 # unmanage docks, dropdowns, etc
-hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK)' manage=off
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DROPDOWN_MENU|POPUP_MENU)' manage=off
 # set apppropriate things to pseudotile
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' pseudotile=on focus=on
 hc rule class~'(VBoxSDL|SleepIsDeathApp|freeciv-sdl|FTL|pinentry)' pseudotile=on focus=on

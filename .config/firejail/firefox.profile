@@ -1,37 +1,29 @@
-# Firejail profile for Mozilla Firefox (Iceweasel in Debian)
+# Firejail profile for firefox
+# Description: Safe and easy web browser from Mozilla
+# This file is overwritten after every install/update
+# Persistent local customizations
+include firefox.local
+# Persistent global definitions
+include globals.local
 
-noblacklist ~/.mozilla
-noblacklist ~/.cache/mozilla
-include /etc/firejail/disable-common.inc
-include /etc/firejail/disable-programs.inc
-include /etc/firejail/disable-devel.inc
+noblacklist ${HOME}/.cache/mozilla
+noblacklist ${HOME}/.mozilla
 
-caps.drop all
-netfilter
-nonewprivs
-noroot
-protocol unix,inet,inet6,netlink
-seccomp
-tracelog
+mkdir ${HOME}/.cache/mozilla/firefox
+mkdir ${HOME}/.mozilla
+whitelist ${HOME}/.cache/mozilla/firefox
+whitelist ${HOME}/.mozilla
 
 whitelist ~/desktop
 whitelist ~/downloads
 whitelist ~/images
 whitelist ~/videos
 whitelist ~/audio/clips
-mkdir ~/.mozilla
-whitelist ~/.mozilla
-mkdir ~/.cache
-mkdir ~/.cache/mozilla
-mkdir ~/.cache/mozilla/firefox
-whitelist ~/.cache/mozilla/firefox
-whitelist ~/dwhelper
-mkdir ~/.local
-mkdir ~/.local/share
-mkdir ~/.local/share/tridactyl
-whitelist ~/.local/share/tridactyl
 
-include /etc/firejail/whitelist-common.inc
+# firefox requires a shell to launch on Arch.
+#private-bin firefox,which,sh,dbus-launch,dbus-send,env,bash
+# private-etc must first be enabled in firefox-common.profile
+#private-etc firefox
 
-# experimental features
-#private-etc passwd,group,hostname,hosts,localtime,nsswitch.conf,resolv.conf,gtk-2.0,pango,fonts,iceweasel,firefox,adobe,mime.types,mailcap,asound.conf,pulse
+# Redirect
+include firefox-common.profile
