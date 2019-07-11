@@ -379,6 +379,7 @@ fun! s:settings_c()
 	setlocal shiftwidth=4
 	setlocal tabstop=4
 	setlocal softtabstop=4
+	setlocal cinoptions=:0,(s,m1,U1
 	"mappings
 	"note: these mappings are in weird reverse order to avoid opening folds
 	nnoremap <buffer> -- O<Space>*/<Esc>hhi/*<Space>
