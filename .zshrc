@@ -155,7 +155,6 @@ elif [[ ! -z $(whence vim) ]] then
 fi
 
 [[ ! -z $(whence sdcv) ]] && alias def='sdcv'
-[[ ! -z $(whence mpv) ]] && alias dvd='mpv --deinterlace=yes dvd://'
 [[ ! -z $(whence herbstclient) ]] && alias hc='herbstclient'
 [[ ! -z $(whence aiksaurus) ]] && alias thesaurus='aiksaurus'
 [[ ! -z $(whence ag) ]] && alias ag='ag --color-match "1;34"'

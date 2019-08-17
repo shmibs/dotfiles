@@ -1,4 +1,14 @@
-emulate sh -c 'source /etc/profile'
+[[ -f /etc/profile ]] && \
+	emulate sh -c 'source /etc/profile'
+
+################## SET EDITOR #################
+if [[ ! -z $(whence nvim) ]] then
+	export EDITOR=nvim
+elif [[ ! -z $(whence vim) ]] then
+	export EDITOR=vim
+elif [[ ! -z $(whence vi) ]] then
+	export EDITOR=vi
+fi
 
 ############# STORE VIMTAGS IN TMP ############
 export QT_STYLE_OVERRIDE=gtk
@@ -32,7 +42,7 @@ func_init_checkreq() {
 	return 0
 }
 
-if [[ -d ~/.config/init/funcs/ && -d ~/.config/init/funcreqs ]]; then
+if [[ -d $HOME/.config/init/funcs/ && -d $HOME/.config/init/funcreqs ]]; then
 	rm -rf /tmp/funcs
 	mkdir -p /tmp/funcs
 	path+=(/tmp/funcs)
@@ -47,7 +57,7 @@ if [[ -d ~/.config/init/funcs/ && -d ~/.config/init/funcreqs ]]; then
 fi
 
 ############# CONNECTING OVER SSH #############
-[[ -f ~/.zprofile-dtach ]] && \
-	source ~/.zprofile-dtach
+[[ -f $HOME/.zprofile-dtach ]] && \
+	source $HOME/.zprofile-dtach
 
 export PATH
