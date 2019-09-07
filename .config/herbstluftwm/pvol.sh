@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env zsh
 
-# race condition, obvs, but this is hopefully time enough
 case "$1" in
 	down)
 		pavolume voldown --quiet 2
