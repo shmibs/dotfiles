@@ -127,6 +127,20 @@ call s:Lightline_palette_init()
 let g:easytags_async = 1
 let g:easytags_always_enabled = 1
 
+"goyo
+fun! s:goyo_enter()
+	set formatoptions+=a
+endfun
+
+fun! s:goyo_leave()
+	set formatoptions-=a
+endfun
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+nnoremap <Leader>w :execute "silent Goyo"<CR><C-l>
+
 
 """"""""""""""""""""""
 "  GENERAL SETTINGS  "
@@ -235,18 +249,6 @@ endif
 cnoremap <PageUp> <up>
 cnoremap <PageDown> <down>
 
-fun! s:goyo_enter()
-	set formatoptions+=a
-endfun
-
-fun! s:goyo_leave()
-	set formatoptions-=a
-endfun
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-nnoremap <Leader>w :execute "silent Goyo"<CR><C-l>
 
 
 """""""""""""""""""""""
@@ -458,6 +460,7 @@ endfun
 fun! s:settings_mail()
 	"settings
 	setlocal spell
+	setlocal nojoinspaces
 	"mappings
 endfun
 
