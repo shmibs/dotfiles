@@ -7,9 +7,9 @@ then
 	xrdb -override ~/.Xresources
 fi
 
-if [ -s /tmp/urxvt-theme ]
+if [ -s /tmp/x-theme ]
 then
-	xrdb -override /tmp/urxvt-theme
+	xrdb -override /tmp/x-theme
 fi
 
 #add compose key
@@ -44,7 +44,7 @@ xset -dpms
 xset s off
 
 #daemons
-compton -b --backend glx --vsync -CG
+picom -b --backend glx --vsync -CG
 
 #this is an ugly hack which runs a dummy program
 #through bumblebee to get the fans on discrete

@@ -245,35 +245,35 @@
 # lily
 #
 
-wallpaper='lily.png'
-
-std_black='#0f0f0e'
-std_red='#8e4b40'
-std_green='#c7d276'
-std_yellow='#f5b45c'
-std_blue='#52818c'
-std_magenta='#e07388'
-std_cyan='#60b8a8'
-std_white='#faf1df'
-
-light_black='#292721'
-light_red='#c25948'
-light_green='#8ceba4'
-light_yellow='#ffab84'
-light_blue='#7fbcc7'
-light_magenta='#e09fc4'
-light_cyan='#7fd6b7'
-light_white='#faf5eb'
-
-bg_normal="$std_black"
-fg_normal="$std_white"
-bg_focus="$std_red"
-fg_focus="$light_white"
-bg_urgent="$std_magenta"
-fg_urgent="$light_white"
-
-bar_bg="$bg_normal"
-bar_fg="$fg_normal"
+# wallpaper='lily.png'
+#
+# std_black='#0f0f0e'
+# std_red='#8e4b40'
+# std_green='#c7d276'
+# std_yellow='#f5b45c'
+# std_blue='#52818c'
+# std_magenta='#e07388'
+# std_cyan='#60b8a8'
+# std_white='#faf1df'
+#
+# light_black='#292721'
+# light_red='#c25948'
+# light_green='#8ceba4'
+# light_yellow='#ffab84'
+# light_blue='#7fbcc7'
+# light_magenta='#e09fc4'
+# light_cyan='#7fd6b7'
+# light_white='#faf5eb'
+#
+# bg_normal="$std_black"
+# fg_normal="$std_white"
+# bg_focus="$std_red"
+# fg_focus="$light_white"
+# bg_urgent="$std_magenta"
+# fg_urgent="$light_white"
+#
+# bar_bg="$bg_normal"
+# bar_fg="$fg_normal"
 
 #
 # わがまま
@@ -313,6 +313,40 @@ bar_fg="$fg_normal"
 #
 # urxvt_bg='わがまま.png;style=tiled'
 
+#
+# kuro
+#
+
+wallpaper='kuro.jpg'
+
+std_black='#100e10'
+std_red='#9e3e00'
+std_green='#248753'
+std_yellow='#b28158'
+std_blue='#405c90'
+std_magenta='#763d3f'
+std_cyan='#52aea0'
+std_white='#d7dbda'
+
+light_black='#2f2c2f'
+light_red='#d76f0e'
+light_green='#569822'
+light_yellow='#dbb460'
+light_blue='#558b9f'
+light_magenta='#b04857'
+light_cyan='#52e1db'
+light_white='#f3fdf4'
+
+bg_normal="$std_black"
+fg_normal="$std_white"
+bg_focus="$std_magenta"
+fg_focus="$light_white"
+bg_urgent="$std_red"
+fg_urgent="$light_white"
+
+bar_bg="$bg_normal"
+bar_fg="$fg_normal"
+
 
 ###############
 #  misc vars  #
@@ -331,6 +365,10 @@ jfont_size='10'
 # c font
 cfont='Noto Sans Mono CJK SC'
 cfont_size='10'
+
+# thai font
+tfont='Noto Sans Thai'
+tfont_size='10'
 
 # emoji font
 efont='Noto Emoji'
