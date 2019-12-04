@@ -56,9 +56,10 @@ check out [urxvt-perls](https://github.com/muennich/urxvt-perls).
 
 ### [ranger](https://ranger.github.io/)/[sxiv](https://github.com/muennich/sxiv)
 
-both are fantastic for keyboard-driven file management, but still've got to
-figure out how to write a ranger extension that can receive selections from
-sxiv, because squinting at filenames is just bleh. python is my bane, though...
+both are fantastic for keyboard-driven file management. i've forked sxiv to use
+4 colours rather than 2, to better fit the theme, but still've got to figure
+out how to write a ranger extension that can receive selections from sxiv,
+because squinting at filenames is just bleh. python is my bane, though...
 
 ### [pass](https://www.passwordstore.org/)
 
@@ -67,7 +68,7 @@ a firefox addon, but it doesn't really work, and there's an existing dmenu
 frontend, but it's not very featureful, so [i wrote my
 own](.config/herbstluftwm/pass.sh).
 
-### [dunst](https://github.com/dunst-project/dunst)/[dmenu](https://bitbucket.org/melek/dmenu2)/[compton](https://github.com/chjj/compton)/[lemonbar](https://github.com/krypt-n/bar)/[nitrogen](http://projects.l3ib.org/nitrogen/)
+### [dunst](https://github.com/dunst-project/dunst)/[dmenu](https://bitbucket.org/melek/dmenu2)/[picom](https://github.com/yshui/picom)/[lemonbar](https://github.com/krypt-n/bar)/[nitrogen](http://projects.l3ib.org/nitrogen/)
 
 useful things all around. i've "patched" dunst (really just a very bad hack) to
 auto clean up on-screen messages when notifications are received from
