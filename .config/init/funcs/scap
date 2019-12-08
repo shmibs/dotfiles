@@ -1,18 +1,20 @@
 #!/usr/bin/env zsh
 # capture webm
 
+source $HOME/.config/init/vars
+
 xset q
 [[ $? -ne 0 ]] && return 1
 
 archey3
 sleep .2
 
-if [[ -e '/tmp/cap.mp4' ]]; then
-    rm '/tmp/cap.mp4' || return 1
+if [[ -e "$tmpdir/cap.mp4" ]]; then
+    rm "$tmpdir/cap.mp4" || return 1
 fi
 
 echo 'recording...'
 
 ffmpeg -v panic -video_size 1920x1080 -framerate 20 -f x11grab -i :0.0 \
     -f pulse -ac 2 -i default -af aresample=async=1 \
-    -c:v libx264 -q 0 -preset ultrafast '/tmp/cap.mp4'
+    -c:v libx264 -q 0 -preset ultrafast "$tmpdir/cap.mp4"

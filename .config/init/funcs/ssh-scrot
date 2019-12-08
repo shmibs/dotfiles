@@ -1,5 +1,8 @@
 #!/usr/bin/env zsh
 # take a screenshot, upload to /img/scrot, and update current symlink
+#
+
+source $HOME/.config/init/vars
 
 archey3
 
@@ -30,10 +33,10 @@ done
 echo 'cheese!'
 sleep .1
 
-scrot /tmp/$name.png
-convert -scale 250x /tmp/$name.png /tmp/${name}_small.png
+scrot $tmpdir/$name.png
+convert -scale 250x $tmpdir/$name.png $tmpdir/${name}_small.png
 
-scp /tmp/$name.png /tmp/${name}_small.png airen-no-jikken.icu:http/img/scrot/$date
+scp $tmpdir/$name.png $tmpdir/${name}_small.png airen-no-jikken.icu:http/img/scrot/$date
 
 echo "https://airen-no-jikken.icu/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection clipboard
 echo "https://airen-no-jikken.icu/img/scrot/$date/$name.png" | tr -d '\n' | xclip -i -selection primary
@@ -42,4 +45,4 @@ echo "https://airen-no-jikken.icu/img/scrot/$date/${name}_small.png" | tr -d '\n
 
 echo 'sent!'
 
-rm /tmp/$name.png /tmp/${name}_small.png
+rm $tmpdir/$name.png $tmpdir/${name}_small.png

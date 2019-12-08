@@ -1,15 +1,15 @@
 #pull inna vars
-source ~/.config/init/vars
+source "$HOME/.config/init/vars"
 
 #merge Xresources
-if [ -s ~/.Xresources ]
+if [ -s "$HOME/.Xresources" ]
 then
-	xrdb -override ~/.Xresources
+	xrdb -override "$HOME/.Xresources"
 fi
 
-if [ -s /tmp/x-theme ]
+if [ -s $tmpdir/x-theme ]
 then
-	xrdb -override /tmp/x-theme
+	xrdb -override $tmpdir/x-theme
 fi
 
 #add compose key
@@ -25,18 +25,19 @@ fcitx &
 xset r rate $kbdelay $kbrate
 
 #store sxiv cache in ram
-export XDG_CACHE_HOME=/home/shmibs/.cache
-if [ -d /tmp/ ]; then
-    mkdir -p /tmp/sxiv
-    cd /home/shmibs/.cache/
-    ln -sf /tmp/sxiv .
+export XDG_CACHE_HOME="$HOME/.cache"
+mkdir -p "$HOME/.cache"
+if [ -d $tmpdir ]; then
+    mkdir -p $tmpdir/sxiv
+    cd "$HOME/.cache/"
+    ln -sf $tmpdir/sxiv .
     cd
 fi
 
 #load more fonts
 xset +fp /usr/share/fonts/local
 xset +fp /usr/share/fonts/misc
-xset +fp ~/.fonts
+xset +fp "$HOME/.fonts"
 xset fp rehash
 
 #disable power saving, so screen doesn't power off

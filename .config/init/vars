@@ -321,11 +321,11 @@ wallpaper='kuro.jpg'
 
 std_black='#100e10'
 std_red='#9e3e00'
-std_green='#248753'
+std_green='#2c945d'
 std_yellow='#b28158'
 std_blue='#405c90'
 std_magenta='#763d3f'
-std_cyan='#52aea0'
+std_cyan='#4b9f92'
 std_white='#d7dbda'
 
 light_black='#2f2c2f'
@@ -334,7 +334,7 @@ light_green='#569822'
 light_yellow='#dbb460'
 light_blue='#558b9f'
 light_magenta='#b04857'
-light_cyan='#52e1db'
+light_cyan='#49c8c2'
 light_white='#f3fdf4'
 
 bg_normal="$std_black"
@@ -411,6 +411,9 @@ tablet_mode=""
 
 kbrate=25
 kbdelay=300
+
+# where should temporary files be stored?
+tmpdir="/tmp"
 
 # use overrides, if any
 if [ -f ~/.config/init/voverride ]; then

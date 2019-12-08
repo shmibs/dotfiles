@@ -26,4 +26,4 @@ for i in ${focus[@]}; do
 	echo "set $i-bg \"$bg_focus\""
 done
 
-} > /tmp/zathurarc
+} > $tmpdir/zathurarc

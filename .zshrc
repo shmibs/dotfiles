@@ -155,7 +155,6 @@ elif [[ ! -z $(whence vim) ]] then
 fi
 
 [[ ! -z $(whence sdcv) ]] && alias def='sdcv'
-[[ ! -z $(whence herbstclient) ]] && alias hc='herbstclient'
 [[ ! -z $(whence aiksaurus) ]] && alias thesaurus='aiksaurus'
 [[ ! -z $(whence ag) ]] && alias ag='ag --color-match "1;34"'
 [[ ! -z $(whence latex) ]] && alias latex='latex -output-format=pdf'

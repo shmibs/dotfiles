@@ -1,6 +1,8 @@
 [[ -f /etc/profile ]] && \
 	emulate sh -c 'source /etc/profile'
 
+export QT_STYLE_OVERRIDE=gtk
+
 ################## SET EDITOR #################
 if [[ ! -z $(whence nvim) ]] then
 	export EDITOR=nvim
@@ -10,16 +12,15 @@ elif [[ ! -z $(whence vi) ]] then
 	export EDITOR=vi
 fi
 
-############# STORE VIMTAGS IN TMP ############
-export QT_STYLE_OVERRIDE=gtk
+source $HOME/.config/init/vars
 
 ############# STORE VIMTAGS IN TMP ############
-[[ -d /tmp/ ]] && \
-	touch /tmp/.vimtags && ln -sf /tmp/.vimtags .
+[[ -d $tmpdir ]] && \
+	touch $tmpdir/.vimtags && ln -sf $tmpdir/.vimtags .
 
 ############# INITIALISE CONFIGS ##############
-[[ -f ~/.config/init/init.sh ]] && \
-	~/.config/init/init.sh
+[[ -f $HOME/.config/init/init.sh ]] && \
+	$HOME/.config/init/init.sh
 
 ########## MAKE USER FUNCS AVAILABLE ##########
 func_init_checkreq() {
@@ -43,15 +44,15 @@ func_init_checkreq() {
 }
 
 if [[ -d $HOME/.config/init/funcs/ && -d $HOME/.config/init/funcreqs ]]; then
-	rm -rf /tmp/funcs
-	mkdir -p /tmp/funcs
-	path+=(/tmp/funcs)
+	rm -rf $tmpdir/funcs
+	mkdir -p $tmpdir/funcs
+	path+=($tmpdir/funcs)
 	for f in $HOME/.config/init/funcreqs/*; do
 		source "$f"
 		func_init_checkreq $func_init_prereqs , $func_init_checks
 		if [[ $? -eq 0 ]] then
 			chmod +x $HOME/.config/init/funcs/${f:t}
-			ln -s $HOME/.config/init/funcs/${f:t} /tmp/funcs/${f:t}
+			ln -s $HOME/.config/init/funcs/${f:t} $tmpdir/funcs/${f:t}
 		fi
 	done
 fi

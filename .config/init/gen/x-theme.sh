@@ -58,5 +58,5 @@ echo    "xft:${bkfont}:size=${bkfont_size}"
 
 echo -n "Sxiv.font: xft:${mfont}:size=${mfont_size}"
 
-} > /tmp/x-theme
+} > $tmpdir/x-theme
 

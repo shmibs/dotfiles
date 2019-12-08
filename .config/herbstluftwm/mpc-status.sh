@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source $HOME/.config/init/vars
+
 case "$1" in
 	next)
 		mpc next
@@ -25,11 +27,11 @@ fi
 cd ~/music/
 dir=$(dirname "$(mpc current -f %file%)")
 # linking is necessary because notify-send can't into icon paths containing commas
-cd /tmp/
+cd $tmpdir
 ln -sf "$HOME/music/$dir/cover-small.png" mpd-icon.png
 
 message="$(mpc current -f '##%track% %title% (%date%)\n%artist% - %album%')
 
 $(mpc status | tail -n -2 | sed -re 's/volume.*repeat/\nrepeat/' -e 's/( ){3,4}/\n/g' -e '/volume:  /d')"
 
-notify-send -t 4000 -a closeme --icon=/tmp/mpd-icon.png "$message"
+notify-send -t 4000 -a closeme --icon=$tmpdir/mpd-icon.png "$message"

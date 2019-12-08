@@ -3,12 +3,12 @@ if [[ -z "${DTACH_SUB}" ]]; then
 	setopt NULL_GLOB
 
 	while true; do
-		set -- /tmp/dtach*
+		set -- $tmpdir/dtach*
 		if [[ "$#" -gt 0 ]]; then
 			# session exists, so show the menu
 			{
 				while true; do
-					set -- /tmp/dtach*
+					set -- $tmpdir/dtach*
 					if [[ "$#" -eq 0 ]]; then
 						# logout if all sessions terminated
 						clear
@@ -16,9 +16,9 @@ if [[ -z "${DTACH_SUB}" ]]; then
 					fi
 
 					# list sessions
-					set -- /tmp/dtach*
+					set -- $tmpdir/dtach*
 					if [[ "$#" -gt 0 ]]; then
-						ls /tmp/dtach* | sed 's/\/tmp\/dtach-//g'
+						ls $tmpdir/dtach* | sed "s/\$tmpdir\/dtach-//g"
 					fi
 
 					echo -n "> "
@@ -33,7 +33,7 @@ if [[ -z "${DTACH_SUB}" ]]; then
 							;;
 
 						*)
-							DTACH_SUB=true dtach -A "/tmp/dtach-${args[1]}" -z zsh
+							DTACH_SUB=true dtach -A "$tmpdir/dtach-${args[1]}" -z zsh
 							clear
 							;;
 					esac
@@ -45,9 +45,9 @@ if [[ -z "${DTACH_SUB}" ]]; then
 			logout
 		else
 			# create the main session
-			DTACH_SUB=true dtach -A /tmp/dtach-1 -z zsh
+			DTACH_SUB=true dtach -A $tmpdir/dtach-1 -z zsh
 			clear
-			set -- /tmp/dtach*
+			set -- $tmpdir/dtach*
 			if [[ "$#" -eq 0 ]]; then
 				# logout if all sessions terminated
 				clear
