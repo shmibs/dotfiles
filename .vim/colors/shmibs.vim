@@ -39,7 +39,9 @@ hi! link Function       Identifier
 hi! link Keyword        Statement
 hi! link LineNr         NonText
 hi! link Number         Constant
-hi! link PreProc        Define
+hi! link Define         PreProc
+hi! link Include        PreProc
+hi! link Macro          PreProc
 hi! link SpecialChar    Special
 hi! link SpecialComment Special
 hi! link SpellLocal     SpellBad
