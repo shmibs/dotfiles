@@ -1,0 +1,37 @@
+priority -50
+
+snippet ndf "#ifndef ... #define ... #endif"
+#ifndef ${1/([A-Za-z0-9_]+).*/$1/}
+#define ${1:SYMBOL} val
+#endif
+endsnippet
+
+snippet main "main() (main)"
+int main(int argc, char **argv)
+{
+	${VISUAL}$0
+	return 0;
+}
+endsnippet
+
+snippet ig "include guard"
+`!p
+if not snip.c:
+	name = re.sub(r'[^A-Za-z0-9]+','_', fn).upper()
+	fpath = os.path.abspath(path)
+	val = ''
+	if (os.path.basename(os.path.dirname(fpath)) == 'src'):
+		dname = os.path.dirname(os.path.dirname(fpath))
+		dname = os.path.basename(dname)
+		dname = re.sub(r'[^A-Za-z0-9]+','_', dname).upper()
+		val = ('%s_%s' % (dname,name))
+	else:
+		val = name
+	snip.rv = '#ifndef ' + val + '\n#define ' + val
+else:
+	snip.rv = snip.c`
+
+${VISUAL}$0
+
+#endif
+endsnippet

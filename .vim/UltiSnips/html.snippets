@@ -1,0 +1,189 @@
+priority -50
+
+global !p
+def x(snip):
+	if snip.ft.startswith("x"):
+		snip.rv = '/'
+	else:
+		snip.rv = ""
+endglobal
+
+snippet doctype "HTML - 5.0 (doctype)" b
+<!DOCTYPE html>
+
+endsnippet
+
+snippet a "Link" w
+<a href="${1:http://www.${2:url.com}}"${3: target="_blank"}>${4:Anchor Text}</a>
+endsnippet
+
+snippet abbr "<abbr>" w
+<abbr title="$2">$1</abbr>
+endsnippet
+
+snippet address "<address>" w
+<address>$1</address>
+endsnippet
+
+snippet article "<article>"
+<article>
+	${1:article content}
+</article>
+endsnippet
+
+snippet aside "<aside>"
+<aside>
+	${1:aside content}
+</aside>
+endsnippet
+
+snippet base "HTML <base>" w
+<base href="$1"${2: target="$3"}`!p x(snip)`>
+endsnippet
+
+snippet blockquote "<blockquote>"
+<blockquote>$1</blockquote>
+endsnippet
+
+snippet body "<body>"
+<body>
+	${0:${VISUAL}}
+</body>
+endsnippet
+
+snippet button "<button>"
+<button>$1</button>
+endsnippet
+
+snippet caption "<caption>"
+<caption>$1</caption>
+endsnippet
+
+snippet cite "<cite>" w
+<cite>$1</cite>
+endsnippet
+
+snippet dfn "<dfn>" w
+<dfn>$1</dfn>
+endsnippet
+
+snippet div "<div>" w
+<div>
+	${0:${VISUAL}}
+</div>
+endsnippet
+
+snippet fig "<figure>"
+<figure>
+$1
+<figcaption>$2</figcaption>
+</figure>
+endsnippet
+
+snippet figcaption "<figcaption>"
+<figcaption>$1</figcaption>
+endsnippet
+
+snippet footer "<footer>"
+<footer>
+	${1:footer content}
+</footer>
+endsnippet
+
+snippet h1 "HTML <h1>" w
+<h1>${0:${VISUAL}}</h1>
+endsnippet
+
+snippet h2 "HTML <h2>" w
+<h2>${0:${VISUAL}}</h2>
+endsnippet
+
+snippet h3 "HTML <h3>" w
+<h3>${0:${VISUAL}}</h3>
+endsnippet
+
+snippet h4 "HTML <h4>" w
+<h4>${0:${VISUAL}}</h4>
+endsnippet
+
+snippet h5 "HTML <h5>" w
+<h5>${0:${VISUAL}}</h5>
+endsnippet
+
+snippet h6 "HTML <h6>" w
+<h6>${0:${VISUAL}}</h6>
+endsnippet
+
+snippet head "HTML <head>"
+<head>
+	<meta charset="utf-8">
+	<title>${1:`!p snip.rv = snip.basename or "Page Title"`}</title>
+	${0:${VISUAL}}
+</head>
+endsnippet
+
+snippet header "<header>"
+<header>
+	${1:header content}
+</header>
+endsnippet
+
+snippet html "HTML basic structure" b
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>${1:`!p snip.rv = snip.basename.replace('-', ' ').capitalize()`}</title>
+	</head>
+	<body>
+		${0:body}
+	</body>
+</html>
+endsnippet
+
+snippet li "list item" w
+<li>${0:${VISUAL}}</li>
+endsnippet
+
+snippet main "<main>"
+<main>
+	${1:main content}
+</main>
+endsnippet
+
+snippet nav "<nav>"
+<nav>
+	${1:navigation links}
+</nav>
+endsnippet
+
+snippet p "paragraph" w
+<p>${0:${VISUAL}}</p>
+endsnippet
+
+snippet script "HTML <script>" w
+<script charset="utf-8">
+	${0:${VISUAL}}
+</script>
+endsnippet
+
+snippet span "<span>" w
+<span>${0:${VISUAL}}</span>
+endsnippet
+
+snippet style "HTML <style>" w
+<style type="text/css" media="screen">
+	${0:${VISUAL}}
+</style>
+endsnippet
+
+snippet title "HTML <title>" w
+<title>${1:`!p snip.rv = snip.basename or "Page Title"`}</title>
+endsnippet
+
+snippet ul "unordered list" w
+<ul>
+	${0:${VISUAL}}
+</ul>
+endsnippet
