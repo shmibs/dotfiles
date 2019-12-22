@@ -18,7 +18,7 @@ if [[ -z "${DTACH_SUB}" ]]; then
 					# list sessions
 					set -- $tmpdir/dtach*
 					if [[ "$#" -gt 0 ]]; then
-						ls $tmpdir/dtach* | sed "s/\$tmpdir\/dtach-//g"
+						ls $tmpdir/dtach* | sed 's/.*\/dtach-//g'
 					fi
 
 					echo -n "> "
