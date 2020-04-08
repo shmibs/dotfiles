@@ -371,7 +371,7 @@ tfont='Noto Sans Thai'
 tfont_size='10'
 
 # emoji font
-efont='Noto Emoji'
+efont='Mizutama Emoji'
 efont_size='10'
 
 # backup font
