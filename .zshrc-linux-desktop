@@ -2,13 +2,18 @@
 
 if [[ $(whence sshfs) != "" ]] then
 	alias smutt='ssh -t shmibs@airen-no-jikken.icu mutt'
+	alias ssmutt='ssh -t shmibs@airen-no-jikken.icu mutt -f sent'
 	alias kmutt='ssh -t k@airen-no-jikken.icu mutt'
+	alias ksmutt='ssh -t k@airen-no-jikken.icu mutt -f sent'
 	alias amutt='ssh -t ageha@airen-no-jikken.icu mutt'
+	alias asmutt='ssh -t ageha@airen-no-jikken.icu mutt -f sent'
 fi
 
 if [[ $(whence sshfs) != "" ]] then
 	alias smount='mkdir -p ~/mount-shmibs && sshfs shmibs@airen-no-jikken.icu: ~/mount-shmibs || rmdir ~/mount-shmibs'
-	alias kmount'mkdir -p ~/mount-k && sshfs k@airen-no-jikken.icu: ~/mount-k || rmdir ~/mount-k'
+	alias kmount='mkdir -p ~/mount-k && sshfs k@airen-no-jikken.icu: ~/mount-k || rmdir ~/mount-k'
+	alias amount='mkdir -p ~/mount-ageha && sshfs ageha@airen-no-jikken.icu: ~/mount-ageha || rmdir ~/mount-ageha'
 	alias sumount='fusermount -u ~/mount-shmibs && rmdir ~/mount-shmibs'
-	alias kumount='fusermount -u ~/mount-shmibs && rmdir ~/mount-k'
+	alias kumount='fusermount -u ~/mount-k && rmdir ~/mount-k'
+	alias aumount='fusermount -u ~/mount-ageha && rmdir ~/mount-ageha'
 fi
