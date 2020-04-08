@@ -186,6 +186,10 @@ pwgen() {
 }
 fi
 
+#################### HOOKS ####################
+
+[[ -f ~/.opam/opam-init/init.zsh ]] && source ~/.opam/opam-init/init.zsh
+
 ################# OS SPECIFIC #################
 
 case $(uname) in 
@@ -201,7 +205,3 @@ case $(uname) in
 	*)
 		echo -e '[-- OS UNRECOGNISED (T_T) --]'
 esac
-
-#################### HOOKS ####################
-
-[[ -f ~/.zshrc-opam ]] && source ~/.zshrc-opam || true
