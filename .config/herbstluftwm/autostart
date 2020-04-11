@@ -159,6 +159,7 @@ hc keybind Mod4-Shift-o spawn ~/yolo/tor/start-tor-browser
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name $EDITOR -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
+hc keybind Mod4-Shift-z spawn zhudi
 
 # dmenu
 hc keybind Mod4-r spawn dmenu_run -fn "${bfont}:size=${bfont_size}" \
