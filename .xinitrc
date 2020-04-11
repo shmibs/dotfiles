@@ -47,11 +47,6 @@ xset s off
 #daemons
 picom -b --backend glx --vsync -CG
 
-#this is an ugly hack which runs a dummy program
-#through bumblebee to get the fans on discrete
-#nvidia graphics cards to shut up
-command -v optirun && $(echo "" | optirun lemonbar)
-
 xsetroot -cursor_name left_ptr
 nitrogen --restore
 xbanish &

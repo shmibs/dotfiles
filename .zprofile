@@ -1,7 +1,11 @@
 [[ -f /etc/profile ]] && \
 	emulate sh -c 'source /etc/profile'
 
+##################### MISC ####################
 export QT_STYLE_OVERRIDE=gtk
+
+# bad hack to make video card fans shut up
+[[ ! -z $(whence optirun) ]] && optirun --no-xorg true
 
 ################## SET EDITOR #################
 if [[ ! -z $(whence nvim) ]] then
