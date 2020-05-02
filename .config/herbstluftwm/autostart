@@ -188,7 +188,7 @@ hc keybind Mod4-Left spawn ~/.config/herbstluftwm/mpc-status.sh prev
 ###########
 
 hc unrule -F
-hc rule focus=on 
+hc rule focus=on floating=off
 # unmanage docks, dropdowns, etc
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DROPDOWN_MENU|POPUP_MENU)' manage=off
 # set apppropriate things to pseudotile
