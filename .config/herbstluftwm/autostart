@@ -156,6 +156,8 @@ hc keybind Mod4-Shift-i spawn gimp
 hc keybind Mod4-Shift-m spawn /usr/lib/mozc/mozc_tool --mode=hand_writing
 hc keybind Mod4-Shift-n spawn urxvt -name "notes" -e $EDITOR ~/notes
 hc keybind Mod4-Shift-o spawn ~/yolo/tor/start-tor-browser
+hc keybind Mod4-Shift-p spawn inkscape
+hc keybind Mod4-Shift-r spawn krita
 hc keybind Mod4-Shift-t spawn transmission-gtk
 hc keybind Mod4-Shift-v spawn urxvt -name $EDITOR -e $EDITOR
 hc keybind Mod4-Shift-w spawn urxvt -name "weechat" -e weechat
