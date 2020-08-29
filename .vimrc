@@ -16,17 +16,14 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'vim-crystal/vim-crystal'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'https://git.airen-no-jikken.icu/ageha/every.vim.git'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'https://git.airen-no-jikken.icu/ageha/mips.vim.git'
-Plugin 'zah/nim.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'cespare/vim-toml'
-Plugin 'ziglang/zig.vim'
 
 "FUNCTIONALITY
 Plugin 'junegunn/vim-easy-align'
@@ -49,8 +46,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tomtom/tcomment_vim'
 
 Plugin 'SirVer/ultisnips'
-
-Plugin 'junegunn/vader.vim'
 
 call vundle#end()
 
