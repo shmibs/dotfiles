@@ -17,7 +17,7 @@ Plugin 'gmarik/Vundle.vim'
 
 "FILETYPES
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'rhysd/vim-crystal'
+Plugin 'vim-crystal/vim-crystal'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'https://git.airen-no-jikken.icu/ageha/every.vim.git'
 Plugin 'plasticboy/vim-markdown'
