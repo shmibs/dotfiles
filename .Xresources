@@ -183,10 +183,12 @@ URxvt*cursorBlink: true
 ! URxvt*{|}
 
 ! OverTheSpot, OffTheSpot, Root; option -pt.
-!URxvt*preeditType: OverTheSpot
+URxvt*preeditType: OverTheSpot
+! URxvt*preeditType: OnTheSpot
 
 ! name of inputMethod to use; option -im.
 !URxvt*inputMethod: ibus
+URxvt*inputMethod: fcitx
 
 ! The locale to use for opening the IM. You can use an "LC_CTYPE" of e.g.  "de_DE.UTF-8" for normal text processing but "ja_JP.EUC-JP" for the input extension
 ! URxvt*imLocale: name
