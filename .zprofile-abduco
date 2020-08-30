@@ -1,0 +1,107 @@
+local window_prompt
+local windows
+local input
+local char
+local i
+local seen
+local off
+
+[[ -z "$ABDUCO_SUB" ]] || return
+
+zmodload zsh/curses || return
+
+while true; do
+
+	window_prompt="$(abduco | tail -n +2)"
+
+	if [[ $window_prompt == $'' ]]; then
+		ABDUCO_SUB=true abduco -A "1" zsh
+		if [[ "$(abduco | tail -n +2)" == $'' ]]; then
+			clear && logout
+		fi
+		continue
+	fi
+
+	windows=( $(printf "%s\n" $window_prompt | sed -e $'s/.*\t//') )
+
+	zcurses init
+
+	function draw_main() {
+		zcurses clear stdscr redraw
+
+		width=$COLUMNS
+
+		zcurses attr stdscr +bold
+
+		if [[ $width -ge 16 ]]; then
+			zcurses move stdscr 0 $(($width / 2 - 8))
+			zcurses string stdscr "select a session"
+		else
+			zcurses move stdscr 0 0
+			zcurses string stdscr "sel"
+		fi
+
+		zcurses attr stdscr -bold
+
+		zcurses move stdscr 2 0
+		zcurses string stdscr $window_prompt
+	}
+
+	trap 'draw_main' WINCH
+
+	draw_main
+
+	input=""
+
+	while true; do
+		zcurses move stdscr $(($#windows + 2 + ($#windows != 0) )) 0
+		zcurses clear stdscr bot
+		zcurses string stdscr "-: $input"
+		zcurses refresh stdscr
+
+		char=""
+		sleep 0
+		zcurses timeout stdscr 100
+		zcurses input stdscr char
+		
+		# clear
+		[[ $char == "" || $char == "" ]] && input="" && continue
+
+		# backspace
+		[[ $char == "" && $input != "" ]] && input=${input:0:-1} && continue
+
+		# tab complete
+		if [[ $char == $'\t' ]]; then
+			seen="false"
+
+			for i in {1..$#windows}; do
+				[[ $windows[$i] =~ "^${input}.*$" ]] || continue
+				[[ $seen == "true" ]] && seen="false" && break
+				seen="true"
+				off=$i
+			done
+
+			[[ $seen == "true" ]] && input=$windows[$off]
+
+			continue
+		fi
+
+		# select
+		[[ $char == $'\n' || $char == "" ]] && break
+
+		# add single alphanum
+		[[ $char =~ "^[a-zA-Z0-9]$" ]] || continue
+
+		input="$input$char"
+	done
+
+	zcurses 'end'
+
+	[[ $input == "" ]] && clear && logout
+
+	ABDUCO_SUB=true abduco -A "$input" zsh
+
+	if [[ "$(abduco | tail -n +2)" == $'' ]]; then
+		clear && logout
+	fi
+done
