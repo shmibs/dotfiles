@@ -43,6 +43,8 @@ Plugin 'sjl/gundo.vim'
 
 Plugin 'itchyny/lightline.vim'
 
+Plugin 'dhruvasagar/vim-table-mode'
+
 Plugin 'tomtom/tcomment_vim'
 
 Plugin 'SirVer/ultisnips'
@@ -136,6 +138,10 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 nnoremap <Leader>w :execute "silent Goyo"<CR><C-l>
+
+"table
+let g:table_mode_corner = '|'
+let g:table_mode_syntax = 0
 
 
 """"""""""""""""""""""
