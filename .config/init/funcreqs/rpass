@@ -1,0 +1,2 @@
+func_init_prereqs=(xclip)
+func_init_checks=("stat /dev/random")

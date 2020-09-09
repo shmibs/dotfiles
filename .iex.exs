@@ -48,7 +48,33 @@ defmodule IExConfigInit do
         "]\n",
         "└:",
         :reset
-      ] |> IO.ANSI.format |> IO.chardata_to_string
+      ] |> IO.ANSI.format |> IO.chardata_to_string,
+      alive_prompt: [
+        # "\e[1A",
+        "\e[G",    # ANSI CHA, move cursor to column 1
+        :bright,
+        :white,
+        "┌[(",
+        :blue,
+        "%node",
+        :white,
+        ")",
+        :magenta,
+        (if user, do: user <> "@", else: ""),
+        "elixir-",
+        Elixir.System.version,
+        "@",
+        hostname,
+        " ",
+        :blue,
+        dir,
+        :white,
+        "]\n",
+        "└:",
+        :reset
+      ] |> IO.ANSI.format |> IO.chardata_to_string,
+      continuation_prompt: "   ",
+      alive_continuation_prompt: "   "
     )
   end
 

@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+# generate random passwords
+
+unsetopt MULTIBYTE
+
+{
+	cat /dev/random | while read -u0 -k1 c; do
+        [[ $c =~ '^[a-zA-Z0-9]$' ]] && printf $c
+	done | head -c 24 && printf "\n"
+} | tee >(xclip -i -selection primary) | xclip -i -selection clipboard
