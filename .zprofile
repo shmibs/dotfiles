@@ -62,7 +62,7 @@ if [[ -d $HOME/.config/init/funcs/ && -d $HOME/.config/init/funcreqs ]]; then
 fi
 
 ############# CONNECTING OVER SSH #############
-[[ -f $HOME/.zprofile-dtach ]] && \
-	source $HOME/.zprofile-dtach
+[[ -f $HOME/.zprofile-abduco ]] && \
+	source $HOME/.zprofile-abduco
 
 export PATH
