@@ -9,14 +9,14 @@ usage() {
 	echo "Usage: $callstr [OPTIONS...] <infile>..."
 	echo "Convert multiple audio files to a new format"
 	echo ""
-	echo "         \e[1mdescription  opt longform   arg     default\e[0m"
-	echo "        output codec  -c  --codec    <codec> opus"
-	echo "      output bitrate  -b  --bitrate  <int>k  (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
-	echo "      output quality  -q  --quality  <int>   N/A"
-	echo "    output directory  -d  --dest     <dir>   ."
-	echo "       copy metadata  -m  --metadata <bool>  false"
-	echo " background job count -j  --jobs     <int>   4"
-	echo "     print this help  -h  --help"
+	echo "          \e[1mdescription  opt longform   arg     default\e[0m"
+	echo "         output codec  -c  --codec    <codec> opus"
+	echo "       output bitrate  -b  --bitrate  <int>k  (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
+	echo "       output quality  -q  --quality  <int>   N/A"
+	echo "     output directory  -d  --dest     <dir>   ."
+	echo "        copy metadata  -m  --metadata <bool>  false"
+	echo " background job count  -j  --jobs     <int>   4"
+	echo "      print this help  -h  --help"
 	exit 0
 }
 

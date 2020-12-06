@@ -9,11 +9,12 @@ usage() {
 	echo "Usage: $callstr [OPTIONS...] <infile>..."
 	echo "Concatenate multiple audio files into one"
 	echo ""
-	echo "                 \e[1mdescription  opt longform  arg    default\e[0m"
-	echo "    specify destination file  -o  --outfile <file> out.ogg"
-	echo "      specify output bitrate  -b  --bitrate <int>k (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
-	echo "  workaround for many inputs  -m  --many"
-	echo "             print this help  -h  --help"
+	echo "            \e[1mdescription  opt longform  arg    default\e[0m"
+	echo "       destination file  -o  --outfile <file> out.ogg"
+	echo "           output codec  -c  --codec    <codec> opus"
+	echo "         output bitrate  -b  --bitrate <int>k (opus:35k, vorbis:50k, mp3:65k, flac:N/A)"
+	echo " many inputs workaround  -m  --many"
+	echo "        print this help  -h  --help"
 	exit 0
 }
 
