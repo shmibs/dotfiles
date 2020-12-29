@@ -177,6 +177,7 @@ set title
 
 "spelling
 set spelllang=en_gb
+set spellcapcheck=
 
 "visual marker for overflowing the 80th column
 highlight Overwide ctermbg=8
